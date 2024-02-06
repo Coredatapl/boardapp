@@ -1,43 +1,63 @@
+<!--
+=========================================================
+* Coredata Board App v1.0
+=========================================================
+
+* More at https://coredata.pl
+
+=========================================================
+-->
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <base href="/" />
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
+    <meta name="theme-color" content="#ffffff" />
     <meta
       name="description"
-      content="Web site created using create-react-app"
+      content="Board App - Customizable dashboard and start page"
     />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
+    <meta
+      name="keywords"
+      content="Dashboard, search engine, todo, shortcuts, links, start page"
+    />
+    <meta property="og:title" content="Board App - Welcome!" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://coredata.pl/" />
+    <meta
+      property="og:description"
+      content="Board App - Customizable dashboard and start page"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:locale" content="en_EN" />
+    <meta property="og:site_name" content="BoardApp" />
+    <meta property="og:url" content="https://coredata.pl/" />
+    <meta property="twitter:title" content="Board App - Welcome!" />
+    <meta
+      property="twitter:description"
+      content="Board App - Customizable dashboard and start page"
+    />
+    <meta property="twitter:site" content="https://coredata.pl/" />
+    <link rel="canonical" href="https://coredata.pl/" />
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="%PUBLIC_URL%/apple-icon.png"
+    />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <title>Board App - Welcome!</title>
   </head>
-  <body>
+  <body class="antialiased app-font">
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+    <script src="handlers.js" defer></script>
   </body>
 </html>

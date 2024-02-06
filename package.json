@@ -1,26 +1,48 @@
 {
   "name": "boardapp",
-  "version": "0.1.0",
+  "description": "Board App - Customizable dashboard and start page",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
+    "@fortawesome/fontawesome-free": "6.2.0",
+    "@react-google-maps/api": "^2.19.2",
     "@types/node": "^16.18.11",
     "@types/react": "^18.0.27",
-    "@types/react-dom": "^18.0.10",
+    "@types/react-dom": "^18.0.11",
+    "autoprefixer": "10.4.13",
+    "postcss": "8.4.31",
+    "prettier": "^2.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
+    "react-router": "6.4.3",
+    "react-router-dom": "6.4.3",
+    "react-scripts": "^5.0.1",
+    "tailwindcss": "3.2.1",
     "typescript": "^4.9.4",
     "web-vitals": "^2.1.4"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/preset-env": "^7.23.9",
+    "@babel/preset-react": "^7.23.3",
+    "@babel/preset-typescript": "^7.23.3",
+    "@testing-library/jest-dom": "6.2.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/google.maps": "^3.52.6",
+    "@types/jest": "29.5.11",
+    "@typescript-eslint/eslint-plugin": "^5.49.0",
+    "@typescript-eslint/parser": "^5.49.0",
+    "eslint": "^8.28.0",
+    "husky": "^9.0.7"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build:tailwind": "tailwind build -i src/assets/styles/index.css -o src/assets/styles/tailwind.css",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test:coverage": "react-scripts test --coverage --coverageDirectory='coverage'",
+    "prepare": "husky"
   },
   "eslintConfig": {
     "extends": [
@@ -38,6 +60,13 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react",
+      "@babel/preset-typescript"
     ]
   }
 }

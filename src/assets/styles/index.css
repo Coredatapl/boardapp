@@ -1,0 +1,80 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+@layer utilities {
+  @layer responsive {
+    .text-shadow-xs {
+      text-shadow: 1px 1px 4px var(--tw-shadow-color);
+    }
+
+    .text-shadow {
+      text-shadow: 2px 2px 5px var(--tw-shadow-color);
+    }
+
+    .text-shadow-none {
+      text-shadow: none;
+    }
+
+    .bg-clip-path-lg {
+      -webkit-clip-path: polygon(0 0, 100% 30%, 100% 100%, 0 100%);
+      clip-path: polygon(0 0, 100% 30%, 100% 100%, 0 100%);
+    }
+
+    .bg-clip-path-md {
+      -webkit-clip-path: polygon(0 0, 100% 15%, 100% 100%, 0 100%);
+      clip-path: polygon(0 0, 100% 15%, 100% 100%, 0 100%);
+    }
+  }
+}
+
+/**
+ * App style settings
+ * 
+ * Font light color:  white
+ * Font dark color:   gray-900
+ */
+
+#root {
+  background: rgb(1, 6, 13);
+  background: linear-gradient(
+    90deg,
+    rgba(1, 6, 13, 1) 0%,
+    rgba(22, 28, 59, 1) 100%
+  );
+}
+
+.app-font {
+  font-family: 'Roboto', sans-serif;
+  font-display: swap;
+  color: white;
+  line-height: 1;
+}
+
+/** 
+ * Search: https://source.unsplash.com/category/nature/1920x1080 
+ * Collection: https://source.unsplash.com/collection/dPrbbsYeca0/1920x1080
+ * Static photo: https://images.unsplash.com/photo-1500964757637-c85e8a162699
+ */
+.app-background {
+  background-image: url('https://images.unsplash.com/photo-1500964757637-c85e8a162699');
+  background-size: cover;
+  opacity: 0.9;
+  height: 100vh;
+}
+
+.app-wrapper {
+  background: rgba(1, 6, 13, 0.2);
+  height: 100vh;
+  width: 100%;
+}
+
+.app-map-dark-theme {
+  filter: invert(90%) hue-rotate(180deg);
+}
+
+.app-state-focused {
+  background-color: rgb(243, 244, 246);
+}

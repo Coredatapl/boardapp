@@ -1,0 +1,27 @@
+﻿<svg viewBox="0 0 144 24" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient
+      id="gradient-fill"
+      x1="0"
+      y1="0"
+      x2="100%"
+      y2="100%"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop offset="0" stop-color="#3d91fc" />
+      <stop offset="0.5" stop-color="#5478fe" />
+      <stop offset="1" stop-color="#6d5afe" />
+    </linearGradient>
+  </defs>
+  <text fill="url(#gradient-fill)">
+    <tspan
+      font-family="Gilroy, sans-serif"
+      font-size="28px"
+      font-weight="700"
+      x="0"
+      y="20"
+    >
+      Board App
+    </tspan>
+  </text>
+</svg>
