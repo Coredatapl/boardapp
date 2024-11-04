@@ -1,17 +1,19 @@
+import { useState } from 'react';
 import { useGlobalState } from '../utils/useGlobalState';
+import TopbarSpacer from './common/TopbarSpacer';
+import TopbarItem from './common/TopbarItem';
 import ConfigWidget from './widgets/config/ConfigWidget';
 import TodoWidget from './widgets/todo/TodoWidget';
 
 import imgLogoLight from '../assets/img/logo-light.svg';
-import TopbarItem from './common/TopbarItem';
-import TopbarSpacer from './common/TopbarSpacer';
 
 function Topbar() {
   const { globalState } = useGlobalState();
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <nav
-      className="fixed top-0 z-20 h-[100px] w-full pt-4 pb-8 py-3 text-white/80 hover:text-white bg-gradient-to-b from-black/60"
+      className={`fixed top-0 z-20 h-[100px] w-full pt-4 pb-8 py-3 text-white/80 hover:text-white bg-gradient-to-b from-black/60`}
       role="menubar"
     >
       <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
@@ -34,7 +36,7 @@ function Topbar() {
         <div className="flex flex-grow items-center">
           <ul className="flex flex-row list-none ml-auto">
             <TopbarItem>
-              <TodoWidget />
+              <TodoWidget setTopbarOpen={setIsOpen} />
             </TopbarItem>
             <TopbarSpacer />
             <TopbarItem>

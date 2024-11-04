@@ -3,7 +3,7 @@ import { TodoItemData } from './TodoWidget';
 
 export class TodoService {
   readonly nameMinLength = 3;
-  readonly nameMaxLength = 20;
+  readonly nameMaxLength = 30;
   private readonly cacheIdx = 'todo-list';
   private readonly cacheTimeout = 1000 * 60 * 60 * 24 * 30; // 30d
 

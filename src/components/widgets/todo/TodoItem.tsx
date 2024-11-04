@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TodoItemData } from './TodoWidget';
 import { DateTime } from '../../../utils/DateTime';
 import Checkbox from '../../common/Checkbox';
 
 interface TodoItemProps {
-  itemId: number;
+  itemId: string;
   item: TodoItemData;
   updateTotoItem: (i: TodoItemData) => void;
   deleteItem: (i: TodoItemData) => void;
@@ -16,9 +16,8 @@ function TodoItem({ itemId, item, updateTotoItem, deleteItem }: TodoItemProps) {
   const elementId = `todo-item-${itemId}`;
 
   function toggleDone() {
-    item.done = !done;
     setDone(!done);
-    updateTotoItem(item);
+    updateTotoItem({ ...item, done: !done });
   }
 
   function getAddedTime(): string | undefined {
@@ -27,6 +26,11 @@ function TodoItem({ itemId, item, updateTotoItem, deleteItem }: TodoItemProps) {
       return timeAgo;
     }
   }
+
+  useEffect(() => {
+    setDone(item.done);
+    getAddedTime();
+  }, [item]);
 
   return (
     <div

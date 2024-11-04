@@ -11,13 +11,17 @@ import { ModalTypeEnum } from '../../../utils/ModalContext';
 
 import imgSaveIcon from '../../../assets/img/icons/icon-save.svg';
 
+interface TodoWidgetProps {
+  setTopbarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 export interface TodoItemData {
   name: string;
   done: boolean;
   added: string;
 }
 
-export default function TodoWidget() {
+export default function TodoWidget({ setTopbarOpen }: TodoWidgetProps) {
   const { globalState } = useGlobalState();
   const [showWidget, setShowWidget] = useState(false);
   const [todoList, setTodoList] = useState<TodoItemData[]>([]);
@@ -26,11 +30,13 @@ export default function TodoWidget() {
   const { setModalState } = useModal();
   const todoWidgetRef = useRef<HTMLDivElement>(null);
   const todoWidgetLinkRef = useRef<HTMLAnchorElement>(null);
+  const [inputInvalid, setInputInvalid] = useState(false);
   const isActive = globalState.widgetTodoActive;
   const Todos = new TodoService(new CacheApi());
 
   function toggleShowWidget() {
     setShowWidget(!showWidget);
+    setTopbarOpen(!showWidget);
   }
 
   function getListFromCache(): TodoItemData[] {
@@ -39,17 +45,28 @@ export default function TodoWidget() {
     return list;
   }
 
-  function addTotoItem() {
-    const input = document.getElementById(
-      'newTodoNameInput'
-    ) as HTMLInputElement;
-
+  function validateInput(input: HTMLInputElement): boolean {
     const nameLength = input.value.length;
+
+    setInputInvalid(false);
     if (
       !nameLength ||
       nameLength < Todos.nameMinLength ||
       nameLength > Todos.nameMaxLength
     ) {
+      setInputInvalid(true);
+      return false;
+    }
+    return true;
+  }
+
+  function addItem() {
+    const input = document.getElementById(
+      'newTodoNameInput'
+    ) as HTMLInputElement;
+    const valid = validateInput(input);
+
+    if (!valid) {
       setModalState((state) => ({
         ...state,
         type: ModalTypeEnum.prompt,
@@ -60,6 +77,18 @@ export default function TodoWidget() {
     }
 
     const list = getListFromCache();
+    const itemExists = list.findIndex((v) => v.name === input.value) !== -1;
+
+    if (itemExists) {
+      setModalState((state) => ({
+        ...state,
+        type: ModalTypeEnum.prompt,
+        prompt: `The Todo item name already exists.`,
+        showModal: true,
+      }));
+      return;
+    }
+
     list.push({
       name: input.value,
       done: false,
@@ -69,43 +98,59 @@ export default function TodoWidget() {
     input.value = '';
   }
 
-  function updateTotoItem(item: TodoItemData) {
+  function updateItem(item: TodoItemData) {
     const list = getListFromCache();
-    const idx = list.findIndex((i) => i.name === item.name);
-
-    list[idx] = item;
-    updateList(list);
+    const updated = list.map((i) => {
+      if (i.name === item.name) {
+        return { ...item };
+      } else {
+        return i;
+      }
+    });
+    updateList(updated);
   }
 
   function updateList(list: TodoItemData[]) {
-    setTodoList(list);
+    setTodoList([...list]);
     setUndoneCount(list.filter((i) => !i.done).length);
-    Todos.update(list);
+    Todos.update([...list]);
   }
 
   function deleteDoneItems() {
-    const filtered = todoList.filter((i) => !i.done);
-    updateList([...filtered]);
+    const list = getListFromCache();
+    const filtered = list.filter((i) => !i.done);
+    updateList(filtered);
   }
 
   function deleteItem(item: TodoItemData) {
-    const filtered = todoList.filter(
+    const list = getListFromCache();
+    const filtered = list.filter(
       (i) => i.name !== item.name || i.added !== item.added
     );
-    updateList([...filtered]);
+    updateList(filtered);
   }
 
-  function handleClick(event: MouseEvent) {
+  function handleClickOutside(event: MouseEvent) {
+    const inputFocused =
+      document.activeElement ===
+      (document.getElementById('newTodoNameInput') as HTMLInputElement);
     if (
+      inputFocused ||
+      !todoWidgetLinkRef.current ||
+      !todoWidgetRef.current ||
       !event.target ||
-      targetInside(event.target, todoWidgetLinkRef.current as HTMLElement)
+      targetInside(event.target, todoWidgetLinkRef.current)
     ) {
       return;
     }
 
-    if (!targetInside(event.target, todoWidgetRef.current as HTMLElement)) {
+    if (!targetInside(event.target, todoWidgetRef.current)) {
       setShowWidget(false);
     }
+  }
+
+  function handleInputChange(input: HTMLInputElement) {
+    validateInput(input);
   }
 
   useEffect(() => {
@@ -113,9 +158,9 @@ export default function TodoWidget() {
     setUndoneCount(list.filter((i) => !i.done).length);
     setTodoList(list);
 
-    document.addEventListener('click', handleClick, true);
+    document.addEventListener('click', handleClickOutside, true);
     return () => {
-      document.removeEventListener('click', handleClick, true);
+      document.removeEventListener('click', handleClickOutside, true);
     };
   }, []);
 
@@ -142,55 +187,81 @@ export default function TodoWidget() {
 
       <div className="relative left-0" ref={todoWidgetRef}>
         <div
-          className={`z-10 ${
-            !showWidget ? 'hidden' : ''
-          } absolute top-4 right-0 z-10 bg-white/70 rounded-lg shadow-lg w-60 backdrop-blur-sm divide-y divide-gray-100`}
+          className={`${
+            !showWidget
+              ? 'z-0 opacity-0 animate-slideup'
+              : 'z-10 opacity-100 animate-slidedown'
+          } absolute top-4 right-0 w-80 bg-white/70 rounded-lg shadow-lg backdrop-blur-sm transition-opacity duration-100 ease-in divide-y divide-gray-100`}
         >
           <div className="px-4 pt-3">
             <h3 className="pb-3 text-xl font-medium text-gray-900">
               Todo list
             </h3>
+            <button
+              type="button"
+              className="absolute top-3 right-4 p-1 ml-auto rounded-md inline-flex items-center text-sm text-gray-500 bg-transparent hover:text-gray-900"
+              onClick={() => toggleShowWidget()}
+            >
+              <svg
+                aria-hidden="true"
+                className="w-6 h-6 transition-all transform ease-in-out hover:rotate-180"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                ></path>
+              </svg>
+              <span className="sr-only">Close</span>
+            </button>
           </div>
           <div className="px-4 py-3">
             <div className="relative">
               <input
                 id="newTodoNameInput"
                 type="text"
-                className="block w-full p-2 pl-2 text-sm text-gray-900 rounded-md outline-none bg-gray-50  border border-slate-300 invalid:border-red-600 invalid:text-red-600"
+                className={`block w-full p-2 pl-2 text-sm text-gray-900 rounded-md outline-none bg-gray-50  border border-slate-300 ${
+                  inputInvalid ? 'app-input-invalid' : ''
+                }`}
                 placeholder="New item name"
                 minLength={Todos.nameMinLength}
                 maxLength={Todos.nameMaxLength}
                 required
+                onChange={(e) => handleInputChange(e.target)}
               />
               <IconButton
                 iconSrc={imgSaveIcon}
-                onClick={addTotoItem}
+                onClick={addItem}
                 title="Save"
                 alt="Save"
               />
             </div>
+            {todoList.length ? (
+              <ul className="pt-3 overflow-y-auto text-sm text-gray-900">
+                {todoList.map((item, idx) => {
+                  const itemId = `todo-item-${item.name}-${idx}`;
+                  return (
+                    <li key={`todo-item-${idx}`}>
+                      <TodoItem
+                        itemId={itemId}
+                        item={{ ...item }}
+                        updateTotoItem={updateItem}
+                        deleteItem={deleteItem}
+                        key={itemId}
+                      />
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <div className="px-4 py-3 text-sm text-center text-gray-900">
+                No todo items
+              </div>
+            )}
           </div>
-          {todoList.length ? (
-            <ul className="px-3 py-3 overflow-y-auto text-sm text-gray-900">
-              {todoList.map((item, idx) => {
-                return (
-                  <li key={`todo-item-${idx}`}>
-                    <TodoItem
-                      itemId={idx}
-                      item={item}
-                      updateTotoItem={updateTotoItem}
-                      deleteItem={deleteItem}
-                      key={`todo-item-${idx}`}
-                    />
-                  </li>
-                );
-              })}
-            </ul>
-          ) : (
-            <div className="px-4 py-3 text-sm text-center text-gray-900">
-              No todo items
-            </div>
-          )}
 
           <button
             className={`${

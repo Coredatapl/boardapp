@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ShortcutsService } from './ShortcutsService';
 import Shortcut from './Shortcut';
-import AddShortcutModal from './AddShortcutModal';
+import AddShortcutForm from './AddShortcutForm';
 import { CacheApi } from '../../../utils/cache/CacheApi';
 import { useGlobalState } from '../../../utils/useGlobalState';
 import { useModal } from '../../../utils/useModal';
@@ -19,7 +19,6 @@ function ShortcutsWidget() {
   const { globalState } = useGlobalState();
   const { setModalState } = useModal();
   const [shortcuts, setShortcuts] = useState<ShortcutData[]>([]);
-  const [showAddShortcutModal, setShowAddShortcutModal] = useState(false);
   const maxCount = 9;
   const addShortcutModalId = 'add-shortcut-modal';
   const Shortcuts = new ShortcutsService(new CacheApi());
@@ -32,7 +31,7 @@ function ShortcutsWidget() {
     const existingIdx = shortcuts.findIndex((s) => s.url === url);
     if (existingIdx !== -1) {
       shortcuts[existingIdx].name = name;
-      setShowAddShortcutModal(false);
+      hideAddModal();
       return;
     }
     if (shortcuts.length >= maxCount) {
@@ -59,7 +58,7 @@ function ShortcutsWidget() {
       });
       updateShortcuts(shortcuts);
     }
-    setShowAddShortcutModal(false);
+    hideAddModal();
   }
 
   function updateShortcuts(shortcuts: ShortcutData[]) {
@@ -68,7 +67,25 @@ function ShortcutsWidget() {
   }
 
   function showAddModal() {
-    setShowAddShortcutModal(true);
+    setModalState((state) => ({
+      ...state,
+      type: ModalTypeEnum.addShortcut,
+      showModal: true,
+      onRender: () => {
+        return (
+          <AddShortcutForm id={addShortcutModalId} addShortcut={addShortcut} />
+        );
+      },
+    }));
+  }
+
+  function hideAddModal() {
+    setModalState((state) => ({
+      ...state,
+      type: ModalTypeEnum.prompt,
+      prompt: '',
+      showModal: false,
+    }));
   }
 
   function generateName(hostname: string): string {
@@ -100,12 +117,6 @@ function ShortcutsWidget() {
 
   return (
     <>
-      <AddShortcutModal
-        id={addShortcutModalId}
-        showModal={showAddShortcutModal}
-        setShowModal={setShowAddShortcutModal}
-        addShortcut={addShortcut}
-      />
       <div
         className={`relative md:w-6/12 max-w-2xl mx-auto ${
           globalState.widgetShortcutsHidden ?? 'hidden'

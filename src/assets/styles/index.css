@@ -44,6 +44,8 @@
     rgba(1, 6, 13, 1) 0%,
     rgba(22, 28, 59, 1) 100%
   );
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
 .app-font {
@@ -63,6 +65,8 @@
   background-size: cover;
   opacity: 0.9;
   height: 100vh;
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
 .app-wrapper {
@@ -77,4 +81,9 @@
 
 .app-state-focused {
   background-color: rgb(243, 244, 246);
+}
+
+.app-input-invalid {
+  color: rgb(220, 38, 38);
+  border-color: rgb(220, 38, 38);
 }

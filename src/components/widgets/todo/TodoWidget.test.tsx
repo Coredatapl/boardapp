@@ -13,11 +13,15 @@ describe('TodoWidget', () => {
   const setGlobalState = (() => {}) as Dispatch<
     SetStateAction<GlobalStateData>
   >;
+  const setTopbarOpen = (() => {}) as React.Dispatch<
+    React.SetStateAction<boolean>
+  >;
+
   test('render', () => {
     // Arrange
     render(
       <GlobalStateContext.Provider value={{ globalState, setGlobalState }}>
-        <TodoWidget />
+        <TodoWidget setTopbarOpen={setTopbarOpen} />
       </GlobalStateContext.Provider>,
       { wrapper: BrowserRouter }
     );

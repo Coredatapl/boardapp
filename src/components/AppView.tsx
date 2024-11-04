@@ -21,7 +21,9 @@ export default function AppView({ children }: AppViewProps) {
       style={{ backgroundImage: `url('${bgUrl}')` }}
       role="main-container"
     >
-      <div className="flex flex-col min-h-screen app-wrapper">{children}</div>
+      <div className="flex flex-col min-h-screen max-h-screen overflow-hidden overscroll-none app-wrapper">
+        {children}
+      </div>
     </div>
   );
 }

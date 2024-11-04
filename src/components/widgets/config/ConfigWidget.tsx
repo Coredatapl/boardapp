@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { useGlobalState } from '../../../utils/useGlobalState';
 import { ConfigKey, ConfigService } from '../../../utils/ConfigService';
 import { useUtil } from '../../../utils/useUtil';
-import Checkbox from '../../common/Checkbox';
 import IconButton from '../../common/IconButton';
+import Toggle from '../../common/Toggle';
 
 import imgSaveIcon from '../../../assets/img/icons/icon-save.svg';
 
@@ -84,12 +84,34 @@ export default function ConfigWidget() {
 
       <div className="relative left-0" ref={widgetRef}>
         <div
-          className={`z-10${
-            !showWidget ? ' hidden' : ''
-          } absolute top-4 right-0 bg-white/70 text-gray-900 rounded-lg shadow-lg w-60 backdrop-blur-sm divide-y divide-gray-100`}
+          className={`${
+            !showWidget
+              ? 'z-0 opacity-0 animate-slideup'
+              : 'z-10 opacity-100 animate-slidedown'
+          } absolute top-4 right-0 w-80 bg-white/70 text-gray-900 rounded-lg shadow-lg transition-opacity duration-100 ease-in backdrop-blur-sm divide-y divide-gray-100`}
         >
           <div className="px-4 pt-3">
             <h3 className="pb-3 text-xl font-medium">Settings</h3>
+            <button
+              type="button"
+              className="absolute top-3 right-4 p-1 ml-auto rounded-md inline-flex items-center text-sm text-gray-500 bg-transparent hover:text-gray-900"
+              onClick={() => toggleShowWidget()}
+            >
+              <svg
+                aria-hidden="true"
+                className="w-6 h-6 transition-all transform ease-in-out hover:rotate-180"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                ></path>
+              </svg>
+              <span className="sr-only">Close</span>
+            </button>
           </div>
           <div className="px-4 py-3">
             <label className="block mb-2 text-sm font-medium">Your name</label>
@@ -111,8 +133,9 @@ export default function ConfigWidget() {
                 alt="Save"
               />
             </div>
+            <label className="block mt-4 text-sm font-medium">Widgets</label>
             <div className="flex items-center mt-1 pl-2">
-              <Checkbox
+              <Toggle
                 name={'toggleWeatherWidget'}
                 label={'Weather widget active'}
                 defaultValue={globalState.widgetWeatherActive as boolean}
@@ -120,7 +143,7 @@ export default function ConfigWidget() {
               />
             </div>
             <div className="flex items-center mt-1 pl-2">
-              <Checkbox
+              <Toggle
                 name={'toggleDatetimeWidget'}
                 label={'Datetime widget active'}
                 defaultValue={globalState.widgetDatetimeActive as boolean}
@@ -128,7 +151,7 @@ export default function ConfigWidget() {
               />
             </div>
             <div className="flex items-center mt-1 pl-2">
-              <Checkbox
+              <Toggle
                 name={'toggleShortcutsWidget'}
                 label={'Shortcuts widget active'}
                 defaultValue={globalState.widgetShortcutsActive as boolean}
@@ -136,11 +159,20 @@ export default function ConfigWidget() {
               />
             </div>
             <div className="flex items-center mt-1 pl-2">
-              <Checkbox
+              <Toggle
                 name={'toggleMapWidget'}
                 label={'Map widget active'}
                 defaultValue={globalState.widgetMapActive as boolean}
+                disabled={true}
                 onChange={() => toggleWidget(ConfigKey.widgetMapActive)}
+              />
+            </div>
+            <div className="flex items-center mt-1 pl-2">
+              <Toggle
+                name={'toggleTodoWidget'}
+                label={'Todo widget active'}
+                defaultValue={globalState.widgetTodoActive as boolean}
+                onChange={() => toggleWidget(ConfigKey.widgetTodoActive)}
               />
             </div>
           </div>

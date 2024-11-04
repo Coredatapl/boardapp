@@ -1,8 +1,9 @@
-import { Dispatch, SetStateAction, createContext } from 'react';
+import { Dispatch, ReactElement, SetStateAction, createContext } from 'react';
 
 export enum ModalTypeEnum {
   confirm = 'confirm',
   prompt = 'prompt',
+  addShortcut = 'addShortcut',
 }
 
 export interface ModalStateData {
@@ -11,6 +12,7 @@ export interface ModalStateData {
   showModal: boolean;
   onConfirm: () => void;
   onCancel?: () => void;
+  onRender?: () => ReactElement;
 }
 
 export const defaultModalState = {

@@ -93,6 +93,42 @@ module.exports = {
       backgroundSize: {
         full: '100%',
       },
+      aria: {
+        invalid: 'invalid=true',
+      },
+      keyframes: {
+        'slide-down': {
+          '0%': {
+            transform: 'translate3d(0, -100%, 0)',
+          },
+          '100%': {
+            transform: 'translate3d(0, 0, 0)',
+          },
+        },
+        'slide-up': {
+          '0%': {
+            transform: 'translate3d(0, 0, 0)',
+          },
+          '100%': {
+            transform: 'translate3d(0, -100%, 0)',
+          },
+        },
+        'fade-in-down': {
+          '0%': {
+            opacity: 0,
+            transform: 'translate3d(0, -100%, 0)',
+          },
+          '100%': {
+            opacity: 1,
+            transform: 'translate3d(0, 0, 0)',
+          },
+        },
+      },
+      animation: {
+        slidedown: 'slide-down 0.2s ease-in',
+        slideup: 'slide-up 0.2s ease-in',
+        fadeindown: 'fade-in-down 0.2s ease-in',
+      },
       // v3.x migration
       colors: {
         current: 'currentColor',

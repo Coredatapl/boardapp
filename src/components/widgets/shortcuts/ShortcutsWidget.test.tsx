@@ -7,17 +7,27 @@ import {
   GlobalStateData,
   defaultGlobalState,
 } from '../../../utils/GlobalStateContext';
+import {
+  ModalStateContext,
+  ModalStateData,
+  defaultModalState,
+} from '../../../utils/ModalContext';
 
 describe('ShortcutsWidget', () => {
   const globalState = defaultGlobalState;
   const setGlobalState = (() => {}) as Dispatch<
     SetStateAction<GlobalStateData>
   >;
+  const modalState = defaultModalState;
+  const setModalState = (() => {}) as Dispatch<SetStateAction<ModalStateData>>;
+
   test('render', () => {
     // Arrange
     render(
       <GlobalStateContext.Provider value={{ globalState, setGlobalState }}>
-        <ShortcutsWidget />
+        <ModalStateContext.Provider value={{ modalState, setModalState }}>
+          <ShortcutsWidget />
+        </ModalStateContext.Provider>
       </GlobalStateContext.Provider>,
       { wrapper: BrowserRouter }
     );
