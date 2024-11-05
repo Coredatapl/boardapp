@@ -8,7 +8,7 @@ export interface GlobalStateData extends ConfigData {
 const Config = ConfigService.getInstance();
 
 export const defaultGlobalState = Config.get() as GlobalStateData;
-defaultGlobalState.widgetShortcutsHidden = true;
+defaultGlobalState.widgetShortcutsHidden = false;
 
 export const GlobalStateContext = createContext({
   globalState: {} as GlobalStateData,

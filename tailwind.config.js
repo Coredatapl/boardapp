@@ -113,6 +113,14 @@ module.exports = {
             transform: 'translate3d(0, -100%, 0)',
           },
         },
+        'fade-in': {
+          '0%': {
+            opacity: 0,
+          },
+          '100%': {
+            opacity: 1,
+          },
+        },
         'fade-in-down': {
           '0%': {
             opacity: 0,
@@ -123,11 +131,24 @@ module.exports = {
             transform: 'translate3d(0, 0, 0)',
           },
         },
+        'fade-out': {
+          '0%': {
+            opacity: 1,
+          },
+          '100%': {
+            opacity: 0,
+          },
+        },
       },
       animation: {
         slidedown: 'slide-down 0.2s ease-in',
         slideup: 'slide-up 0.2s ease-in',
-        fadeindown: 'fade-in-down 0.2s ease-in',
+        fadein: 'fade-in 0.3s ease-in',
+        fadeindown: 'fade-in-down 0.3s ease-in',
+        fadeout: 'fade-out 0.3s ease-in',
+      },
+      transitionProperty: {
+        maxheight: 'max-height',
       },
       // v3.x migration
       colors: {

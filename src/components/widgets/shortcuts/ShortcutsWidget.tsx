@@ -118,11 +118,13 @@ function ShortcutsWidget() {
   return (
     <>
       <div
-        className={`relative md:w-6/12 max-w-2xl mx-auto ${
-          globalState.widgetShortcutsHidden ?? 'hidden'
+        className={`relative md:w-6/12 max-w-2xl mx-auto transition-opacity duration-100 ease-in-out ${
+          globalState.widgetShortcutsHidden
+            ? 'animate-fadeout hidden'
+            : 'animate-fadein'
         }`}
       >
-        <div className="container md:px-4 pb-2 my-4">
+        <div className="container pb-2 my-4">
           <div className="grid grid-cols-4 lg:grid-cols-5 gap-2 lg:gap-x-6 items-center justify-center">
             <div className="flex justify-center relative">
               <button
