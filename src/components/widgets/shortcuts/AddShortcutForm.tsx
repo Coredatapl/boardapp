@@ -91,7 +91,7 @@ export default function AddShortcutForm({
         <Button
           type="submit"
           title="Add Shortcut"
-          style="text-white bg-blue-700 hover:bg-blue-600 active:bg-blue-700"
+          style="text-gray-500 bg-gray-100 hover:text-gray-700 hover:bg-gray-200 active:bg-gray-100 active:shadow-none"
         />
       </div>
     </form>

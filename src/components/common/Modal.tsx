@@ -88,13 +88,13 @@ export default function Modal() {
                     type="button"
                     title="Confirm"
                     onClick={handleConfirm}
-                    style="text-white bg-green-700 hover:bg-green-600 active:bg-green-600"
+                    style="text-white bg-green-700 hover:bg-green-600 active:bg-green-600 active:shadow-none"
                   />
                   <Button
                     type="button"
                     title="Cancel"
                     onClick={handleCancel}
-                    style="text-red-500 bg-gray-700 hover:bg-gray-600 active:bg-gray-600"
+                    style="text-gray-500 bg-gray-100 hover:text-red-700 hover:bg-gray-200 active:bg-gray-100 active:shadow-none"
                   />
                 </div>
               </form>
@@ -109,7 +109,7 @@ export default function Modal() {
                     type="button"
                     title="Ok"
                     onClick={() => setShowModal(false)}
-                    style="text-white bg-blue-700 hover:bg-blue-600 active:bg-blue-700"
+                    style="text-gray-500 bg-gray-100 hover:text-gray-700 hover:bg-gray-200 active:bg-gray-100 active:shadow-none"
                   />
                 </div>
               </form>

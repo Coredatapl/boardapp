@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { KeyboardEvent } from 'react';
 import { CacheApi } from '../../../utils/cache/CacheApi';
-import { useUtil } from '../../../utils/useUtil';
 import { useGlobalState } from '../../../utils/useGlobalState';
 import Button from '../../common/Button';
 import SearchEngineSelector from './SearchEngineSelector';
@@ -16,7 +15,6 @@ export default function SearchBar() {
   const [query, setQuery] = useState('');
   const [placeHolder, setPlaceHolder] = useState('Search the web...');
   const [searchEngine, setSearchEngine] = useState(SearchEngineEnum.Google);
-  const { targetInside } = useUtil();
   const searchBarRef = useRef<HTMLDivElement>(null);
   const searchService = new SearchService(new CacheApi());
   const minQueryLength = searchService.minQueryLength;
@@ -164,7 +162,7 @@ export default function SearchBar() {
       </div>
 
       <div
-        className={`relative flex w-full rounded-b-lg shadow-lg overflow-hidden items-center bg-white/70 text-gray-800 app-state-focused transition-maxheight duration-100 ease-in-out ${
+        className={`relative flex w-full rounded-b-lg shadow-xl overflow-hidden items-center bg-white/70 text-gray-800 app-state-focused transition-maxheight duration-100 ease-in-out ${
           focused || showQueryHistory ? 'max-h-screen z-10' : 'max-h-0 z-0'
         }`}
       >
@@ -173,13 +171,13 @@ export default function SearchBar() {
             title="Search"
             type="button"
             onClick={submitQuery}
-            style="md:w-3/12 border border-gray-200 font-semibold shadow-none text-gray-500 bg-gray-100 hover:text-gray-700 hover:bg-gray-200 active:bg-gray-200"
+            style="md:w-3/12 border border-gray-200 font-semibold shadow-none text-gray-500 bg-gray-100 hover:text-gray-700 hover:bg-gray-200 active:bg-gray-200 active:shadow-none"
           />
           <Button
             type="button"
             title="Cancel"
             onClick={cancelQuery}
-            style="md:w-3/12 border border-gray-200 font-semibold shadow-none text-gray-500 bg-gray-100 hover:text-red-700 hover:bg-gray-200 active:bg-gray-200"
+            style="md:w-3/12 border border-gray-200 font-semibold shadow-none text-gray-500 bg-gray-100 hover:text-red-700 hover:bg-gray-200 active:bg-gray-200 active:shadow-none"
           />
         </div>
       </div>

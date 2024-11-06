@@ -1,11 +1,8 @@
-import ReactDOM from 'react-dom';
-
 export const targetInside = (
   target: EventTarget,
   element: HTMLElement
 ): boolean => {
-  const node = ReactDOM.findDOMNode(element);
-  return element && node !== null && node.contains(target as Node);
+  return element && element.contains(target as Node);
 };
 
 export const matchByWords = (
