@@ -1,34 +1,54 @@
 import { useEffect, useState, KeyboardEvent } from 'react';
 import { DateTime } from '../../utils/DateTime';
-import { useGlobalState } from '../../utils/useGlobalState';
+import { useGlobalState } from '../../hooks/useGlobalState';
+import { useLoading } from '../../hooks/useLoading';
+import { useModal } from '../../hooks/useModal';
 import { ConfigKey, ConfigService } from '../../utils/ConfigService';
+import { ModalTypeEnum } from '../../utils/ModalContext';
+import Loading from '../common/Loading';
 import Button from '../common/Button';
 
 import imgLogoColor from '../../assets/img/logo-color.svg';
 
 export default function WelcomeWidget() {
   const { globalState, setGlobalState } = useGlobalState();
+  const { loading } = useLoading();
+  const { setModalState } = useModal();
   const [welcomeMessage, setWelcomeMessage] = useState('Welcome');
   const [welcomeName, setWelcomeName] = useState('');
-  const [fadeIn, setFadeIn] = useState(false);
-  const [fadeInNext, setFadeInNext] = useState(false);
+  const [showFirstStep, setShowFirstStep] = useState(false);
+  const [showNextStep, setShowNextStep] = useState(false);
   const dayTime = DateTime.getDayTime();
-  const minWelcomeNameLength = 3;
   const Config = ConfigService.getInstance();
+  const welcomeNameMinLength = Config.getValue<number>(
+    ConfigKey.welcomeNameMinLength
+  );
+  const welcomeNameMaxLength = Config.getValue<number>(
+    ConfigKey.welcomeNameMaxLength
+  );
 
   function saveWelcomeName() {
-    const name = (
-      document.getElementById('welcomeNameInput') as HTMLInputElement
-    ).value;
+    if (
+      welcomeName.length < welcomeNameMinLength ||
+      welcomeName.length > welcomeNameMaxLength
+    ) {
+      setModalState((state) => ({
+        ...state,
+        type: ModalTypeEnum.prompt,
+        prompt: `The name should be a min of ${welcomeNameMinLength} and a max of ${welcomeNameMaxLength} characters.`,
+        showModal: true,
+      }));
+      return;
+    }
 
-    Config.set(ConfigKey.welcomeName, name);
+    Config.set(ConfigKey.welcomeName, welcomeName);
     Config.set(ConfigKey.firstRun, false);
 
     setGlobalState((state) => ({
       ...state,
-      welcomeName: name,
+      welcomeName,
     }));
-    setFadeInNext(true);
+    goNext();
   }
 
   function setMessage() {
@@ -39,44 +59,70 @@ export default function WelcomeWidget() {
   function handleKeyDown(e: KeyboardEvent) {
     const key = e.key;
 
-    if (welcomeName.length < minWelcomeNameLength) {
-      // warning info
-      return;
-    }
-
     if (key === 'Enter') {
       saveWelcomeName();
     }
   }
 
+  function goNext() {
+    setShowFirstStep(false);
+    setShowNextStep(true);
+  }
+
+  function goBack() {
+    setShowNextStep(false);
+    setShowFirstStep(true);
+  }
+
   function getStarted() {
-    setGlobalState((state) => ({
-      ...state,
-      firstRun: false,
-    }));
-    setFadeInNext(false);
+    setShowNextStep(false);
+    setTimeout(() => {
+      setGlobalState((state) => ({
+        ...state,
+        firstRun: false,
+      }));
+      window.location.reload();
+    }, 500);
   }
 
   useEffect(() => {
     if (globalState.firstRun) {
-      window.addEventListener('load', () => setFadeIn(true));
+      setTimeout(() => {
+        setShowFirstStep(true);
+      }, 1000);
     } else {
       setMessage();
     }
+  }, []);
+
+  useEffect(() => {
+    setMessage();
   }, [globalState]);
 
   if (globalState.firstRun) {
+    if (loading) {
+      return (
+        <div
+          className={
+            'absolute z-40 w-full h-full mx-auto inset-0 overflow-x-hidden overflow-y-auto text-gray-800 bg-gray-100'
+          }
+        >
+          <Loading />
+        </div>
+      );
+    }
+
     return (
       <div
         className={
-          'absolute z-40 w-full h-full mx-auto p-4 inset-0 overflow-x-hidden overflow-y-auto text-gray-800 bg-gray-100'
+          'absolute z-40 w-full h-full mx-auto inset-0 overflow-hidden text-gray-800 bg-gray-100'
         }
       >
         <div className="relative w-full h-full">
           <div
             className={
-              'relative min-w-full h-screen p-4 flex justify-center items-center text-center transition-all ease-in-out duration-500 ' +
-              (fadeIn ? 'opacity-100' : 'opacity-0')
+              'relative min-w-full h-screen max-h-screen flex justify-center items-center text-center transition-all ease-in-out duration-500 ' +
+              (showFirstStep || showNextStep ? 'opacity-100' : 'opacity-0')
             }
           >
             <div className="absolute top-[calc(40%-100px)] m-auto mb-4 py-4">
@@ -91,7 +137,7 @@ export default function WelcomeWidget() {
             <div
               className={
                 'absolute top-[calc(40%)] mx-auto min-h-280-px transition-all ease-in-out duration-500 ' +
-                (!fadeInNext ? 'opacity-100' : 'opacity-0')
+                (!showNextStep ? 'opacity-100' : 'opacity-0')
               }
             >
               <h1 className="w-full text-xl md:text-2xl">Hello!</h1>
@@ -108,21 +154,38 @@ export default function WelcomeWidget() {
                   id="welcomeNameInput"
                   placeholder={`What's your name?`}
                   value={welcomeName}
-                  minLength={minWelcomeNameLength}
+                  minLength={welcomeNameMinLength}
+                  maxLength={welcomeNameMaxLength}
                   onChange={(e) => setWelcomeName(e.target.value)}
                   onKeyDown={(e) => handleKeyDown(e)}
                 />
               </div>
+              <p className="mt-2 mb-4 text-sm text-gray-500">
+                <i
+                  className="fa fa-lightbulb text-lg mr-2 text-yellow-400"
+                  aria-hidden="true"
+                ></i>{' '}
+                The name will be used to greet you everyday so you can choose
+                something creative like <i>Boss</i> :)
+              </p>
               <div className="flex justify-center pt-6">
-                <p className="text-xs text-gray-500">
-                  Press <b>Enter</b> to proceed.
+                <p className="py-2 text-xs text-gray-500">
+                  Press <b>Enter</b> or click the button to proceed.
                 </p>
+              </div>
+              <div className="relative flex z-10 justify-center">
+                <Button
+                  type="button"
+                  title="Save"
+                  style="text-white bg-green-700 hover:bg-green-600 active:bg-green-600"
+                  onClick={() => saveWelcomeName()}
+                />
               </div>
             </div>
             <div
               className={
-                'absolute top-[calc(40%)] mx-auto min-h-280-px transition-all ease-in-out duration-500 ' +
-                (fadeInNext ? 'opacity-100' : 'opacity-0')
+                'absolute top-[calc(40%)] w-10/12 min-h-280-px mx-auto transition-all ease-in-out duration-500 ' +
+                (showNextStep ? 'opacity-100' : 'opacity-0')
               }
             >
               <h2 className="w-full text-base md:text-lg">
@@ -133,12 +196,18 @@ export default function WelcomeWidget() {
                 The application does not collect any personal data. Your data is
                 only available locally in your browser.
               </h2>
-              <div className="flex justify-center">
+              <div className="flex gap-4 mx-10 justify-center">
                 <Button
                   type="button"
                   title="Agree and get started!"
-                  style="text-white bg-green-700 hover:bg-green-600 active:bg-green-600"
+                  style="w-3/12 text-white bg-green-700 hover:bg-green-600 active:bg-green-600"
                   onClick={getStarted}
+                />
+                <Button
+                  type="button"
+                  title="Back"
+                  onClick={goBack}
+                  style="w-3/12 text-gray-500 bg-gray-100 hover:text-red-700 hover:bg-gray-200 active:bg-gray-100 active:shadow-none"
                 />
               </div>
             </div>

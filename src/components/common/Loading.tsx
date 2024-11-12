@@ -5,7 +5,7 @@ export default function Loading() {
     <div className="flex flex-col min-h-screen app-wrapper">
       <div className="flex flex-col items-center justify-center grow text-gray-600 bg-gray-100">
         <div className="flex flex-row mb-4">
-          <img src={imgLogo} alt="Board App." width={150} height={25} />
+          <img src={imgLogo} alt="Board App" width={150} height={25} />
         </div>
         <div className="flex flex-row items-center justify-center text-lg font-semibold">
           <svg

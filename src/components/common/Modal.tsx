@@ -1,5 +1,5 @@
 import Button from './Button';
-import { useModal } from '../../utils/useModal';
+import { useModal } from '../../hooks/useModal';
 import { ModalTypeEnum } from '../../utils/ModalContext';
 
 export default function Modal() {

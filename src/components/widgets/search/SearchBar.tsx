@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { KeyboardEvent } from 'react';
 import { CacheApi } from '../../../utils/cache/CacheApi';
-import { useGlobalState } from '../../../utils/useGlobalState';
+import { useGlobalState } from '../../../hooks/useGlobalState';
 import Button from '../../common/Button';
 import SearchEngineSelector from './SearchEngineSelector';
 import QueryHistoryListItem from './QueryHistoryListItem';
@@ -146,7 +146,7 @@ export default function SearchBar() {
 
       <div
         className={`relative flex w-full overflow-hidden items-center bg-white/70 text-gray-800 app-state-focused transition-maxheight duration-500 ease-in-out ${
-          showQueryHistory ? 'max-h-screen z-10' : 'max-h-0 z-0'
+          showQueryHistory ? 'max-h-screen z-3' : 'max-h-0 z-0'
         }`}
       >
         <ul className={`relative list-none w-full`}>
@@ -163,7 +163,7 @@ export default function SearchBar() {
 
       <div
         className={`relative flex w-full rounded-b-lg shadow-xl overflow-hidden items-center bg-white/70 text-gray-800 app-state-focused transition-maxheight duration-100 ease-in-out ${
-          focused || showQueryHistory ? 'max-h-screen z-10' : 'max-h-0 z-0'
+          focused || showQueryHistory ? 'max-h-screen z-3' : 'max-h-0 z-0'
         }`}
       >
         <div className="relative flex w-full gap-4 p-2 justify-center">

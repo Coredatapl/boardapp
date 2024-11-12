@@ -9,7 +9,7 @@ import {
   GlobalStateData,
   defaultGlobalState,
 } from '../../../utils/GlobalStateContext';
-import { useGlobalState } from '../../../utils/useGlobalState';
+import { useGlobalState } from '../../../hooks/useGlobalState';
 
 describe('ConfigWidget', () => {
   const globalState = defaultGlobalState;

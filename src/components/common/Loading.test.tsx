@@ -7,7 +7,7 @@ describe('Loading', () => {
     // Arrange
     // Act
     render(<Loading />, { wrapper: BrowserRouter });
-    const logo = screen.getByAltText('Board App.');
+    const logo = screen.getByAltText('Board App');
     const loadingText = screen.getByText('Loading ...');
 
     // Assert

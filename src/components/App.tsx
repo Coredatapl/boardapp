@@ -3,6 +3,9 @@ import {
   GlobalStateContext,
   defaultGlobalState,
 } from '../utils/GlobalStateContext';
+import { ModalStateContext, defaultModalState } from '../utils/ModalContext';
+import Modal from './common/Modal';
+import Loading from './common/Loading';
 import AppView from './AppView';
 import Footer from './Footer';
 import Topbar from './Topbar';
@@ -13,9 +16,6 @@ import DateTimeWidget from './widgets/DateTimeWidget';
 import WelcomeWidget from './widgets/WelcomeWidget';
 import ShortcutsWidget from './widgets/shortcuts/ShortcutsWidget';
 import MapWidget from './widgets/MapWidget';
-import Modal from './common/Modal';
-import { ModalStateContext, defaultModalState } from '../utils/ModalContext';
-import Loading from './common/Loading';
 
 export default function App() {
   const [globalState, setGlobalState] = useState(defaultGlobalState);

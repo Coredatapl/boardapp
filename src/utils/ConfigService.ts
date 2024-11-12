@@ -3,6 +3,8 @@ import { CacheApi } from './cache/CacheApi';
 export enum ConfigKey {
   appName = 'appName',
   welcomeName = 'welcomeName',
+  welcomeNameMinLength = 'welcomeNameMinLength',
+  welcomeNameMaxLength = 'welcomeNameMaxLength',
   firstRun = 'firstRun',
   widgetWeatherActive = 'widgetWeatherActive',
   widgetDatetimeActive = 'widgetDatetimeActive',
@@ -30,6 +32,8 @@ export class ConfigService {
   private config: ConfigData = {
     appName: 'Board App',
     welcomeName: 'to Board App',
+    welcomeNameMinLength: 3,
+    welcomeNameMaxLength: 30,
     firstRun: true,
     widgetWeatherActive: true,
     widgetDatetimeActive: true,
@@ -59,6 +63,10 @@ export class ConfigService {
 
   get(key?: ConfigKey): ConfigData | ConfigValue {
     return key ? this.config[key] : this.config;
+  }
+
+  getValue<T>(key: ConfigKey): T {
+    return this.config[key] as T;
   }
 
   set(key: ConfigKey, value: ConfigValue): void {

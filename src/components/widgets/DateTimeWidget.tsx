@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useGlobalState } from '../../utils/useGlobalState';
+import { useGlobalState } from '../../hooks/useGlobalState';
 
 function DateTimeWidget() {
   const { globalState } = useGlobalState();

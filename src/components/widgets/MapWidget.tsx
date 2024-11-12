@@ -3,8 +3,8 @@ import {
   TrafficLayer,
   useJsApiLoader,
 } from '@react-google-maps/api';
-import { useGlobalState } from '../../utils/useGlobalState';
-import { useGeolocation } from '../../utils/useGeolocation';
+import { useGlobalState } from '../../hooks/useGlobalState';
+import { useGeolocation } from '../../hooks/useGeolocation';
 
 export default function MapWidget() {
   const { globalState } = useGlobalState();

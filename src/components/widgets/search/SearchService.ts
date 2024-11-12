@@ -4,6 +4,7 @@ import { matchByWords } from '../../../utils/common';
 export enum SearchEngineEnum {
   Google = 'Google',
   Bing = 'Bing',
+  DuckDuckGo = 'DuckDuckGo',
 }
 
 export class SearchService {
@@ -14,6 +15,7 @@ export class SearchService {
   private readonly searchUrls: Record<SearchEngineEnum, string> = {
     Google: 'https://www.google.com/search?q=',
     Bing: 'https://www.bing.com/search?q=',
+    DuckDuckGo: 'https://duckduckgo.com/?q=',
   };
 
   constructor(private readonly Cache: CacheApi) {}

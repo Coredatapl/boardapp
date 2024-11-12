@@ -1,4 +1,4 @@
-import { useGlobalState } from '../utils/useGlobalState';
+import { useGlobalState } from '../hooks/useGlobalState';
 
 interface FooterProps {
   children?: any;

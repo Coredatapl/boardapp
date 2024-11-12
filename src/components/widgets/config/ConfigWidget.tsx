@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useGlobalState } from '../../../utils/useGlobalState';
+import { useGlobalState } from '../../../hooks/useGlobalState';
+import { useModal } from '../../../hooks/useModal';
+import { useUtil } from '../../../hooks/useUtil';
 import { ConfigKey, ConfigService } from '../../../utils/ConfigService';
-import { useUtil } from '../../../utils/useUtil';
+import { ModalTypeEnum } from '../../../utils/ModalContext';
 import IconButton from '../../common/IconButton';
 import Toggle from '../../common/Toggle';
 
@@ -12,9 +14,16 @@ export default function ConfigWidget() {
   const { globalState, setGlobalState } = useGlobalState();
   const [showWidget, setShowWidget] = useState(false);
   const { targetInside } = useUtil();
+  const { setModalState } = useModal();
   const widgetRef = useRef<HTMLDivElement>(null);
   const widgetLinkRef = useRef<HTMLAnchorElement>(null);
   const Config = ConfigService.getInstance();
+  const welcomeNameMinLength = Config.getValue<number>(
+    ConfigKey.welcomeNameMinLength
+  );
+  const welcomeNameMaxLength = Config.getValue<number>(
+    ConfigKey.welcomeNameMaxLength
+  );
 
   function toggleShowWidget() {
     setShowWidget(!showWidget);
@@ -24,16 +33,27 @@ export default function ConfigWidget() {
     const input = document.getElementById(
       'setWelcomeNameInput'
     ) as HTMLInputElement;
+    const welcomeName = input.value;
 
-    if (!input.value.length) {
+    if (
+      welcomeName.length < welcomeNameMinLength ||
+      welcomeName.length > welcomeNameMaxLength
+    ) {
+      setModalState((state) => ({
+        ...state,
+        type: ModalTypeEnum.prompt,
+        prompt: `The name should be a min of ${welcomeNameMinLength} and a max of ${welcomeNameMaxLength} characters.`,
+        showModal: true,
+      }));
+      input.value = globalState.welcomeName as string;
       return;
     }
 
-    Config.set(ConfigKey.welcomeName, input.value);
+    Config.set(ConfigKey.welcomeName, welcomeName);
 
     setGlobalState((state) => ({
       ...state,
-      [ConfigKey.welcomeName]: input.value,
+      [ConfigKey.welcomeName]: welcomeName,
     }));
   }
 
@@ -70,6 +90,8 @@ export default function ConfigWidget() {
     };
   }, []);
 
+  useEffect(() => {}, [globalState]);
+
   return (
     <>
       <Link
@@ -85,9 +107,7 @@ export default function ConfigWidget() {
       <div className="relative left-0" ref={widgetRef}>
         <div
           className={`${
-            !showWidget
-              ? 'z-0 opacity-0 animate-slideup'
-              : 'z-10 opacity-100 animate-slidedown'
+            !showWidget ? 'hidden' : 'z-30 opacity-100 animate-slidedown'
           } absolute top-4 right-0 w-80 bg-white/70 text-gray-900 rounded-lg shadow-lg transition-opacity duration-100 ease-in backdrop-blur-sm divide-y divide-gray-100`}
         >
           <div className="px-4 pt-3">
@@ -122,8 +142,8 @@ export default function ConfigWidget() {
                 defaultValue={globalState.welcomeName as string}
                 className="block w-full p-2 pl-2 text-sm rounded-md outline-none bg-gray-50 border border-gray-200"
                 placeholder="Set your name"
-                minLength={3}
-                maxLength={20}
+                minLength={welcomeNameMinLength}
+                maxLength={welcomeNameMaxLength}
                 required
               />
               <IconButton

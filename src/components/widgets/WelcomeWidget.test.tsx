@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import {
   GlobalStateContext,
   GlobalStateData,
@@ -14,7 +14,7 @@ describe('WelcomeWidget', () => {
     SetStateAction<GlobalStateData>
   >;
 
-  test('render first run', () => {
+  test('render first run', async () => {
     // Arrange
     // Act
     render(
@@ -25,11 +25,12 @@ describe('WelcomeWidget', () => {
       </GlobalStateContext.Provider>
     );
     const logo = screen.getByAltText(globalState.appName as string);
-    const helloHeader = screen.getByText('Hello!');
 
     // Assert
     expect(logo).toBeInTheDocument();
-    expect(helloHeader).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText('Hello!')).toBeInTheDocument();
+    });
   });
 
   test('render', () => {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useGlobalState } from '../utils/useGlobalState';
+import { useGlobalState } from '../hooks/useGlobalState';
 import TopbarSpacer from './common/TopbarSpacer';
 import TopbarItem from './common/TopbarItem';
 import ConfigWidget from './widgets/config/ConfigWidget';

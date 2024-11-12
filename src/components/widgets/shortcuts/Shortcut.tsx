@@ -1,7 +1,7 @@
 import { useState, MouseEvent, useEffect } from 'react';
 import { ShortcutData } from './ShortcutsWidget';
-import { useGlobalState } from '../../../utils/useGlobalState';
-import { useModal } from '../../../utils/useModal';
+import { useGlobalState } from '../../../hooks/useGlobalState';
+import { useModal } from '../../../hooks/useModal';
 import { ModalTypeEnum } from '../../../utils/ModalContext';
 import FetchApi from '../../../utils/fetch/FetchApi';
 

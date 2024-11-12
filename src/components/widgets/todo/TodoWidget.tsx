@@ -4,9 +4,9 @@ import TodoItem from './TodoItem';
 import IconButton from '../../common/IconButton';
 import { TodoService } from './TodoService';
 import { CacheApi } from '../../../utils/cache/CacheApi';
-import { useGlobalState } from '../../../utils/useGlobalState';
-import { useUtil } from '../../../utils/useUtil';
-import { useModal } from '../../../utils/useModal';
+import { useGlobalState } from '../../../hooks/useGlobalState';
+import { useUtil } from '../../../hooks/useUtil';
+import { useModal } from '../../../hooks/useModal';
 import { ModalTypeEnum } from '../../../utils/ModalContext';
 
 import imgSaveIcon from '../../../assets/img/icons/icon-save.svg';
@@ -188,9 +188,7 @@ export default function TodoWidget({ setTopbarOpen }: TodoWidgetProps) {
       <div className="relative left-0" ref={todoWidgetRef}>
         <div
           className={`${
-            !showWidget
-              ? 'z-0 opacity-0 animate-slideup'
-              : 'z-10 opacity-100 animate-slidedown'
+            !showWidget ? 'hidden' : 'z-30 opacity-100 animate-slidedown'
           } absolute top-4 right-0 w-80 bg-white/70 rounded-lg shadow-lg backdrop-blur-sm transition-opacity duration-100 ease-in divide-y divide-gray-100`}
         >
           <div className="px-4 pt-3">

@@ -3,8 +3,8 @@ import { ShortcutsService } from './ShortcutsService';
 import Shortcut from './Shortcut';
 import AddShortcutForm from './AddShortcutForm';
 import { CacheApi } from '../../../utils/cache/CacheApi';
-import { useGlobalState } from '../../../utils/useGlobalState';
-import { useModal } from '../../../utils/useModal';
+import { useGlobalState } from '../../../hooks/useGlobalState';
+import { useModal } from '../../../hooks/useModal';
 import { ModalTypeEnum } from '../../../utils/ModalContext';
 
 import imgAddIcon from '../../../assets/img/icons/icon-plus-circle.svg';

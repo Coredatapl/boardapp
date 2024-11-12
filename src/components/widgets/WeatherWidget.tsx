@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ConfigService, ConfigKey } from '../../utils/ConfigService';
-import { useGlobalState } from '../../utils/useGlobalState';
+import { useGlobalState } from '../../hooks/useGlobalState';
 
 interface MainData {
   temp: number;
