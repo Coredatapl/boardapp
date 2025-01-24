@@ -18,6 +18,8 @@ export enum ConfigKey {
   geolocationLat = 'geolocationLat',
   geolocationLon = 'geolocationLon',
   localBg = 'localBg',
+  contactEmail = 'contactEmail',
+  notificationsActive = 'notificationsActive',
 }
 
 export type ConfigValue = string | number | boolean;
@@ -47,6 +49,8 @@ export class ConfigService {
     geolocationLat: 0,
     geolocationLon: 0,
     localBg: process.env.REACT_APP_LOCAL_BACKGROUND === 'false' ? false : true,
+    contactEmail: '',
+    notificationsActive: false,
   };
 
   constructor(private readonly Cache: CacheApi) {

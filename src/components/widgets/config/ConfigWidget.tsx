@@ -3,7 +3,11 @@ import { Link } from 'react-router-dom';
 import { useGlobalState } from '../../../hooks/useGlobalState';
 import { useModal } from '../../../hooks/useModal';
 import { useUtil } from '../../../hooks/useUtil';
-import { ConfigKey, ConfigService } from '../../../utils/ConfigService';
+import {
+  ConfigKey,
+  ConfigService,
+  ConfigValue,
+} from '../../../utils/ConfigService';
 import { ModalTypeEnum } from '../../../utils/ModalContext';
 import IconButton from '../../common/IconButton';
 import Toggle from '../../common/Toggle';
@@ -29,6 +33,15 @@ export default function ConfigWidget() {
     setShowWidget(!showWidget);
   }
 
+  function setConfigValue(key: ConfigKey, value: ConfigValue) {
+    Config.set(key, value);
+
+    setGlobalState((state) => ({
+      ...state,
+      [key]: value,
+    }));
+  }
+
   function setWelcomeName() {
     const input = document.getElementById(
       'setWelcomeNameInput'
@@ -49,15 +62,35 @@ export default function ConfigWidget() {
       return;
     }
 
-    Config.set(ConfigKey.welcomeName, welcomeName);
-
-    setGlobalState((state) => ({
-      ...state,
-      [ConfigKey.welcomeName]: welcomeName,
-    }));
+    setConfigValue(ConfigKey.welcomeName, welcomeName);
   }
 
-  function toggleWidget(index: ConfigKey) {
+  function setContactEmail() {
+    const input = document.getElementById(
+      'setContactEmailInput'
+    ) as HTMLInputElement;
+    const contactEmail = input.value;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!contactEmail || !emailPattern.test(contactEmail)) {
+      setModalState((state) => ({
+        ...state,
+        type: ModalTypeEnum.prompt,
+        prompt: 'Please enter a valid email address.',
+        showModal: true,
+      }));
+      input.value = '';
+      return;
+    }
+
+    setConfigValue(ConfigKey.contactEmail, contactEmail);
+
+    if (!globalState.notificationsActive) {
+      toggleSetting(ConfigKey.notificationsActive);
+    }
+  }
+
+  function toggleSetting(index: ConfigKey) {
     const active = globalState[index] as boolean;
 
     Config.set(index, !active);
@@ -140,7 +173,7 @@ export default function ConfigWidget() {
                 id="setWelcomeNameInput"
                 type="text"
                 defaultValue={globalState.welcomeName as string}
-                className="block w-full p-2 pl-2 text-sm rounded-md outline-none bg-gray-50 border border-gray-200"
+                className="block w-full p-2 pl-2 text-sm rounded-md outline-none bg-gray-50 border border-gray-400"
                 placeholder="Set your name"
                 minLength={welcomeNameMinLength}
                 maxLength={welcomeNameMaxLength}
@@ -153,13 +186,40 @@ export default function ConfigWidget() {
                 alt="Save"
               />
             </div>
+            <label className="block my-2 text-sm font-medium">
+              Your email address
+            </label>
+            <div className="relative">
+              <input
+                id="setContactEmailInput"
+                type="email"
+                defaultValue={globalState.contactEmail as string}
+                className="block w-full p-2 pl-2 text-sm rounded-md outline-none bg-gray-50 border border-gray-400"
+                placeholder="Set your email address"
+                required
+              />
+              <IconButton
+                iconSrc={imgSaveIcon}
+                onClick={() => setContactEmail()}
+                title="Save"
+                alt="Save"
+              />
+            </div>
+            <div className="flex items-center mt-1 pl-2">
+              <Toggle
+                name={'toggleNotifications'}
+                label={'Email notifications'}
+                defaultValue={globalState.notificationsActive as boolean}
+                onChange={() => toggleSetting(ConfigKey.notificationsActive)}
+              />
+            </div>
             <label className="block mt-4 text-sm font-medium">Widgets</label>
             <div className="flex items-center mt-1 pl-2">
               <Toggle
                 name={'toggleWeatherWidget'}
                 label={'Weather widget active'}
                 defaultValue={globalState.widgetWeatherActive as boolean}
-                onChange={() => toggleWidget(ConfigKey.widgetWeatherActive)}
+                onChange={() => toggleSetting(ConfigKey.widgetWeatherActive)}
               />
             </div>
             <div className="flex items-center mt-1 pl-2">
@@ -167,7 +227,7 @@ export default function ConfigWidget() {
                 name={'toggleDatetimeWidget'}
                 label={'Datetime widget active'}
                 defaultValue={globalState.widgetDatetimeActive as boolean}
-                onChange={() => toggleWidget(ConfigKey.widgetDatetimeActive)}
+                onChange={() => toggleSetting(ConfigKey.widgetDatetimeActive)}
               />
             </div>
             <div className="flex items-center mt-1 pl-2">
@@ -175,7 +235,7 @@ export default function ConfigWidget() {
                 name={'toggleShortcutsWidget'}
                 label={'Shortcuts widget active'}
                 defaultValue={globalState.widgetShortcutsActive as boolean}
-                onChange={() => toggleWidget(ConfigKey.widgetShortcutsActive)}
+                onChange={() => toggleSetting(ConfigKey.widgetShortcutsActive)}
               />
             </div>
             <div className="flex items-center mt-1 pl-2">
@@ -184,7 +244,7 @@ export default function ConfigWidget() {
                 label={'Map widget active'}
                 defaultValue={globalState.widgetMapActive as boolean}
                 disabled={true}
-                onChange={() => toggleWidget(ConfigKey.widgetMapActive)}
+                onChange={() => toggleSetting(ConfigKey.widgetMapActive)}
               />
             </div>
             <div className="flex items-center mt-1 pl-2">
@@ -192,7 +252,7 @@ export default function ConfigWidget() {
                 name={'toggleTodoWidget'}
                 label={'Todo widget active'}
                 defaultValue={globalState.widgetTodoActive as boolean}
-                onChange={() => toggleWidget(ConfigKey.widgetTodoActive)}
+                onChange={() => toggleSetting(ConfigKey.widgetTodoActive)}
               />
             </div>
           </div>

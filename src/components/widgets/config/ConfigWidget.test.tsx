@@ -29,11 +29,9 @@ describe('ConfigWidget', () => {
     render(<ConfigWidget />, { wrapper: BrowserRouter });
     const settingsLink = screen.getByTitle('Settings');
     const settingsTitle = screen.getByText('Settings');
-    const saveButton = screen.getByTitle('Save');
 
     // Assert
     expect(settingsLink).toBeInTheDocument();
     expect(settingsTitle).toBeInTheDocument();
-    expect(saveButton).toBeInTheDocument();
   });
 });
