@@ -7,11 +7,20 @@ import {
   GlobalStateData,
   defaultGlobalState,
 } from '../utils/GlobalStateContext';
+import {
+  defaultNotificationsState,
+  NotificationsStateContext,
+  NotificationsStateData,
+} from '../utils/NotificationsContext';
 
 describe('Topbar', () => {
   const globalState = defaultGlobalState;
   const setGlobalState = (() => {}) as Dispatch<
     SetStateAction<GlobalStateData>
+  >;
+  const notificationsState = defaultNotificationsState;
+  const setNotificationsState = (() => {}) as Dispatch<
+    SetStateAction<NotificationsStateData>
   >;
 
   test('render', () => {
@@ -19,7 +28,11 @@ describe('Topbar', () => {
     // Act
     render(
       <GlobalStateContext.Provider value={{ globalState, setGlobalState }}>
-        <Topbar />
+        <NotificationsStateContext.Provider
+          value={{ notificationsState, setNotificationsState }}
+        >
+          <Topbar />
+        </NotificationsStateContext.Provider>
       </GlobalStateContext.Provider>,
       { wrapper: BrowserRouter }
     );

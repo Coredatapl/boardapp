@@ -255,6 +255,16 @@ export default function ConfigWidget() {
                 onChange={() => toggleSetting(ConfigKey.widgetTodoActive)}
               />
             </div>
+            <div className="flex items-center mt-1 pl-2">
+              <Toggle
+                name={'toggleNotificationsWidget'}
+                label={'Notifications widget active'}
+                defaultValue={globalState.widgetNotificationsActive as boolean}
+                onChange={() =>
+                  toggleSetting(ConfigKey.widgetNotificationsActive)
+                }
+              />
+            </div>
           </div>
         </div>
       </div>
