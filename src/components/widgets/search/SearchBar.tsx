@@ -19,7 +19,7 @@ export default function SearchBar() {
   const [query, setQuery] = useState('');
   const [placeHolder, setPlaceHolder] = useState('Search the web...');
   const [searchEngine, setSearchEngine] = useState(SearchEngineEnum.Google);
-  const searchService = new SearchService(new CacheApi());
+  const searchService = new SearchService(CacheApi.getInstance());
   const minQueryLength = searchService.minQueryLength;
   const searchBarRef = useRef<HTMLDivElement>(null);
   const searchButtonsRef = useRef<HTMLDivElement>(null);
@@ -175,7 +175,7 @@ export default function SearchBar() {
 
         <div
           ref={searchButtonsRef}
-          className={`flex w-full h-full max-h-screen overflow-hidden`}
+          className={`flex w-full h-full max-h-0 overflow-hidden`}
         >
           <div
             className={`relative flex w-full overflow-hidden items-center ${

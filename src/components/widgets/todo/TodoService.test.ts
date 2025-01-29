@@ -4,7 +4,7 @@ import { TodoItemData } from './TodoWidget';
 
 describe('TodoService', () => {
   jest.mock('../../../utils/cache/CacheApi');
-  const service: TodoService = new TodoService(new CacheApi());
+  const service: TodoService = new TodoService(CacheApi.getInstance());
 
   beforeEach(() => {
     jest.clearAllMocks();

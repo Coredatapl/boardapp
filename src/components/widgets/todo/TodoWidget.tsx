@@ -35,8 +35,7 @@ export default function TodoWidget({ setTopbarOpen }: TodoWidgetProps) {
   const todoWidgetLinkRef = useRef<HTMLAnchorElement>(null);
   const [inputInvalid, setInputInvalid] = useState(false);
   const isActive = globalState.widgetTodoActive;
-  const Todos = new TodoService(new CacheApi());
-  const Notifications = new NotificationService(new CacheApi());
+  const Todos = new TodoService(CacheApi.getInstance());
 
   function toggleShowWidget() {
     setShowWidget(!showWidget);

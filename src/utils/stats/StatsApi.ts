@@ -46,7 +46,7 @@ export class StatsApi {
 
   static getInstance(): StatsApi {
     if (!StatsApi.instance) {
-      StatsApi.instance = new StatsApi(new CacheApi());
+      StatsApi.instance = new StatsApi(CacheApi.getInstance());
     }
     return StatsApi.instance;
   }

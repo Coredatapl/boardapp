@@ -23,7 +23,7 @@ describe('CacheApi', () => {
     writable: true,
     value: mockLocalStorage,
   });
-  const service = new CacheApi();
+  const service = CacheApi.getInstance();
   const prefix = 'boardapp-';
 
   beforeEach(() => {

@@ -64,7 +64,7 @@ export class ConfigService {
 
   static getInstance(): ConfigService {
     if (!ConfigService.instance) {
-      ConfigService.instance = new ConfigService(new CacheApi());
+      ConfigService.instance = new ConfigService(CacheApi.getInstance());
     }
     return ConfigService.instance;
   }
