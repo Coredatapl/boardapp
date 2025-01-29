@@ -3,7 +3,7 @@ import { CacheApi } from './cache/CacheApi';
 
 describe('ConfigService', () => {
   jest.mock('./cache/CacheApi');
-  const service: ConfigService = new ConfigService(new CacheApi());
+  const service: ConfigService = new ConfigService(CacheApi.getInstance());
 
   beforeEach(() => {
     jest.clearAllMocks();

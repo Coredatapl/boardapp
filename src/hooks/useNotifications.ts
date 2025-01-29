@@ -14,7 +14,7 @@ export const useNotifications = () => {
       'useNotifications must be used within a NotificationsStateContext'
     );
   }
-  const notificationService = new NotificationService(new CacheApi());
+  const notificationService = NotificationService.getInstance();
 
   const generateNotifications = (
     items: NotifyItem[],

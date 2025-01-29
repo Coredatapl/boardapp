@@ -25,7 +25,7 @@ export default function NotificationWidget() {
   const widgetRef = useRef<HTMLDivElement>(null);
   const widgetLinkRef = useRef<HTMLAnchorElement>(null);
   const isActive = globalState.widgetNotificationsActive;
-  const Notifications = new NotificationService(new CacheApi());
+  const Notifications = NotificationService.getInstance();
 
   function toggleShowWidget() {
     setShowWidget(!showWidget);
@@ -57,6 +57,42 @@ export default function NotificationWidget() {
     updateList(filtered);
   }
 
+  function checkNotifications(list: NotificationData[]) {
+    const toSend: { idx: number; value: NotificationData }[] = [];
+    for (let i = 0; i < list.length; i++) {
+      const toNotify =
+        Date.now() - new Date(list[i].added).getTime() >=
+        Notifications.notifyAfterDays * 24 * 60 * 60 * 1000;
+      if (
+        list[i].status === 'pending' &&
+        toNotify &&
+        Object.values(toSend)
+          .map((v) => v.idx)
+          .includes(i) === false
+      ) {
+        toSend.push({ idx: i, value: list[i] });
+      }
+    }
+    return toSend;
+  }
+
+  async function sendNotifications() {
+    const list = getListFromCache();
+    const toSend = checkNotifications(list);
+    if (toSend.length > 0) {
+      const items = toSend.map((item) => item.value);
+      const result = await Notifications.requestSend(items);
+      for (const i of Object.values(toSend).map((v) => v.idx)) {
+        if (result) {
+          list[i].status = 'sent';
+        } else {
+          list[i].status = 'failed';
+        }
+      }
+      updateList(list);
+    }
+  }
+
   function handleClickOutside(event: MouseEvent) {
     const inputFocused =
       document.activeElement ===
@@ -80,6 +116,7 @@ export default function NotificationWidget() {
     const list = getListFromCache();
     setActiveCount(list.filter((i) => i.status === 'pending').length);
     setNotificationsState({ notifications: [...list] });
+    sendNotifications();
 
     document.addEventListener('click', handleClickOutside, true);
     return () => {

@@ -5,6 +5,17 @@ export interface CacheItem {
 
 export class CacheApi {
   private readonly prefix = 'boardapp-';
+  private static instance: CacheApi;
+
+  private constructor() {}
+
+  static getInstance(): CacheApi {
+    if (!CacheApi.instance) {
+      CacheApi.instance = new CacheApi();
+    }
+
+    return CacheApi.instance;
+  }
 
   get(key: string): CacheItem | null {
     const data = localStorage.getItem(`${this.prefix}${key}`);

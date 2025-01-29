@@ -21,7 +21,7 @@ function ShortcutsWidget() {
   const [shortcuts, setShortcuts] = useState<ShortcutData[]>([]);
   const maxCount = 9;
   const addShortcutModalId = 'add-shortcut-modal';
-  const Shortcuts = new ShortcutsService(new CacheApi());
+  const Shortcuts = new ShortcutsService(CacheApi.getInstance());
 
   function addShortcut(url: string, name?: string) {
     if (!name) {
