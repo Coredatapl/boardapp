@@ -3,7 +3,7 @@ import { SearchEngineEnum, SearchService } from './SearchService';
 
 describe('SearchService', () => {
   jest.mock('../../../utils/cache/CacheApi');
-  const service: SearchService = new SearchService(new CacheApi());
+  const service: SearchService = new SearchService(CacheApi.getInstance());
 
   beforeEach(() => {
     jest.clearAllMocks();

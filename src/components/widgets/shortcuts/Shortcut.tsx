@@ -19,7 +19,7 @@ function Shortcut({ data, shortcuts, updateShortcuts }: ShortcutProps) {
   const [showDeleteButton, setShowDeleteButton] = useState(false);
   const [iconSrc, setIconSrc] = useState('');
   const nameMaxLength = globalState.widgetShortcutsNameMaxLength as number;
-  const WebApi = new FetchApi();
+  const WebApi = FetchApi.getInstance();
 
   function onClick(e: MouseEvent<HTMLAnchorElement>) {
     e.preventDefault();

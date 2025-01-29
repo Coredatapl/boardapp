@@ -4,7 +4,9 @@ import { ShortcutData } from './ShortcutsWidget';
 
 describe('ShortcutsService', () => {
   jest.mock('../../../utils/cache/CacheApi');
-  const service: ShortcutsService = new ShortcutsService(new CacheApi());
+  const service: ShortcutsService = new ShortcutsService(
+    CacheApi.getInstance()
+  );
 
   beforeEach(() => {
     jest.clearAllMocks();

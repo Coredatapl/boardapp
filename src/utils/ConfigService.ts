@@ -13,11 +13,15 @@ export enum ConfigKey {
   widgetTodoActive = 'widgetTodoActive',
   widgetLinksActive = 'widgetLinksActive',
   widgetMapActive = 'widgetMapActive',
+  widgetNotificationsActive = 'widgetNotificationsActive',
   mobile = 'mobile',
   geolocationPermitted = 'geolocationPermitted',
   geolocationLat = 'geolocationLat',
   geolocationLon = 'geolocationLon',
   localBg = 'localBg',
+  contactEmail = 'contactEmail',
+  notificationsActive = 'notificationsActive',
+  todoNotifyAfterDays = 'todoNotifyAfterDays',
 }
 
 export type ConfigValue = string | number | boolean;
@@ -42,11 +46,15 @@ export class ConfigService {
     widgetTodoActive: true,
     widgetLinksActive: false,
     widgetMapActive: false,
+    widgetNotificationsActive: true,
     mobile: window.innerWidth <= 768,
     geolocationPermitted: false,
     geolocationLat: 0,
     geolocationLon: 0,
     localBg: process.env.REACT_APP_LOCAL_BACKGROUND === 'false' ? false : true,
+    contactEmail: '',
+    notificationsActive: false,
+    todoNotifyAfterDays: 7,
   };
 
   constructor(private readonly Cache: CacheApi) {
@@ -56,7 +64,7 @@ export class ConfigService {
 
   static getInstance(): ConfigService {
     if (!ConfigService.instance) {
-      ConfigService.instance = new ConfigService(new CacheApi());
+      ConfigService.instance = new ConfigService(CacheApi.getInstance());
     }
     return ConfigService.instance;
   }

@@ -1,15 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import TodoItem from './TodoItem';
-import IconButton from '../../common/IconButton';
 import { TodoService } from './TodoService';
-import { CacheApi } from '../../../utils/cache/CacheApi';
-import { useGlobalState } from '../../../hooks/useGlobalState';
+import IconButton from '../../common/IconButton';
 import { useUtil } from '../../../hooks/useUtil';
 import { useModal } from '../../../hooks/useModal';
+import { useGlobalState } from '../../../hooks/useGlobalState';
+import { CacheApi } from '../../../utils/cache/CacheApi';
 import { ModalTypeEnum } from '../../../utils/ModalContext';
+import { NotificationService } from '../notifications/NotificationService';
 
 import imgSaveIcon from '../../../assets/img/icons/icon-save.svg';
+import { useNotifications } from '../../../hooks/useNotifications';
 
 interface TodoWidgetProps {
   setTopbarOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,6 +25,7 @@ export interface TodoItemData {
 
 export default function TodoWidget({ setTopbarOpen }: TodoWidgetProps) {
   const { globalState } = useGlobalState();
+  const { generateNotifications } = useNotifications();
   const [showWidget, setShowWidget] = useState(false);
   const [todoList, setTodoList] = useState<TodoItemData[]>([]);
   const [undoneCount, setUndoneCount] = useState(0);
@@ -32,7 +35,7 @@ export default function TodoWidget({ setTopbarOpen }: TodoWidgetProps) {
   const todoWidgetLinkRef = useRef<HTMLAnchorElement>(null);
   const [inputInvalid, setInputInvalid] = useState(false);
   const isActive = globalState.widgetTodoActive;
-  const Todos = new TodoService(new CacheApi());
+  const Todos = new TodoService(CacheApi.getInstance());
 
   function toggleShowWidget() {
     setShowWidget(!showWidget);
@@ -153,10 +156,29 @@ export default function TodoWidget({ setTopbarOpen }: TodoWidgetProps) {
     validateInput(input);
   }
 
+  function createNotifications() {
+    if (!globalState.notificationsActive) {
+      return;
+    }
+    const items = getListFromCache()
+      .filter((i) => !i.done)
+      .map((item) => {
+        return {
+          added: item.added,
+          message: `Todo item "${item.name}" is still pending. Maybe it's time to complete it?`,
+        };
+      });
+    const limit =
+      1000 * 60 * 60 * 24 * (globalState.todoNotifyAfterDays as number);
+
+    generateNotifications(items, limit, 'todo');
+  }
+
   useEffect(() => {
     const list = getListFromCache();
     setUndoneCount(list.filter((i) => !i.done).length);
     setTodoList(list);
+    createNotifications();
 
     document.addEventListener('click', handleClickOutside, true);
     return () => {

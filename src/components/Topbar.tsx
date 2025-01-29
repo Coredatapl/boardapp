@@ -4,6 +4,7 @@ import TopbarSpacer from './common/TopbarSpacer';
 import TopbarItem from './common/TopbarItem';
 import ConfigWidget from './widgets/config/ConfigWidget';
 import TodoWidget from './widgets/todo/TodoWidget';
+import NotificationWidget from './widgets/notifications/NotificationWidget';
 
 import imgLogoLight from '../assets/img/logo-light.svg';
 
@@ -35,6 +36,9 @@ function Topbar() {
         </div>
         <div className="flex flex-grow items-center">
           <ul className="flex flex-row list-none ml-auto">
+            <TopbarItem>
+              <NotificationWidget />
+            </TopbarItem>
             <TopbarItem>
               <TodoWidget setTopbarOpen={setIsOpen} />
             </TopbarItem>

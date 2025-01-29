@@ -7,8 +7,8 @@ export class UnsplashApi {
   private readonly apiImageUrl = 'https://images.unsplash.com';
   private readonly cacheIdx = 'background-photo-idx';
   private readonly cacheTimeout = 1000 * 60 * 30; // 30m
-  private readonly Cache = new CacheApi();
-  private readonly FetchApi = new FetchApi();
+  private readonly Cache = CacheApi.getInstance();
+  private readonly FetchApi = FetchApi.getInstance();
   private readonly Config = ConfigService.getInstance();
 
   async getRandomFromCollection(collectionId?: string): Promise<string> {
