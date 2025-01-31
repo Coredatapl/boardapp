@@ -60,7 +60,7 @@ export default class AssistantApi {
         body: JSON.stringify({
           to: email,
           subject: 'BoardApp Notification',
-          content: '',
+          content: message,
           template: 'boardapp-notification',
           templateData: {
             displayName,

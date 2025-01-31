@@ -44,11 +44,12 @@ export class NotificationService {
     });
   }
 
-  async requestSend(item: NotificationData) {
+  async requestSend(items: NotificationData[]) {
     if (!this.configService.getValue<boolean>(ConfigKey.notificationsActive)) {
       return;
     }
     const email = this.configService.getValue<string>(ConfigKey.contactEmail);
-    return this.assistantApi.sendEmail(email, item.message);
+    const message = items.map((i) => i.message).join('<br />');
+    return this.assistantApi.sendEmail(email, message);
   }
 }
