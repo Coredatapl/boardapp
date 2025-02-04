@@ -3,7 +3,6 @@ import { KeyboardEvent } from 'react';
 import { CacheApi } from '../../../utils/cache/CacheApi';
 import { useGlobalState } from '../../../hooks/useGlobalState';
 import Button from '../../common/Button';
-import SearchEngineSelector from './SearchEngineSelector';
 import QueryHistoryListItem from './QueryHistoryListItem';
 import { SearchEngineEnum, SearchService } from './SearchService';
 import SearchEngineIndicator from './SearchEngineIndicator';
@@ -50,8 +49,22 @@ export default function SearchBar() {
       return;
     }
     searchService.saveQuery(query);
-    window.location.href =
-      searchService.getSearchUrl(searchEngine) + encodeURIComponent(query);
+
+    if (typeof chrome === 'undefined' || typeof chrome.search === 'undefined') {
+      // standalone app mode
+      window.location.href =
+        searchService.getSearchUrl(searchEngine) + encodeURIComponent(query);
+      return;
+    }
+
+    const queryInfo: chrome.search.QueryInfo = {
+      text: query,
+      disposition: 'NEW_TAB',
+    };
+
+    chrome.search.query(queryInfo, () => {
+      console.log('Chrome Search API: Search query executed => new tab');
+    });
   }
 
   function cancelQuery() {
