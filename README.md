@@ -1,6 +1,6 @@
 # <img src="/src/assets/img/logo-color.svg" alt="Board App project" width="300" height="auto">
 
-![version](https://img.shields.io/badge/version-1.0.0-blue.svg)
+![version](https://img.shields.io/badge/version-1.0.2-blue.svg)
 
 Coredata specializes in AI automation, web and mobile apps, IT support and consultations.
 
