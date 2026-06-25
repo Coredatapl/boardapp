@@ -1,25 +1,30 @@
 {
-  "short_name": "BoardApp",
-  "name": "Coredata - Board App",
-  "icons": [
-    {
-      "src": "img/icons/logo192.png",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    },
-    {
-      "src": "img/icons/logo192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "img/icons/logo512.png",
-      "type": "image/png",
-      "sizes": "512x512"
-    }
-  ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+	"short_name": "BoardApp",
+	"name": "Coredata - Board App",
+	"icons": [
+		{
+			"src": "img/icons/symbol64.png",
+			"sizes": "64x64 32x32 24x24 16x16",
+			"type": "image/x-icon"
+		},
+		{
+			"src": "img/icons/symbol192.png",
+			"sizes": "192x192",
+			"type": "image/x-icon"
+		},
+		{
+			"src": "img/icons/symbol256.png",
+			"type": "image/png",
+			"sizes": "256x256"
+		},
+		{
+			"src": "img/icons/symbol512.png",
+			"type": "image/png",
+			"sizes": "512x512"
+		}
+	],
+	"start_url": ".",
+	"display": "standalone",
+	"theme_color": "#1a1a1a",
+	"background_color": "#f3f4f6"
 }

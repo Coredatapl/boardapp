@@ -1,0 +1,19 @@
+{
+	"editHint": {
+		"part1": "Appuyez sur",
+		"part2": "sur un raccourci pour le supprimer",
+		"part3": "cliquez ailleurs ou appuyez sur Échap pour quitter"
+	},
+	"addModal": {
+		"header": "Ajouter un raccourci",
+		"shortcutName": "Nouveau raccourci",
+		"nameLabel": "Nom",
+		"actionAdd": "Ajouter le raccourci",
+		"buttonAdd": "Ajouter"
+	},
+	"deleteModal": {
+		"header": "Supprimer le raccourci ?",
+		"hint": "sera supprimé de votre page de nouvel onglet",
+		"actionDelete": "Supprimer le raccourci"
+	}
+}

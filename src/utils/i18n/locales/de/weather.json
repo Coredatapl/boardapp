@@ -1,0 +1,17 @@
+{
+	"loading": "Wetterdaten werden geladen ...",
+	"widgetHint": "Wetter-Widget",
+	"forecastCold": "Heute wird es kalt",
+	"forecastHot": "Heute wird es heiß",
+	"forecastWind": "Es können starke Windböen auftreten",
+	"forecastPressure": "Es wird ein niedriger Luftdruck herrschen",
+	"notificationLabel": "Wetterwarnung",
+	"modal": {
+		"feelsLike": "Gefühlt",
+		"windSpeed": "Windgeschwindigkeit",
+		"humidity": "Luftfeuchtigkeit",
+		"pressure": "Luftdruck",
+		"minTemp": "Min. Temp.",
+		"maxTemp": "Max. Temp."
+	}
+}

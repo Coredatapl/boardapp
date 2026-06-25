@@ -1,0 +1,7 @@
+{
+	"header": "Todo",
+	"noItems": "Noch keine Todo-Einträge",
+	"removeDoneLabel": "Erledigte Einträge entfernen",
+	"notificationLabel": "Neuer Todo-Eintrag erstellt",
+	"addPlaceholder": "Aufgabe hinzufügen …"
+}

@@ -1,0 +1,17 @@
+{
+	"loading": "Caricamento dati meteo ...",
+	"widgetHint": "Widget meteo",
+	"forecastCold": "Farà freddo oggi",
+	"forecastHot": "Farà caldo oggi",
+	"forecastWind": "Potrebbero verificarsi forti raffiche di vento",
+	"forecastPressure": "La pressione atmosferica sarà bassa",
+	"notificationLabel": "Allerta meteo",
+	"modal": {
+		"feelsLike": "Percepita",
+		"windSpeed": "Velocità del vento",
+		"humidity": "Umidità",
+		"pressure": "Pressione",
+		"minTemp": "Temp Min",
+		"maxTemp": "Temp Max"
+	}
+}

@@ -1,0 +1,14 @@
+{
+	"header": "Oops! That's not what we expected",
+	"info": "The app encountered an unexpected problem. We apologize for the inconvenience!",
+	"suggestionHeader": "What can I do?",
+	"suggestion": {
+		"web": "Please refresh the page and try again.",
+		"extension": "Try reinstalling the extension and restarting."
+	},
+	"report": "If the error persists, please contact us at {{email}}",
+	"details": "Error details:",
+	"tryAgainLabel": "Try again",
+	"refreshLabel": "Refresh",
+	"reportLabel": "Report"
+}

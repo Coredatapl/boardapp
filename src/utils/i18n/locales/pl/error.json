@@ -1,0 +1,14 @@
+{
+	"header": "Ups! Nie tego się spodziewaliśmy",
+	"info": "Aplikacja napotkała nieoczekiwany problem. Przepraszamy za utrudnienia!",
+	"suggestionHeader": "Co mogę zrobić?",
+	"suggestion": {
+		"web": "Proszę odświeżyć stronę i spróbować jeszcze raz.",
+		"extension": "Spróbuj przeinstalować rozszerzenie i uruchomić ponownie."
+	},
+	"report": "Jeśli błąd się powtórzy, napisz do nas: {{email}}",
+	"details": "Szczegóły błędu:",
+	"tryAgainLabel": "Spróbuj ponownie",
+	"refreshLabel": "Odśwież",
+	"reportLabel": "Zgłoś"
+}

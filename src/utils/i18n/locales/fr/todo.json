@@ -1,0 +1,7 @@
+{
+	"header": "Todo",
+	"noItems": "Pas encore de tâches à faire",
+	"removeDoneLabel": "Supprimer les tâches terminées",
+	"notificationLabel": "Nouvelle tâche créée",
+	"addPlaceholder": "Ajouter une tâche …"
+}

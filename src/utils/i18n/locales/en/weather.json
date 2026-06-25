@@ -1,0 +1,17 @@
+{
+	"loading": "Loading weather data ...",
+	"widgetHint": "Weather widget",
+	"forecastCold": "It's going to be cold today",
+	"forecastHot": "It's going to be hot today",
+	"forecastWind": "Strong gusts of wind may occur",
+	"forecastPressure": "There will be low air pressure",
+	"notificationLabel": "Weather alert",
+	"modal": {
+		"feelsLike": "Feels Like",
+		"windSpeed": "Wind Speed",
+		"humidity": "Humidity",
+		"pressure": "Pressure",
+		"minTemp": "Min Temp",
+		"maxTemp": "Max Temp"
+	}
+}

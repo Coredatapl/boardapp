@@ -1,0 +1,27 @@
+{
+	"header": "Ajustes",
+	"appearance": {
+		"header": "Apariencia",
+		"mode": "Modo {{theme}}",
+		"themeHint": "Actualmente {{theme}}"
+	},
+	"profile": {
+		"header": "Perfil",
+		"language": "Idioma",
+		"languageHint": "Se utiliza para los comandos de voz y la precisión de la transcripción.",
+		"displayName": "Nombre de pantalla",
+		"displayNamePlaceholder": "ej. John",
+		"displayNameHint": "Se muestra en el mensaje de bienvenida."
+	},
+	"shortcuts": {
+		"header": "Accesos directos",
+		"editLabel": "Editar accesos directos",
+		"editingHint": "Editando actualmente — toca ✕ para eliminar",
+		"toEditHint": "Toca para ingresar al modo de edición"
+	},
+	"about": {
+		"header": "Acerca de",
+		"developed": "Desarrollado por"
+	},
+	"saveHint": "Ajustes guardados automáticamente"
+}

@@ -1,0 +1,7 @@
+{
+	"header": "Todo",
+	"noItems": "No todo items yet",
+	"removeDoneLabel": "Remove done items",
+	"notificationLabel": "New Todo item created",
+	"addPlaceholder": "Add a task …"
+}

@@ -1,0 +1,17 @@
+{
+	"defaultPlaceholder": "Wyszukaj albo wpisz URL …",
+	"aiPlaceholder": "Zapytaj lub wpisz komendę ...",
+	"voicePlaceholder": "Powiedz mi czego szukasz ...",
+	"listeningPlaceholder": "Słucham ...",
+	"actionSearch": "Szukaj",
+	"actionAsk": "Zapytaj",
+	"actionTalk": "Mów",
+	"actionStop": "Stop",
+	"actionSend": "Wyślij",
+	"searchModeLabel": "Wyszukiwarka",
+	"searchModeDescription": "Domyślny silnik wyszukiwania",
+	"aiModeLabel": "Tryb AI",
+	"aiModeDescription": "Rozmawiaj z czatbotem AI",
+	"voiceModeLabel": "Tryb głosowy",
+	"voiceModeDescription": "Komunikuj sie głosowo"
+}
