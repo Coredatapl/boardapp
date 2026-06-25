@@ -1,0 +1,19 @@
+{
+	"editHint": {
+		"part1": "Toca",
+		"part2": "en un acceso directo para eliminarlo",
+		"part3": "haz clic en otro lugar o presiona Esc para salir"
+	},
+	"addModal": {
+		"header": "Añadir acceso directo",
+		"shortcutName": "Nuevo acceso directo",
+		"nameLabel": "Nombre",
+		"actionAdd": "Añadir acceso directo",
+		"buttonAdd": "Añadir"
+	},
+	"deleteModal": {
+		"header": "¿Eliminar acceso directo?",
+		"hint": "se eliminará de tu página de nueva pestaña",
+		"actionDelete": "Eliminar acceso directo"
+	}
+}

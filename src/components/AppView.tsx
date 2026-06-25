@@ -1,29 +1,12 @@
-import { useEffect, useState } from 'react';
-import { UnsplashApi } from '../utils/unsplash/UnsplashApi';
+import type { PropsWithChildren } from "react";
 
-interface AppViewProps {
-  children: any;
-}
-
-export default function AppView({ children }: AppViewProps) {
-  const bgChangeInterval = 15 * 60 * 1000;
-  const Unsplash = new UnsplashApi();
-  const [bgUrl, setBgUrl] = useState(Unsplash.getRandom());
-
-  useEffect(() => {
-    setInterval(() => {
-      setBgUrl(Unsplash.getRandom());
-    }, bgChangeInterval);
-  }, []);
-  return (
-    <div
-      className="app-background ease-linear transition-all duration-500"
-      style={{ backgroundImage: `url('${bgUrl}')` }}
-      role="main-container"
-    >
-      <div className="flex flex-col min-h-screen max-h-screen overflow-hidden overscroll-none app-wrapper">
-        {children}
-      </div>
-    </div>
-  );
+export default function AppView({ children }: PropsWithChildren) {
+	return (
+		<div
+			id="appView"
+			className={`relative min-h-screen overflow-x-hidden dark:bg-surface-dark bg-surface transition-colors duration-300`}
+		>
+			{children}
+		</div>
+	);
 }

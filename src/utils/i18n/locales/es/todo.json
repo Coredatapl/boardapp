@@ -1,0 +1,7 @@
+{
+	"header": "Todo",
+	"noItems": "Aún no hay tareas pendientes",
+	"removeDoneLabel": "Eliminar tareas completadas",
+	"notificationLabel": "Nueva tarea pendiente creada",
+	"addPlaceholder": "Añadir una tarea …"
+}

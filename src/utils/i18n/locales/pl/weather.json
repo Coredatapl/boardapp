@@ -1,0 +1,17 @@
+{
+	"loading": "Ładowanie danych pogodowych ...",
+	"widgetHint": "Widżet pogodowy",
+	"forecastCold": "Dzisiaj będzie zimno",
+	"forecastHot": "Dzisiaj będzie gorąco",
+	"forecastWind": "Mogą wystąpić silne porywy wiatru",
+	"forecastPressure": "Ciśnienie atmosferyczne będzie niskie",
+	"notificationLabel": "Alert pogodowy",
+	"modal": {
+		"feelsLike": "Temperatura odczuwalna",
+		"windSpeed": "Prędkość wiatru",
+		"humidity": "Wilgotność",
+		"pressure": "Ciśnienie",
+		"minTemp": "Temp. min.",
+		"maxTemp": "Temp. maks."
+	}
+}

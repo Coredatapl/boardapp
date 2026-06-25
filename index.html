@@ -1,0 +1,60 @@
+<!--
+=========================================================
+* Coredata Board App v2
+=========================================================
+
+* More at https://board.coredata.pl
+
+=========================================================
+-->
+<!doctype html>
+<html lang="en">
+  <head>
+    <base href="/" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f3f4f6" />
+    <meta
+      name="description"
+      content="Board App - Customizable dashboard and start page Google Chrome extension"
+    />
+    <meta
+      name="keywords"
+      content="ai Assistant, search, search engine, todo, shortcuts, links, start page, weather, chrome extension"
+    />
+    <meta property="og:title" content="Board App - Welcome!" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://board.coredata.pl" />
+    <meta
+      property="og:description"
+      content="Board App - Customizable start page"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:locale" content="en_EN" />
+    <meta property="og:site_name" content="BoardApp" />
+    <meta property="og:url" content="https://board.coredata.pl" />
+    <meta property="twitter:title" content="Board App - Welcome!" />
+    <link rel="icon" type="image/svg+xml" href="/img/favicon.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="stylesheet" href="/css/preview.css" />
+    <title>Board App - Welcome!</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root">
+      <div class="preview">
+        <div class="preview-loader-container">
+          <div id="previewProgressInfo" class="preview-progress-info">
+            Application is initializing ...
+          </div>
+          <div class="preview-progress-track">
+            <div class="preview-progress-bar" id="previewProgressBar"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script src="/handlers.js" defer></script>
+    <script src="/preview.js" defer></script>
+  </body>
+</html>

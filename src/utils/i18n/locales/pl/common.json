@@ -1,0 +1,11 @@
+{
+	"confirmLabel": "Potwierdź",
+	"cancelLabel": "Anuluj",
+	"yearsAgo": "{{years}} lat temu",
+	"monthsAgo": "{{months}} months ago",
+	"daysAgo": "{{days}} dni temu",
+	"hoursAgo": "{{hours}} godzin temu",
+	"minutesAgo": "{{minutes}} minut temu",
+	"secondsAgo": "{{seconds}} sekund temu",
+	"now": "teraz"
+}

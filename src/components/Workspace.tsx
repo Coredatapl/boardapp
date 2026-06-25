@@ -1,13 +1,9 @@
-interface WorkspaceProps {
-  children: any;
-}
+import type { PropsWithChildren } from "react";
 
-function Workspace({ children }: WorkspaceProps) {
-  return (
-    <div className="flex flex-col items-center justify-center grow">
-      {children}
-    </div>
-  );
+export default function Workspace({ children }: PropsWithChildren) {
+	return (
+		<main className="relative z-0 flex flex-col min-h-screen px-4 gap-10 items-center justify-center">
+			{children}
+		</main>
+	);
 }
-
-export default Workspace;

@@ -1,0 +1,17 @@
+{
+	"defaultPlaceholder": "Cerca o inserisci un URL …",
+	"aiPlaceholder": "Fai una domanda o digita un comando ...",
+	"voicePlaceholder": "Dimmi cosa stai cercando ...",
+	"listeningPlaceholder": "Ti ascolto ...",
+	"actionSearch": "Cerca",
+	"actionAsk": "Chiedi",
+	"actionTalk": "Parla",
+	"actionStop": "Interrompi",
+	"actionSend": "Invia",
+	"searchModeLabel": "Modalità ricerca",
+	"searchModeDescription": "Motore di ricerca predefinito",
+	"aiModeLabel": "Modalità AI",
+	"aiModeDescription": "Fai domande al chatbot AI",
+	"voiceModeLabel": "Modalità vocale",
+	"voiceModeDescription": "Parla e ottieni testo dal parlato"
+}

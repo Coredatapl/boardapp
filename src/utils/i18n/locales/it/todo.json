@@ -1,0 +1,7 @@
+{
+	"header": "Todo",
+	"noItems": "Ancora nessun elemento da fare",
+	"removeDoneLabel": "Rimuovi elementi completati",
+	"notificationLabel": "Nuovo elemento da fare creato",
+	"addPlaceholder": "Aggiungi un'attività …"
+}
