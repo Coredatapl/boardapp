@@ -12,13 +12,20 @@ import { compare } from "@/utils/common";
 import { OneYearMs } from "@/utils/time";
 import type { AppNotification } from "../types/notification";
 import NotificationItem from "./NotificationItem";
+import type { ApiResponse } from "@/types/api";
+import { useLogger } from "@/hooks/useLogger";
 
-// TODO: intergrate with Coredata Api => send notifications sumup
 export default function Notifications() {
-  const { settings, notifications, setNotifications, setUnreadNotidications } =
-    useAppContext();
+  const {
+    isExtension,
+    settings,
+    notifications,
+    setNotifications,
+    setUnreadNotidications,
+  } = useAppContext();
   const { t } = useTranslate();
   const storage = useStorage();
+  const logger = useLogger("Notifications");
   const { activePanel, closePanel } = usePanel();
   const notifyCreatedLimit = 1000 * 60 * 60 * 24;
   const lastSendPeriod = 1000 * 60 * 60 * 24;
@@ -69,6 +76,9 @@ export default function Notifications() {
   }
 
   async function sendNotifications(notifications: AppNotification[]) {
+    if (!isExtension) return;
+
+    const recipient = settings.contactEmail;
     const displayName = settings.displayName;
     const data = notifications
       .filter((n) => !n.emailed && n.created < Date.now() + notifyCreatedLimit)
@@ -81,12 +91,19 @@ export default function Notifications() {
 
     if (!data.length) return;
 
-    const result = await sendNotification(displayName, data);
+    sendNotification(recipient, displayName, data);
+    logger.log("Sending notifications", "...");
+  }
 
-    if (result.success) {
-      markAllAsEmailed();
-      storage.set("notifications-send", Date.now(), OneYearMs);
+  function onSendNotification(response: ApiResponse) {
+    if (!response.success) {
+      logger.log("Sending notifications failed");
+      return;
     }
+
+    markAllAsEmailed();
+    storage.set("notifications-send", Date.now(), OneYearMs);
+    logger.log("Sending notifications", "done");
   }
 
   useEffect(() => {
@@ -99,6 +116,15 @@ export default function Notifications() {
       if (!lastSend || lastSend >= Date.now() + lastSendPeriod) {
         sendNotifications(notifications);
       }
+    }
+
+    if (isExtension) {
+      chrome.runtime.onMessage.addListener((message) => {
+        if (message.action === "send_notification") {
+          onSendNotification(message);
+        }
+        return false;
+      });
     }
   }, []);
 

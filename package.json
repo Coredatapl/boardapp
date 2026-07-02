@@ -11,7 +11,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "jose": "^6.2.3",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-error-boundary": "^6.1.2",
