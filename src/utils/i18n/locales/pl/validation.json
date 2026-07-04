@@ -1,0 +1,23 @@
+{
+	"invalid": "Nieprawidłowa wartość",
+	"string": {
+		"minLength": "Ciąg znaków musi mieć co najmniej {{minLength}} znaków",
+		"maxLength": "Ciąg znaków może mieć maksymalnie {{maxLength}} znaków"
+	},
+	"password": {
+		"minLength": "Hasło musi mieć co najmniej {{minLength}} znaków",
+		"maxLength": "Hasło może mieć maksymalnie {{maxLength}} znaków",
+		"uppercase": "Hasło must zawierać co najmniej jedną wielką literę",
+		"lowercase": "Hasło musi zawierać co najmniej jedną małą literę",
+		"digit": "Hasło musi zawierać co najmniej jedną cyfrę",
+		"special": "Hasło musi zawierać co najmniej jeden znak specjalny"
+	},
+	"url": {
+		"invalid": "Podany adres URL jest nieprawidłowy",
+		"minLength": "Adres URL musi mieć co najmniej {{minLength}} znaków"
+	},
+	"email": {
+		"invalid": "Podany adres e-mail jest niepoprawny",
+		"minLength": "Adres e-mail musi mieć co najmniej {{minLength}} znaków"
+	}
+}

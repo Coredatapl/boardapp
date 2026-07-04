@@ -10,6 +10,8 @@ interface InputProps {
 	minLength?: number;
 	maxLength?: number;
 	invalid?: boolean;
+	error?: string;
+	hint?: string;
 	style?: string;
 	onInput?: () => void;
 	onChange?: (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) => void;
@@ -25,6 +27,8 @@ export default function Input({
 	minLength,
 	maxLength,
 	invalid,
+	error,
+	hint,
 	style,
 	onInput,
 	onChange,
@@ -39,7 +43,7 @@ export default function Input({
 			</label>
 			<div>
 				<input
-					className={`w-full px-3 py-2 rounded-xl text-sm dark:bg-surface-dark-container bg-surface-container dark:text-white/85 text-gray-700 dark:placeholder-white/25 placeholder-gray-400 outline-none transition-colors border focus:border-accent ${invalid ? "border-rose-400" : "dark:border-surface-dark-element border-surface-element"} ${style}`}
+					className={`w-full px-3 py-2 rounded-xl text-sm dark:bg-surface-dark bg-surface dark:text-white/85 text-gray-700 dark:placeholder-white/25 placeholder-gray-400 outline-none transition-colors border ${invalid ? "border-rose-400 focus:border-rose-400" : "dark:border-surface-dark-element border-surface-element focus:border-accent"} ${style}`}
 					ref={ref}
 					id={id}
 					type={type}
@@ -50,6 +54,14 @@ export default function Input({
 					onInput={onInput}
 					onChange={onChange}
 				/>
+				{invalid && error && (
+					<div className="p-1 text-xs text-rose-400">{error}</div>
+				)}
+				{!invalid && !error && hint && (
+					<div className="p-1 text-xs dark:text-white/35 text-gray-400">
+						<span className="text-accent font-semibold">Hint:</span> {hint}
+					</div>
+				)}
 			</div>
 		</div>
 	);

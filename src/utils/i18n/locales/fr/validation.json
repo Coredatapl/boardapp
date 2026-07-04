@@ -1,0 +1,23 @@
+{
+	"invalid": "Valeur non valide",
+	"string": {
+		"minLength": "La chaîne doit contenir au moins {{minLength}} caractères",
+		"maxLength": "La chaîne peut contenir au maximum {{maxLength}} caractères"
+	},
+	"password": {
+		"minLength": "Le mot de passe doit contenir au moins {{minLength}} caractères",
+		"maxLength": "Le mot de passe może zawierać maksymalnie {{maxLength}} caractères",
+		"uppercase": "Le mot de passe doit contenir au moins une lettre majuscule",
+		"lowercase": "Le mot de passe doit contenir au moins une lettre minuscule",
+		"digit": "Le mot de passe doit contenir au moins un chiffre",
+		"special": "Le mot de passe doit contenir au moins un caractère spécial"
+	},
+	"url": {
+		"invalid": "L'URL fournie n'est pas valide",
+		"minLength": "L'URL doit contenir au moins {{minLength}} caractères"
+	},
+	"email": {
+		"invalid": "L'adresse e-mail fournie est incorrecte",
+		"minLength": "L'e-mail doit contenir au moins {{minLength}} caractères"
+	}
+}

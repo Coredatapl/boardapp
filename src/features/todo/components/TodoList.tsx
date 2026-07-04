@@ -53,6 +53,7 @@ export default function TodoList() {
     logger.log(`New todo item`, "created");
   }
 
+  // TODO: on done => delete triggered notification
   function toggleDone(id: string, forceDone?: boolean) {
     const updated = todos.map((t) => {
       if (compare(t.id, id)) {

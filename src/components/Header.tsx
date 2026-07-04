@@ -1,11 +1,13 @@
 import type { PropsWithChildren } from "react";
 import { useAppContext } from "@/app/AppContext";
+import Account from "@/features/auth/components/Account";
 import BrandLogo from "./ui/BrandLogo";
 import IconButton from "./ui/IconButton";
 import { usePanel } from "./ui/panel/hooks/usePanel";
 
 export default function Header({ children }: PropsWithChildren) {
-	const { isMobile, undoneTodos, unreadNotidications } = useAppContext();
+	const { isExtension, isMobile, undoneTodos, unreadNotidications } =
+		useAppContext();
 	const { openPanel } = usePanel();
 
 	return (
@@ -80,6 +82,8 @@ export default function Header({ children }: PropsWithChildren) {
 						/>
 					</svg>
 				</IconButton>
+
+				{isExtension && <Account />}
 			</div>
 		</header>
 	);

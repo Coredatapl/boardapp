@@ -23,7 +23,11 @@ export default function AddTodoItem({ addItem }: AddTodoItemProps) {
 	let updateLabelTimer: number | undefined;
 
 	function validateLabel(value: string): string | null {
-		return validate(value, getStringSchema(labelMinLength, labelMaxLength));
+		const errors = validate(
+			value,
+			getStringSchema(labelMinLength, labelMaxLength),
+		);
+		return errors ? null : value;
 	}
 
 	function updateLabel(): string | null {

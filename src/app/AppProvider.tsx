@@ -15,6 +15,7 @@ import type { TodoItem } from "@/features/todo/types/todoItem";
 import { WeatherNotificationTrigger } from "@/features/weather/utils/trigger";
 import { useLogger } from "@/hooks/useLogger";
 import { useStorage } from "@/hooks/useStorage";
+import type { UserAccount } from "@/types/account";
 import type { AppSettings } from "@/types/settings";
 import { compare, DarkTheme, LightTheme } from "@/utils/common";
 import { translator } from "@/utils/i18n/translator";
@@ -22,11 +23,15 @@ import { getClientLanguage } from "@/utils/i18n/utils/language";
 import { detectMobileDevice } from "@/utils/responsive";
 import { OneYearMs } from "@/utils/time";
 import { AppContext } from "./AppContext";
+import type { MessageCallback } from "@/types/api";
 
 export function AppProvider({ children }: PropsWithChildren) {
   const logger = useLogger();
   const storage = useStorage();
-  const isExtension = window.chrome && typeof chrome.storage !== "undefined";
+  const isExtension =
+    window.chrome &&
+    typeof chrome.storage !== "undefined" &&
+    typeof chrome.runtime !== "undefined";
   const [isMobile, setIsMobile] = useState(() => detectMobileDevice());
   const [editMode, setEditMode] = useState(false);
   const [settings, setSettings] = useState<AppSettings>(
@@ -37,6 +42,10 @@ export function AppProvider({ children }: PropsWithChildren) {
       displayName: "Boss",
     },
   );
+  const [account, setAccount] = useState<UserAccount | undefined>(undefined);
+  const [messageCallbacks, setMessageCallbacks] = useState<
+    Map<string, MessageCallback[]>
+  >(new Map());
   const [notifications, setNotifications] = useState<AppNotification[]>(
     storage.get<AppNotification[]>("notifications") ?? [],
   );
@@ -45,6 +54,12 @@ export function AppProvider({ children }: PropsWithChildren) {
   );
   const [undoneTodos, setUndoneTodos] = useState<boolean>(false);
   let storeInChromeStorageInterval: number | undefined;
+
+  function registerMessageCallback(action: string, callback: MessageCallback) {
+    const callbacks = messageCallbacks.get(action) ?? [];
+    messageCallbacks.set(action, [...callbacks, callback]);
+    setMessageCallbacks(messageCallbacks);
+  }
 
   function triggerNotification(data: AppNotificationDto) {
     if (
@@ -93,8 +108,20 @@ export function AppProvider({ children }: PropsWithChildren) {
 
   function loadFromChromeStorage() {
     chrome.storage.local.get(
-      ["settings", "shortcuts", "todo", "notifications", "weather", "location"],
+      [
+        "account",
+        "settings",
+        "shortcuts",
+        "todo",
+        "notifications",
+        "weather",
+        "location",
+      ],
       (items) => {
+        if (items.account) {
+          setAccount(items.account);
+          storage.set("account", items.account);
+        }
         if (items.settings) {
           setSettings(items.settings);
           storage.set("settings", items.settings);
@@ -192,6 +219,10 @@ export function AppProvider({ children }: PropsWithChildren) {
             setEditMode,
             settings,
             setSettings,
+            account,
+            setAccount,
+            messageCallbacks,
+            registerMessageCallback,
             notifications,
             setNotifications,
             triggerNotification,

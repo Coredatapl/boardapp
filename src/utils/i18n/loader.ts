@@ -9,6 +9,8 @@ export async function loadTranslation(lang: string) {
 	const todo = await import(`./locales/${lang}/todo.json`);
 	const settings = await import(`./locales/${lang}/settings.json`);
 	const error = await import(`./locales/${lang}/error.json`);
+	const auth = await import(`./locales/${lang}/auth.json`);
+	const validation = await import(`./locales/${lang}/validation.json`);
 
 	return {
 		common,
@@ -21,5 +23,7 @@ export async function loadTranslation(lang: string) {
 		todo,
 		settings,
 		error,
+		auth,
+		validation,
 	};
 }

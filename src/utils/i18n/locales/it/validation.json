@@ -1,0 +1,23 @@
+{
+	"invalid": "Valore non valido",
+	"string": {
+		"minLength": "La stringa deve contenere almeno {{minLength}} caratteri",
+		"maxLength": "La stringa può contenere al massimo {{maxLength}} caratteri"
+	},
+	"password": {
+		"minLength": "La password deve contenere almeno {{minLength}} caratteri",
+		"maxLength": "La password può contenere al massimo {{maxLength}} caratteri",
+		"uppercase": "La password deve contenere almeno una lettera maiuscola",
+		"lowercase": "La password deve contenere almeno una lettera minuscola",
+		"digit": "La password deve contenere almeno un numero",
+		"special": "La password deve contenere almeno un carattere speciale"
+	},
+	"url": {
+		"invalid": "L'URL fornito non è valido",
+		"minLength": "L'URL deve contenere almeno {{minLength}} caratteri"
+	},
+	"email": {
+		"invalid": "L'indirizzo email fornito non è corretto",
+		"minLength": "L'email deve contenere almeno {{minLength}} caratteri"
+	}
+}

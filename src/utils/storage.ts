@@ -1,8 +1,7 @@
 import { LoggerFactory } from "./logger";
 
 type StorageKey =
-  | "at"
-  | "rt"
+  | "account"
   | "settings"
   | "shortcuts"
   | "todo"

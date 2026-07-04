@@ -5,20 +5,21 @@ import { usePanel } from "@/components/ui/panel/hooks/usePanel";
 import Panel from "@/components/ui/panel/Panel";
 import PanelBody from "@/components/ui/panel/PanelBody";
 import PanelHeader from "@/components/ui/panel/PanelHeader";
+import { useLogger } from "@/hooks/useLogger";
 import { useStorage } from "@/hooks/useStorage";
 import { useTranslate } from "@/hooks/useTranslate";
+import type { ApiResponse } from "@/types/api";
 import { sendNotification } from "@/utils/api";
 import { compare } from "@/utils/common";
 import { OneYearMs } from "@/utils/time";
 import type { AppNotification } from "../types/notification";
 import NotificationItem from "./NotificationItem";
-import type { ApiResponse } from "@/types/api";
-import { useLogger } from "@/hooks/useLogger";
 
 export default function Notifications() {
   const {
     isExtension,
     settings,
+    registerMessageCallback,
     notifications,
     setNotifications,
     setUnreadNotidications,
@@ -119,12 +120,7 @@ export default function Notifications() {
     }
 
     if (isExtension) {
-      chrome.runtime.onMessage.addListener((message) => {
-        if (message.action === "send_notification") {
-          onSendNotification(message);
-        }
-        return false;
-      });
+      registerMessageCallback("send_notification_result", onSendNotification);
     }
   }, []);
 

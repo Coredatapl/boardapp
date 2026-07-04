@@ -16,6 +16,7 @@
 	--color-accent: #5e72e4;
 	--color-accent-soft: #8f9ef0;
 	--color-green: #4ade80;
+	--color-yellow: #ffb900;
 	--color-error: #cc5500;
 
 	--text-xs: 0.5rem;
@@ -127,6 +128,10 @@ body::before {
 	z-index: 0;
 	background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
 	opacity: 0.4;
+}
+
+a:hover {
+	color: var(--color-accent);
 }
 
 code,

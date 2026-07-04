@@ -44,11 +44,16 @@ export default function AddModal({ addShortcut }: AddModalProps) {
 		if (!/^https?:\/\//i.test(value)) {
 			value = `https://${value}`;
 		}
-		return validate(value, getUrlSchema(urlMinLength));
+		const errors = validate(value, getUrlSchema(urlMinLength));
+		return errors ? null : value;
 	}
 
 	function validateName(value: string): string | null {
-		return validate(value, getStringSchema(nameMinLength, nameMaxLength));
+		const errors = validate(
+			value,
+			getStringSchema(nameMinLength, nameMaxLength),
+		);
+		return errors ? null : value;
 	}
 
 	function updateUrl(): string | null {

@@ -1,5 +1,6 @@
 import * as z from "zod/mini";
 import { useLogger } from "@/hooks/useLogger";
+import { useTranslate } from "@/hooks/useTranslate";
 
 export type ZodSchema = z.ZodMiniURL | z.ZodMiniString<string>;
 
@@ -11,32 +12,82 @@ export const TodoLabelMinLength = 2;
 export const TodoLabelMaxLength = 100;
 export const DisplayNameMinLength = 3;
 export const DisplayNameMaxLength = 20;
+export const AuthEmailMinLength = 3;
+export const AuthPasswordMinLength = 8;
+export const AuthPasswordMaxLength = 32;
 
-export const getUrlSchema = (minLenght: number): z.ZodMiniURL =>
-	z
+export const getUrlSchema = (minLength: number): z.ZodMiniURL => {
+	const { t } = useTranslate();
+
+	return z
 		.url({
 			protocol: /^https$/,
 			hostname: z.regexes.domain,
 			normalize: true,
-			error: "Invalid URL",
+			error: t("validation.url.invalid"),
 		})
-		.check(z.minLength(minLenght));
+		.check(
+			z.minLength(minLength, t("validation.url.minLength", { minLength })),
+		);
+};
 
 export const getStringSchema = (
 	minLength: number,
 	maxLength: number,
-): z.ZodMiniString<string> =>
-	z.string().check(z.minLength(minLength), z.maxLength(maxLength));
+): z.ZodMiniString<string> => {
+	const { t } = useTranslate();
+	return z
+		.string()
+		.check(
+			z.minLength(minLength, t("validation.string.minLength", { minLength })),
+			z.maxLength(maxLength, t("validation.string.maxLength", { maxLength })),
+		);
+};
 
-export const validate = (value: any, schema: ZodSchema): string | null => {
+export const getEmailSchema = (minLength: number) => {
+	const { t } = useTranslate();
+	return z
+		.string()
+		.check(
+			z.minLength(minLength, t("validation.email.minLength", { minLength })),
+			z.email(t("validation.email.invalid")),
+		);
+};
+
+export const getPasswordSchema = (
+	minLength: number,
+	maxLength: number,
+): z.ZodMiniString<string> => {
+	const { t } = useTranslate();
+	return z
+		.string()
+		.check(
+			z.minLength(minLength, t("validation.password.minLength", { minLength })),
+			z.maxLength(maxLength, t("validation.password.maxLength", { maxLength })),
+			z.regex(/[A-Z]/, t("validation.password.uppercase")),
+			z.regex(/[a-z]/, t("validation.password.lowercase")),
+			z.regex(/[0-9]/, t("validation.password.digit")),
+			z.regex(/[^A-Za-z0-9]/, t("validation.password.special")),
+		);
+};
+
+/**
+ * Validate value against schema and returns errors array or null if valid
+
+ * @param value any Value to validate
+ * @param schema ZodSchema Validation schema
+ * @returns string[] | null 
+ */
+export const validate = (value: any, schema: ZodSchema): string[] | null => {
+	const { t } = useTranslate();
 	const logger = useLogger("Validator");
 	const result = schema.safeParse(value);
 	if (!result.success) {
-		const flattened = z.flattenError(result.error);
-		logger.log(`Value ${value} is invalid`, flattened);
-		return null;
+		const errors = result.error.issues.map((e) => e.message);
+		logger.log(`Value ${value} is invalid`, { errors });
+		return errors.length ? errors : [t("validation.invalid")];
 	}
-	return result.data;
+	return null;
 };
 
 export const isValidUrl = (str: string) => {
