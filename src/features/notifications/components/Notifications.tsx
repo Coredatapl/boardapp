@@ -98,7 +98,7 @@ export default function Notifications() {
 
   function onSendNotification(response: ApiResponse) {
     if (!response.success) {
-      logger.log("Sending notifications failed");
+      logger.log("Sending notifications failed", { result: response.result });
       return;
     }
 

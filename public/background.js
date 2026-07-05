@@ -153,7 +153,9 @@ async function authenticate(email, password) {
 async function sendNotification(data) {
   const storage = await chrome.storage.local.get(["account"]);
 
-  if (!storage.account?.email) return;
+  if (!storage.account?.email) {
+    return { success: false, result: "Undefined account email" };
+  }
 
   const route = "/email/send";
   const method = "POST";
@@ -198,7 +200,7 @@ chrome.runtime.onMessage.addListener((message) => {
 
   try {
     if (message.action === "send_notification") {
-      sendNotification(token, message.data).then((response) =>
+      sendNotification(message.data).then((response) =>
         responseHandler(response),
       );
     } else if (message.action === "authenticate") {

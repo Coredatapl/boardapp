@@ -21,13 +21,17 @@ export default function Account() {
   }
 
   function onAuthenticate(response: ApiResponse) {
-    if (response.success) {
-      chrome.storage.local.get(["account"], (items) => {
-        if (items.account) {
-          setAccount(items.account);
-        }
-      });
+    if (!response.success) {
+      logger.log("Authenticate action failed", { result: response.result });
+      return;
     }
+    chrome.storage.local.get(["account"], (items) => {
+      if (!items.account) {
+        logger.log("No account data in storage after authentication");
+        return;
+      }
+      setAccount(items.account);
+    });
   }
 
   function onSessionExpired(response: ApiSessionExpiredResponse) {
