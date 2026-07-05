@@ -1,4 +1,8 @@
-export type ApiActionType = "authenticate" | "logout" | "send_notification";
+export type ApiActionType =
+  | "register"
+  | "login"
+  | "logout"
+  | "send_notification";
 
 export type MessageCallback = (message: any) => void;
 

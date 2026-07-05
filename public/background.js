@@ -2,6 +2,7 @@ console.log("[i] Extension background service worker is running");
 
 const ENV = "dev";
 const API_URL = "https://server.coredata.pl";
+const API_USER_ROLE = "user";
 let isRefreshing = false;
 let refreshSubscribers = [];
 
@@ -123,7 +124,21 @@ async function refreshTokens(refreshToken) {
   return response.json(); // { accessToken, refreshToken }
 }
 
-async function authenticate(email, password) {
+async function register(email, password, username) {
+  const response = await fetch(`${API_URL}/auth/register`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password, username, role: API_USER_ROLE }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Registration failed");
+  }
+
+  return { success: true, result: "Registration successful" };
+}
+
+async function login(email, password) {
   const response = await fetch(`${API_URL}/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -140,14 +155,14 @@ async function authenticate(email, password) {
     throw new Error("No auth tokens");
   }
 
-  // TODO: get user account data (username, createdAt)
+  // TODO: get user account data (userId, username, createdAt)
   await chrome.storage.local.set({
     account: { email, username: email, createdAt: "" },
     accessToken: result.accessToken,
     refreshToken: result.refreshToken,
   });
 
-  return { success: true, result: "Authentication done" };
+  return { success: true, result: "Authentication successful" };
 }
 
 async function sendNotification(data) {
@@ -199,16 +214,34 @@ chrome.runtime.onMessage.addListener((message) => {
   }
 
   try {
-    if (message.action === "send_notification") {
-      sendNotification(message.data).then((response) =>
-        responseHandler(response),
-      );
-    } else if (message.action === "authenticate") {
-      authenticate(message.data.email, message.data.password).then((response) =>
+    if (message.action === "register") {
+      register(
+        message.data.email,
+        message.data.password,
+        message.data.displayName,
+      ).then((response) => {
+        if (response.success) {
+          login(message.data.email, message.data.password).then(
+            (loginResponse) => {
+              if (loginResponse.success) {
+                // TODO: Add to BoardApp newslleter
+              }
+              return responseHandler(response);
+            },
+          );
+        }
+        return responseHandler(response);
+      });
+    } else if (message.action === "login") {
+      login(message.data.email, message.data.password).then((response) =>
         responseHandler(response),
       );
     } else if (message.action === "logout") {
       handleLogout(message.data.reason);
+    } else if (message.action === "send_notification") {
+      sendNotification(message.data).then((response) =>
+        responseHandler(response),
+      );
     }
   } catch (error) {
     errorHandler(error);

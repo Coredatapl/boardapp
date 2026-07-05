@@ -11,7 +11,7 @@ import Spinner from "@/components/ui/Spinner";
 import { useLogger } from "@/hooks/useLogger";
 import { useTranslate } from "@/hooks/useTranslate";
 import type { ApiResponse } from "@/types/api";
-import { authenticate } from "@/utils/api";
+import { apiLogin } from "@/utils/api";
 import {
   AuthEmailMinLength,
   getEmailSchema,
@@ -105,7 +105,7 @@ export default function LoginModal() {
     setProcessing(true);
 
     try {
-      await authenticate(email, password);
+      await apiLogin(email, password);
     } catch (error: any) {
       setProcessing(false);
       onFailure(error.message);

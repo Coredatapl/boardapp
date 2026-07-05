@@ -9,7 +9,7 @@ import { useLogger } from "@/hooks/useLogger";
 import { useStorage } from "@/hooks/useStorage";
 import { useTranslate } from "@/hooks/useTranslate";
 import type { ApiResponse } from "@/types/api";
-import { sendNotification } from "@/utils/api";
+import { apiSendNotification } from "@/utils/api";
 import { compare } from "@/utils/common";
 import { OneYearMs } from "@/utils/time";
 import type { AppNotification } from "../types/notification";
@@ -92,7 +92,7 @@ export default function Notifications() {
 
     if (!data.length) return;
 
-    sendNotification(recipient, displayName, data);
+    apiSendNotification(recipient, displayName, data);
     logger.log("Sending notifications", "...");
   }
 

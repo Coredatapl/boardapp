@@ -7,20 +7,32 @@ const apiRequest = async (action: ApiActionType, data: any): Promise<void> => {
   return chrome.runtime.sendMessage({ action, data });
 };
 
-const authenticate = async (email: string, password: string): Promise<void> => {
-  return apiRequest("authenticate", {
+const apiRegister = async (
+  email: string,
+  password: string,
+  displayName: string,
+): Promise<void> => {
+  return apiRequest("register", {
+    email,
+    password,
+    displayName,
+  });
+};
+
+const apiLogin = async (email: string, password: string): Promise<void> => {
+  return apiRequest("login", {
     email,
     password,
   });
 };
 
-const logout = async (reason: string): Promise<void> => {
+const apiLogout = async (reason: string): Promise<void> => {
   return apiRequest("logout", {
     reason,
   });
 };
 
-const sendNotification = async (
+const apiSendNotification = async (
   recipient: string,
   displayName: string,
   notifications: {
@@ -37,4 +49,4 @@ const sendNotification = async (
   });
 };
 
-export { authenticate, logout, sendNotification };
+export { apiLogin, apiLogout, apiRegister, apiSendNotification };

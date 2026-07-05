@@ -7,7 +7,7 @@ import ModalHeader from "@/components/ui/modal/ModalHeader";
 import PrimaryButton from "@/components/ui/PrimaryButton";
 import { useLogger } from "@/hooks/useLogger";
 import { useTranslate } from "@/hooks/useTranslate";
-import { logout } from "@/utils/api";
+import { apiLogout } from "@/utils/api";
 import { capitalise } from "@/utils/common";
 
 export default function AccountModal() {
@@ -18,7 +18,7 @@ export default function AccountModal() {
 
   function logoutAction() {
     setAccount(undefined);
-    logout("user_action");
+    apiLogout("user_action");
     modal.close();
   }
 
