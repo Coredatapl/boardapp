@@ -26,7 +26,8 @@ import SunIcon from "./SunIcon";
 const appVersion = (await import("../../../../package.json")).version;
 
 export default function Settings() {
-  const { settings, setSettings, editMode, setEditMode } = useAppContext();
+  const { isExtension, settings, setSettings, editMode, setEditMode } =
+    useAppContext();
   const { t } = useTranslate();
   const logger = useLogger("Settings");
   const storage = useStorage();
@@ -106,6 +107,11 @@ export default function Settings() {
 
   function saveSettings(settings: AppSettings) {
     storage.set("settings", settings, OneYearMs);
+    if (isExtension) {
+      chrome.storage.local.set({
+        settings,
+      });
+    }
   }
 
   useEffect(() => {

@@ -16,6 +16,7 @@ import { WeatherNotificationTrigger } from "@/features/weather/utils/trigger";
 import { useLogger } from "@/hooks/useLogger";
 import { useStorage } from "@/hooks/useStorage";
 import type { UserAccount } from "@/types/account";
+import type { MessageCallback } from "@/types/api";
 import type { AppSettings } from "@/types/settings";
 import { compare, DarkTheme, LightTheme } from "@/utils/common";
 import { translator } from "@/utils/i18n/translator";
@@ -23,7 +24,6 @@ import { getClientLanguage } from "@/utils/i18n/utils/language";
 import { detectMobileDevice } from "@/utils/responsive";
 import { OneYearMs } from "@/utils/time";
 import { AppContext } from "./AppContext";
-import type { MessageCallback } from "@/types/api";
 
 export function AppProvider({ children }: PropsWithChildren) {
   const logger = useLogger();
@@ -42,7 +42,9 @@ export function AppProvider({ children }: PropsWithChildren) {
       displayName: "Boss",
     },
   );
-  const [account, setAccount] = useState<UserAccount | undefined>(undefined);
+  const [account, setAccount] = useState<UserAccount | undefined>(
+    storage.get<UserAccount>("account") ?? undefined,
+  );
   const [messageCallbacks, setMessageCallbacks] = useState<
     Map<string, MessageCallback[]>
   >(new Map());
@@ -52,7 +54,15 @@ export function AppProvider({ children }: PropsWithChildren) {
   const [unreadNotidications, setUnreadNotidications] = useState<boolean>(
     notifications.some((n) => n.read === false),
   );
-  const [undoneTodos, setUndoneTodos] = useState<boolean>(false);
+  const [todos, setTodos] = useState<TodoItem[]>(
+    storage.get<TodoItem[]>("todo") ?? [],
+  );
+  const [undoneTodos, setUndoneTodos] = useState<boolean>(
+    todos.some((t) => !t.done),
+  );
+  const [shortcuts, setShortcuts] = useState<Shortcut[]>(
+    storage.get<Shortcut[]>("shortcuts") ?? defaultShortcuts,
+  );
   let storeInChromeStorageInterval: number | undefined;
 
   function registerMessageCallback(action: string, callback: MessageCallback) {
@@ -99,24 +109,16 @@ export function AppProvider({ children }: PropsWithChildren) {
 
   function storeInChromeStorage() {
     chrome.storage.local.set({
-      settings: settings,
-      notifications: notifications,
-      shortcuts: storage.get<Shortcut[]>("shortcuts") ?? defaultShortcuts,
-      todos: storage.get<TodoItem[]>("todo") ?? [],
+      settings,
+      notifications,
+      shortcuts,
+      todos,
     });
   }
 
   function loadFromChromeStorage() {
     chrome.storage.local.get(
-      [
-        "account",
-        "settings",
-        "shortcuts",
-        "todo",
-        "notifications",
-        "weather",
-        "location",
-      ],
+      ["account", "settings", "notifications", "shortcuts", "todos"],
       (items) => {
         if (items.account) {
           setAccount(items.account);
@@ -136,7 +138,7 @@ export function AppProvider({ children }: PropsWithChildren) {
         if (items.todos) {
           storage.set("todo", items.todos);
         }
-        storeInChromeStorage();
+        setTimeout(() => storeInChromeStorage(), 1000);
         logger.log(`Chrome storage data`, "loaded");
       },
     );
@@ -157,13 +159,11 @@ export function AppProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     const isDark = settings.theme === DarkTheme;
     document.body.classList.toggle(DarkTheme, isDark);
-  }, [settings.theme]);
 
-  useEffect(() => {
-    if (settings.lang) {
+    if (translator.language.code !== settings.lang) {
       translator.setLanguage(settings.lang);
     }
-  }, [settings.lang]);
+  }, [settings]);
 
   useEffect(() => {
     if (isExtension) {
@@ -171,8 +171,6 @@ export function AppProvider({ children }: PropsWithChildren) {
       loadFromChromeStorage();
       storeInChromeStorageInterval = setInterval(storeInChromeStorage, 10000);
     }
-
-    getClientLanguage();
 
     window.addEventListener("resize", () => resizeHandler);
     document.addEventListener("keydown", (e: KeyboardEvent) =>
@@ -228,8 +226,12 @@ export function AppProvider({ children }: PropsWithChildren) {
             triggerNotification,
             unreadNotidications,
             setUnreadNotidications,
+            todos,
+            setTodos,
             undoneTodos,
             setUndoneTodos,
+            shortcuts,
+            setShortcuts,
           }}
         >
           <ModalProvider>

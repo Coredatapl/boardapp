@@ -10,7 +10,8 @@
 		"uppercase": "Das Passwort muss mindestens einen Großbuchstaben enthalten",
 		"lowercase": "Das Passwort muss mindestens einen Kleinbuchstaben enthalten",
 		"digit": "Das Passwort muss mindestens eine Zahl enthalten",
-		"special": "Das Passwort muss mindestens ein Sonderzeichen contain"
+		"special": "Das Passwort muss mindestens ein Sonderzeichen contain",
+		"confirmInvalid": "Passwords don't match"
 	},
 	"url": {
 		"invalid": "Die angegebene URL ist ungültig",

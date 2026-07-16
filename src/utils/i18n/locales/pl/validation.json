@@ -10,7 +10,8 @@
 		"uppercase": "Hasło must zawierać co najmniej jedną wielką literę",
 		"lowercase": "Hasło musi zawierać co najmniej jedną małą literę",
 		"digit": "Hasło musi zawierać co najmniej jedną cyfrę",
-		"special": "Hasło musi zawierać co najmniej jeden znak specjalny"
+		"special": "Hasło musi zawierać co najmniej jeden znak specjalny",
+		"confirmInvalid": "Hasłą muszą być takie same"
 	},
 	"url": {
 		"invalid": "Podany adres URL jest nieprawidłowy",

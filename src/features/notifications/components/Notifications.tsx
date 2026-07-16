@@ -18,7 +18,7 @@ import NotificationItem from "./NotificationItem";
 export default function Notifications() {
   const {
     isExtension,
-    settings,
+    account,
     registerMessageCallback,
     notifications,
     setNotifications,
@@ -74,15 +74,18 @@ export default function Notifications() {
   function saveNotifications(notifications: AppNotification[]) {
     setNotifications(notifications);
     storage.set("notifications", notifications, OneYearMs);
+    if (isExtension) {
+      chrome.storage.local.set({
+        notifications,
+      });
+    }
   }
 
   async function sendNotifications(notifications: AppNotification[]) {
-    if (!isExtension) return;
+    if (!isExtension || !account) return;
 
-    const recipient = settings.contactEmail;
-    const displayName = settings.displayName;
     const data = notifications
-      .filter((n) => !n.emailed && n.created < Date.now() + notifyCreatedLimit)
+      .filter((n) => !n.emailed && n.created + notifyCreatedLimit >= Date.now())
       .map((n) => ({
         label: n.label,
         desc: n.description,
@@ -92,7 +95,7 @@ export default function Notifications() {
 
     if (!data.length) return;
 
-    apiSendNotification(recipient, displayName, data);
+    apiSendNotification(data);
     logger.log("Sending notifications", "...");
   }
 
@@ -114,8 +117,8 @@ export default function Notifications() {
   useEffect(() => {
     if (notifications.some((n) => !n.emailed)) {
       const lastSend = storage.get<number>("notifications-send");
-      if (!lastSend || lastSend >= Date.now() + lastSendPeriod) {
-        sendNotifications(notifications);
+      if (!lastSend || lastSend + lastSendPeriod <= Date.now()) {
+        setTimeout(() => sendNotifications(notifications), 1000);
       }
     }
 

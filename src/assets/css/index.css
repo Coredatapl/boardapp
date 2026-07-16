@@ -21,7 +21,7 @@
 
 	--text-xs: 0.5rem;
 	--text-sm: 0.75rem;
-	--text-md: 0.85rem;
+	--text-md: 1rem;
 
 	--animate-fade-in: fadeIn 0.5s ease forwards;
 	--animate-slide-up: slideUp 0.5s ease forwards;

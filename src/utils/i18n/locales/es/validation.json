@@ -10,7 +10,8 @@
 		"uppercase": "La contraseña debe contener al menos una letra mayúscula",
 		"lowercase": "La contraseña debe contener al menos una letra minúscula",
 		"digit": "La contraseña debe contener al menos un número",
-		"special": "La contraseña debe contener al menos un carácter特殊"
+		"special": "La contraseña debe contener al menos un carácter",
+		"confirmInvalid": "Passwords don't match"
 	},
 	"url": {
 		"invalid": "La URL proporcionada no es válida",

@@ -23,6 +23,21 @@ async function handleLogout(reason) {
   log(`Logged out ${reason ? `for reason: ${reason}` : ""}`);
 }
 
+async function fetchWithTimeout(url, options = {}) {
+  const { timeout = 10000 } = options;
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeout);
+
+  const response = await fetch(url, {
+    ...options,
+    signal: controller.signal,
+  });
+  clearTimeout(timer);
+
+  return response;
+}
+
 async function fetchAuthenticated(url, options = {}) {
   const storage = await chrome.storage.local.get([
     "accessToken",
@@ -30,7 +45,7 @@ async function fetchAuthenticated(url, options = {}) {
   ]);
 
   if (!storage.accessToken) {
-    console.error("Authenticated fetch attempt with no auth token");
+    log("Authenticated fetch attempt with no auth token");
     return { status: 401, message: "No auth token" };
   }
 
@@ -39,7 +54,7 @@ async function fetchAuthenticated(url, options = {}) {
     Authorization: `Bearer ${storage.accessToken}`,
   };
 
-  const response = await fetch(url, options);
+  const response = await fetchWithTimeout(url, options);
 
   if (response.status === 401) {
     if (isRefreshing) {
@@ -65,11 +80,11 @@ async function fetchAuthenticated(url, options = {}) {
       onRefreshed(newTokens.accessToken);
 
       options.headers.Authorization = `Bearer ${newTokens.accessToken}`;
-      return fetch(url, options);
+      return fetchWithTimeout(url, options);
     } catch (error) {
       isRefreshing = false;
       refreshSubscribers = [];
-      console.error("Authenticated fetch failed", error);
+      log("Authenticated fetch failed", error);
       await handleLogout("auth_failed");
       throw new Error("Session expired");
     }
@@ -78,7 +93,6 @@ async function fetchAuthenticated(url, options = {}) {
   return response;
 }
 
-// TODO: request timeout (max 5s)
 async function sendRequest(endpoint, method, body) {
   const url = `${API_URL}${endpoint}`;
   const options = {
@@ -89,6 +103,7 @@ async function sendRequest(endpoint, method, body) {
       "Content-Type": "application/json",
     },
     body,
+    timeout: 5000,
   };
 
   try {
@@ -103,7 +118,7 @@ async function sendRequest(endpoint, method, body) {
 
     return { success: response.ok, result };
   } catch (error) {
-    console.error("Send request failed", error);
+    log("Send request failed", error);
     throw new Error(`Send request failed. ${error.message}`);
   }
 }
@@ -111,58 +126,99 @@ async function sendRequest(endpoint, method, body) {
 async function refreshTokens(refreshToken) {
   if (!refreshToken) throw new Error("No refresh token");
 
-  const response = await fetch(`${API_URL}/auth/refresh`, {
+  const response = await fetchWithTimeout(`${API_URL}/auth/refresh`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ refreshToken }),
   });
 
   if (!response.ok) {
-    throw new Error("Refreshing auth tokens failed");
+    return { success: false, result: "Refreshing auth tokens failed" };
   }
 
   return response.json(); // { accessToken, refreshToken }
 }
 
-async function register(email, password, username) {
-  const response = await fetch(`${API_URL}/auth/register`, {
+async function register(email, password, displayname) {
+  const response = await fetchWithTimeout(`${API_URL}/auth/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password, username, role: API_USER_ROLE }),
+    body: JSON.stringify({ email, password, displayname, role: API_USER_ROLE }),
   });
 
   if (!response.ok) {
-    throw new Error("Registration failed");
+    if (response.status === 409) {
+      return { success: false, result: "Account already exists" };
+    }
+    return { success: false, result: "Registration failed" };
   }
 
   return { success: true, result: "Registration successful" };
 }
 
 async function login(email, password) {
-  const response = await fetch(`${API_URL}/auth/login`, {
+  const response = await fetchWithTimeout(`${API_URL}/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
   });
 
   if (!response.ok) {
-    throw new Error("Authentication failed");
+    return { success: false, result: "Login failed" };
   }
 
   const result = await response.json();
 
   if (!result.accessToken?.length || !result.refreshToken?.length) {
-    throw new Error("No auth tokens");
+    return { success: false, result: "No auth tokens" };
   }
 
-  // TODO: get user account data (userId, username, createdAt)
   await chrome.storage.local.set({
-    account: { email, username: email, createdAt: "" },
     accessToken: result.accessToken,
     refreshToken: result.refreshToken,
   });
 
-  return { success: true, result: "Authentication successful" };
+  const account = await getAccountData(email);
+  const accountData = account.success
+    ? account.result
+    : {
+        email,
+        displayName: email,
+        createdAt: "",
+      };
+
+  return {
+    success: true,
+    result: accountData,
+  };
+}
+
+async function getAccountData(email) {
+  const route = `/user/${email}`;
+  const method = "GET";
+
+  try {
+    const response = await sendRequest(route, method);
+
+    if (!response.success) {
+      return {
+        success: false,
+        result: `Fetch user data failed. ${response.result}`,
+      };
+    }
+
+    const account = {
+      email: response.result.email,
+      displayName: response.result.displayname,
+      createdAt: response.result.createdAt,
+    };
+
+    await chrome.storage.local.set({ account });
+
+    return { success: true, result: account };
+  } catch (error) {
+    return { success: false, result: error };
+  }
 }
 
 async function sendNotification(data) {
@@ -178,9 +234,18 @@ async function sendNotification(data) {
     recipient: storage.account.email,
     subject: `BoardApp Notifications`,
     template: "boardapp-notification",
-    templateData: data,
+    templateData: {
+      displayName: storage.account.displayName,
+      notifications: data.notifications,
+    },
   });
-  return sendRequest(route, method, body);
+
+  try {
+    const response = await sendRequest(route, method, body);
+    return response;
+  } catch (error) {
+    return { success: false, result: error };
+  }
 }
 
 function log(message, data) {
@@ -213,40 +278,28 @@ chrome.runtime.onMessage.addListener((message) => {
     responseHandler({ success: false, result: error });
   }
 
-  try {
-    if (message.action === "register") {
-      register(
-        message.data.email,
-        message.data.password,
-        message.data.displayName,
-      ).then((response) => {
+  if (message.action === "register") {
+    register(
+      message.data.email,
+      message.data.password,
+      message.data.displayName,
+    )
+      .then((response) => {
         if (response.success) {
-          login(message.data.email, message.data.password).then(
-            (loginResponse) => {
-              if (loginResponse.success) {
-                // TODO: Add to BoardApp newslleter
-              }
-              return responseHandler(response);
-            },
-          );
+          // TODO: Add to BoardApp newslleter
         }
-        return responseHandler(response);
-      });
-    } else if (message.action === "login") {
-      login(message.data.email, message.data.password).then((response) =>
-        responseHandler(response),
-      );
-    } else if (message.action === "logout") {
-      handleLogout(message.data.reason);
-    } else if (message.action === "send_notification") {
-      sendNotification(message.data).then((response) =>
-        responseHandler(response),
-      );
-    }
-  } catch (error) {
-    errorHandler(error);
-    return false;
+        responseHandler(response);
+      })
+      .catch((error) => errorHandler(error));
+  } else if (message.action === "login") {
+    login(message.data.email, message.data.password)
+      .then((response) => responseHandler(response))
+      .catch((error) => errorHandler(error));
+  } else if (message.action === "logout") {
+    handleLogout(message.data.reason);
+  } else if (message.action === "send_notification") {
+    sendNotification(message.data)
+      .then((response) => responseHandler(response))
+      .catch((error) => errorHandler(error));
   }
-
-  return true; // Keeps the communication line open for the async fetch
 });

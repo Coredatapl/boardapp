@@ -10,7 +10,8 @@
 		"uppercase": "Le mot de passe doit contenir au moins une lettre majuscule",
 		"lowercase": "Le mot de passe doit contenir au moins une lettre minuscule",
 		"digit": "Le mot de passe doit contenir au moins un chiffre",
-		"special": "Le mot de passe doit contenir au moins un caractère spécial"
+		"special": "Le mot de passe doit contenir au moins un caractère spécial",
+		"confirmInvalid": "Passwords don't match"
 	},
 	"url": {
 		"invalid": "L'URL fournie n'est pas valide",

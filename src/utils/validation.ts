@@ -1,5 +1,4 @@
 import * as z from "zod/mini";
-import { useLogger } from "@/hooks/useLogger";
 import { useTranslate } from "@/hooks/useTranslate";
 
 export type ZodSchema = z.ZodMiniURL | z.ZodMiniString<string>;
@@ -80,11 +79,33 @@ export const getPasswordSchema = (
  */
 export const validate = (value: any, schema: ZodSchema): string[] | null => {
 	const { t } = useTranslate();
-	const logger = useLogger("Validator");
 	const result = schema.safeParse(value);
 	if (!result.success) {
 		const errors = result.error.issues.map((e) => e.message);
-		logger.log(`Value ${value} is invalid`, { errors });
+		return errors.length ? errors : [t("validation.invalid")];
+	}
+	return null;
+};
+
+export const validatePasswords = (
+	password: string,
+	passwordConfirm: string,
+): string[] | null => {
+	const { t } = useTranslate();
+	const passwordPair = z
+		.object({
+			password: z.string(),
+			passwordConfirm: z.string(),
+		})
+		.check(
+			z.refine((data) => data.password === data.passwordConfirm, {
+				error: t("validation.password.confirmInvalid"),
+				path: ["confirm"],
+			}),
+		);
+	const result = z.safeParse(passwordPair, { password, passwordConfirm });
+	if (!result.success) {
+		const errors = result.error.issues.map((e) => e.message);
 		return errors.length ? errors : [t("validation.invalid")];
 	}
 	return null;

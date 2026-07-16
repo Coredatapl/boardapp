@@ -9,25 +9,32 @@ import { useLogger } from "@/hooks/useLogger";
 import { useTranslate } from "@/hooks/useTranslate";
 import { apiLogout } from "@/utils/api";
 import { capitalise } from "@/utils/common";
+import { useStorage } from "@/hooks/useStorage";
 
 export default function AccountModal() {
-  const { account, setAccount } = useAppContext();
+  const { isExtension, account, setAccount } = useAppContext();
   const modal = useModal();
+  const storage = useStorage();
   const logger = useLogger("Auth");
   const { t } = useTranslate();
 
   function logoutAction() {
     setAccount(undefined);
     apiLogout("user_action");
+    storage.del("account");
     modal.close();
   }
 
   useEffect(() => {
+    if (!isExtension) {
+      logger.log("Authentication available only within Chrome Extension");
+      modal.close();
+    }
     if (!account) {
       logger.log("User account undefined");
       modal.close();
     }
-  }, [account]);
+  }, [isExtension, account]);
 
   if (!account) return;
 
@@ -52,7 +59,7 @@ export default function AccountModal() {
             className="text-xl font-semibold text-gray-900 dark:text-white"
             id="user-name"
           >
-            {capitalise(account.username)}
+            {capitalise(account.displayName)}
           </h3>
           <p
             className="text-sm text-gray-500 dark:text-gray-400 mt-1"
@@ -61,7 +68,7 @@ export default function AccountModal() {
             {account.email}
           </p>
           <p className="mt-6 text-sm">
-            Associated with a{" "}
+            Associated with{" "}
             <a
               href="https://coredata.pl"
               target="_blank"
@@ -70,7 +77,15 @@ export default function AccountModal() {
             >
               Coredata Services Server
             </a>{" "}
-            account{account.createdAt.length ? ` on ${account.createdAt}` : ""}.
+            account
+            {account.createdAt.length && (
+              <span>
+                {" "}
+                on <br />
+                {account.createdAt}
+              </span>
+            )}
+            .
           </p>
 
           <div className="mt-6">

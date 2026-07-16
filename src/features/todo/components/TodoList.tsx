@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAppContext } from "@/app/AppContext";
 import Button from "@/components/ui/Button";
 import { usePanel } from "@/components/ui/panel/hooks/usePanel";
@@ -16,14 +16,12 @@ import AddTodoItem from "./AddTodoItem";
 import TodoListItem from "./TodoListItem";
 
 export default function TodoList() {
-  const { setUndoneTodos, triggerNotification } = useAppContext();
+  const { isExtension, todos, setTodos, setUndoneTodos, triggerNotification } =
+    useAppContext();
   const { t } = useTranslate();
   const logger = useLogger("TodoList");
   const storage = useStorage();
   const { activePanel, closePanel } = usePanel();
-  const [todos, setTodos] = useState<TodoItem[]>(
-    storage.get<TodoItem[]>("todo") ?? [],
-  );
 
   function addItem(item: TodoItem) {
     const existingItem = todos.find((t) => compare(t.label, item.label));
@@ -78,6 +76,11 @@ export default function TodoList() {
   function saveTodos(todos: TodoItem[]) {
     setTodos(todos);
     storage.set("todo", todos, OneYearMs);
+    if (isExtension) {
+      chrome.storage.local.set({
+        todos,
+      });
+    }
   }
 
   useEffect(() => {

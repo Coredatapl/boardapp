@@ -4,7 +4,7 @@ import { useModal } from "@/components/ui/modal/hooks/useModal";
 import { useLogger } from "@/hooks/useLogger";
 import type { ApiResponse, ApiSessionExpiredResponse } from "@/types/api";
 import AccountModal from "./AccountModal";
-import LoginModal from "./LoginModal";
+import AuthModal from "./AuthModal";
 
 export default function Account() {
   const { isExtension, account, setAccount, registerMessageCallback } =
@@ -14,7 +14,7 @@ export default function Account() {
 
   function openModal() {
     if (!account) {
-      modal.open(<LoginModal />);
+      modal.open(<AuthModal />);
     } else {
       modal.open(<AccountModal />);
     }
@@ -25,13 +25,7 @@ export default function Account() {
       logger.log("Authenticate action failed", { result: response.result });
       return;
     }
-    chrome.storage.local.get(["account"], (items) => {
-      if (!items.account) {
-        logger.log("No account data in storage after authentication");
-        return;
-      }
-      setAccount(items.account);
-    });
+    setAccount(response.result);
   }
 
   function onSessionExpired(response: ApiSessionExpiredResponse) {
@@ -42,7 +36,7 @@ export default function Account() {
 
   useEffect(() => {
     if (!isExtension) return;
-    registerMessageCallback("authenticate_result", onAuthenticate);
+    registerMessageCallback("login_result", onAuthenticate);
     registerMessageCallback("session_expired", onSessionExpired);
   }, []);
 

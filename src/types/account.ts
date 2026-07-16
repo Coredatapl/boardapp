@@ -1,5 +1,5 @@
 export interface UserAccount {
 	email: string;
-	username: string;
+	displayName: string;
 	createdAt: string;
 }
