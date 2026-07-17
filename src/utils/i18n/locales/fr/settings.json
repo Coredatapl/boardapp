@@ -1,0 +1,27 @@
+{
+	"header": "Paramètres",
+	"appearance": {
+		"header": "Apparence",
+		"mode": "Mode {{theme}}",
+		"themeHint": "Actuellement {{theme}}"
+	},
+	"profile": {
+		"header": "Profil",
+		"language": "Langue",
+		"languageHint": "Utilisé pour les commandes vocales et la précision de la transcription.",
+		"displayName": "Nom d'affichage",
+		"displayNamePlaceholder": "ex. John",
+		"displayNameHint": "Affiché dans le message d'accueil."
+	},
+	"shortcuts": {
+		"header": "Raccourcis",
+		"editLabel": "Modifier les raccourcis",
+		"editingHint": "Modification en cours — appuyez sur ✕ pour supprimer",
+		"toEditHint": "Appuyez pour passer en mode édition"
+	},
+	"about": {
+		"header": "À propos",
+		"developed": "Développé par"
+	},
+	"saveHint": "Paramètres enregistrés automatiquement"
+}

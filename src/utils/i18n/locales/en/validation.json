@@ -1,0 +1,24 @@
+{
+	"invalid": "Value invalid",
+	"string": {
+		"minLength": "The string must be at least {{minLength}} characters long",
+		"maxLength": "The string can be at most {{maxLength}} characters long"
+	},
+	"password": {
+		"minLength": "Password must be at least {{minLength}} characters long",
+		"maxLength": "The password can have a maximum of {{maxLength}} characters",
+		"uppercase": "The password must contain at least one uppercase letter",
+		"lowercase": "The password must contain at least one lowercase letter",
+		"digit": "The password must contain at least one number",
+		"special": "The password must contain at least one special character",
+		"confirmInvalid": "Passwords don't match"
+	},
+	"url": {
+		"invalid": "The URL you provided is invalid",
+		"minLength": "URL must be at least {{minLength}} characters long"
+	},
+	"email": {
+		"invalid": "The email address provided is incorrect",
+		"minLength": "Email must be at least {{minLength}} characters long"
+	}
+}

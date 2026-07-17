@@ -1,0 +1,19 @@
+{
+	"editHint": {
+		"part1": "Stuknij",
+		"part2": "skrót, aby go usunąć",
+		"part3": "kliknij w innym miejscu lub naciśnij Esc, aby wyjść"
+	},
+	"addModal": {
+		"header": "Dodaj skrót",
+		"shortcutName": "Nowy skrót",
+		"nameLabel": "Nazwa",
+		"actionAdd": "Dodaj skrót",
+		"buttonAdd": "Dodaj"
+	},
+	"deleteModal": {
+		"header": "Usunąć skrót?",
+		"hint": "zostanie usunięty ze strony nowej karty",
+		"actionDelete": "Usuń skrót"
+	}
+}

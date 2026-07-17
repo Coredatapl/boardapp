@@ -1,0 +1,12 @@
+{
+	"confirmLabel": "Confirm",
+	"cancelLabel": "Cancel",
+	"yearsAgo": "{{years}} years ago",
+	"monthsAgo": "{{months}} months ago",
+	"daysAgo": "{{days}} days ago",
+	"hoursAgo": "{{hours}} hours ago",
+	"minutesAgo": "{{minutes}} minutes ago",
+	"secondsAgo": "{{seconds}} seconds ago",
+	"now": "just now",
+	"loadingInfo": "Application components are loading ..."
+}

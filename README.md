@@ -1,68 +1,84 @@
-# <img src="/src/assets/img/logo-color.svg" alt="Board App project" width="300" height="auto">
+# <img src="/src/assets/img/logo-color.png" alt="Board App project" width="300" height="auto">
 
-![version](https://img.shields.io/badge/version-1.0.2-blue.svg)
+![version](https://img.shields.io/badge/version-2.0-blue.svg)
 
-Coredata specializes in AI automation, web and mobile apps, IT support and consultations.
+<b>BoardApp</b> is an enhanced fully customizable start page with advanced search features, shortcuts, todo list, notifications and many other features.
 
-Board App is a React application that replaces the browser's start page, provides many additional functions and expands web search functions.
+The application was developed by <b>Coredata</b>, a company that specializes in artificial intelligence automation, web and mobile applications, IT support, and consulting.
+
+<img src="/src/assets/img/combined-mock.png" alt="Board App project" width="600" height="auto">
+
+## Google Chrome Extension
 
 ## Main features
 
-- Extended search options
-- Shortcuts for favorite pages
-- Current weather informations
-- Current date and time informations
-- Todo list widget
-- Personalised settings
+### Search
 
-Find out more at [board.coredata.pl](https://board.coredata.pl/)
+Improved search bar with customizable search modes and modern progressive design.
 
-## Requirements
+- <b>AI mode</b> allows you to ask questions and send commands directly to the AI ​​assistant.
 
-- NodeJS **LTS** version from [NodeJs Official Page](https://nodejs.org)
-- NPM Package manager
+- <b>Voice mode</b> allows you to dictate questions and commands by voice.
 
-## Configuration
+### Shortcuts
+
+Manage shortcuts to your favotire sites on the start page. Now you have all your favorite sites at your fingertips.
+
+You can add, rearrange, and remove shortcuts to your favorite sites.
+Shortcuts can be automatically sorted based on popularity.
+
+### TODO List
+
+Manage your daily todo tasks and get notifications in one place. You will never forget an important task again.
+
+You can add, uncheck, and delete completed tasks.
+
+### Notifications
+
+The notification system allows you to be notified of important tasks at scheduled intervals. You'll also receive notifications about various important events in the app.
+
+### Weather
+
+Have information about the current weather in your location always at your fingertips.
+
+Weather information is updated continuously. You can also view a weather map and forecast for the next few days.
+
+### Greeting
+
+Each time, the app will greet you with a personalized greeting.
+
+You'll also receive information about the current day of the week and time. Time data is updated continuously.
+
+### Personalisation
+
+Customize the look of your home page to suit your needs.
+
+You have two graphic modes to choose from: light and dark. The graphic mode adapts to the appearance of your browser.
+
+### Privacy
+
+Whenever you use the app, <b>your personal data is safe</b>. The app does not collect your personal information, and weather location information is stored in your browser's local storage.
+
+You can clear your stored data at any time by clearing your browser data.
+
+Find out more at [board.coredata.pl](https://board.coredata.pl).
+
+## Development
+
+### Requirements
+
+- Vite
+- Pnpm
+
+### Configuration
 
 To run this app you need to create `.env` file with configuration params. Edit the `.env.sample` file, rename it and provide correct param values for your environment.
 
-## Getting Started with Create React App
+## Learn More
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-### Available Scripts
-
-In the project directory, you can run:
-
-#### `npm run start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-#### `npm run test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-#### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+You can learn more in the [Board App Documentation](https://board.coredata.pl).
 
 ---
 
-<sup>Coredata &copy; All rights reserved. Visit http://coredata.pl</sup>
+<sup><b>Coredata</b> &copy; All rights reserved.
+Visit http://coredata.pl</sup>

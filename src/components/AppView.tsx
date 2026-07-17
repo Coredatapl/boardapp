@@ -1,29 +1,33 @@
-import { useEffect, useState } from 'react';
-import { UnsplashApi } from '../utils/unsplash/UnsplashApi';
+import { type PropsWithChildren, useEffect } from "react";
+import { useAppContext } from "@/app/AppContext";
+import { useLogger } from "@/hooks/useLogger";
 
-interface AppViewProps {
-  children: any;
-}
+export default function AppView({ children }: PropsWithChildren) {
+	const { isExtension, messageCallbacks } = useAppContext();
+	const logger = useLogger();
 
-export default function AppView({ children }: AppViewProps) {
-  const bgChangeInterval = 15 * 60 * 1000;
-  const Unsplash = new UnsplashApi();
-  const [bgUrl, setBgUrl] = useState(Unsplash.getRandom());
+	useEffect(() => {
+		if (!isExtension) return;
+		chrome.runtime.onMessage.addListener((message) => {
+			const callbacks = messageCallbacks.get(message.action);
+			if (callbacks) {
+				logger.log(`Handling ${message.action} message`, "...");
+				for (const callback of callbacks) {
+					callback(message);
+				}
+			} else {
+				logger.log(`No handler for ${message.action} message`);
+			}
+			return false;
+		});
+	}, [isExtension]);
 
-  useEffect(() => {
-    setInterval(() => {
-      setBgUrl(Unsplash.getRandom());
-    }, bgChangeInterval);
-  }, []);
-  return (
-    <div
-      className="app-background ease-linear transition-all duration-500"
-      style={{ backgroundImage: `url('${bgUrl}')` }}
-      role="main-container"
-    >
-      <div className="flex flex-col min-h-screen max-h-screen overflow-hidden overscroll-none app-wrapper">
-        {children}
-      </div>
-    </div>
-  );
+	return (
+		<div
+			id="appView"
+			className={`relative min-h-screen overflow-x-hidden dark:bg-surface-dark bg-surface transition-colors duration-300`}
+		>
+			{children}
+		</div>
+	);
 }

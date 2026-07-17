@@ -1,0 +1,173 @@
+@import "tailwindcss";
+
+@theme {
+	--color-surface: #f3f4f6;
+	--color-surface-container: #ffffff;
+	--color-surface-item: #f9fafb;
+	--color-surface-element: #e5e7eb;
+	--color-surface-hover: oklab(0 0 0 / 0.05);
+
+	--color-surface-dark: #1a1a1a;
+	--color-surface-dark-container: #242424;
+	--color-surface-dark-item: #2f2f2f;
+	--color-surface-dark-element: #3b3b3b;
+	--color-surface-dark-hover: oklab(0.999994 0.0000455678 0.0000200868 / 0.05);
+
+	--color-accent: #5e72e4;
+	--color-accent-soft: #8f9ef0;
+	--color-green: #4ade80;
+	--color-yellow: #ffb900;
+	--color-error: #cc5500;
+
+	--text-xs: 0.5rem;
+	--text-sm: 0.75rem;
+	--text-md: 1rem;
+
+	--animate-fade-in: fadeIn 0.5s ease forwards;
+	--animate-slide-up: slideUp 0.5s ease forwards;
+	--animate-tile-out: tileOut 0.5s ease forwards;
+
+	@keyframes fadeIn {
+		0% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+	@keyframes slideUp {
+		0% {
+			opacity: 0;
+			transform: translateY(16px);
+		}
+		100% {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+	@keyframes tileOut {
+		0% {
+			opacity: 1;
+			transform: scale(1) rotate(0deg);
+		}
+		45% {
+			opacity: 0.3;
+			transform: scale(1.1) rotate(-4deg);
+		}
+		100% {
+			opacity: 0;
+			transform: scale(0.4) rotate(6deg);
+		}
+	}
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+	--text: #6b6375;
+	--bg: #fff;
+	--sans: sans-serif;
+	--mono: monospace;
+
+	font: 18px / 145% var(--sans);
+	color: var(--text);
+	background: var(--bg);
+	letter-spacing: 0.18px;
+	color-scheme: light dark;
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	@media (max-width: 1024px) {
+		font-size: 16px;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--text: #9ca3af;
+		--bg: #1a1a1a;
+
+		font: 18px / 145% var(--sans);
+		color: var(--text);
+		background: var(--bg);
+	}
+}
+
+/**
+ * Prevent -internal-autofill-selected browser style using !important
+ * Transitions take precedence over !important
+ */
+input:autofill,
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:autofill,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:autofill,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+	transition:
+		color calc(infinity * 1s) step-end,
+		background-color calc(infinity * 1s) step-end;
+}
+
+body {
+	font-family: var(--sans);
+}
+/* Noise overlay for depth */
+body::before {
+	content: "";
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	z-index: 0;
+	background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+	opacity: 0.4;
+}
+
+a:hover {
+	color: var(--color-accent);
+}
+
+code,
+pre {
+	font-family: var(--mono);
+}
+
+.dropdown-animate {
+	transition:
+		opacity 0.2s ease-out,
+		transform 0.2s ease-out;
+}
+
+/* Stagger delays */
+.delay-1 {
+	animation-delay: 0.05s;
+}
+.delay-2 {
+	animation-delay: 0.1s;
+}
+.delay-3 {
+	animation-delay: 0.15s;
+}
+
+/* Shortcut icon hover ring */
+.shortcut:hover .icon-wrap {
+	box-shadow: 0 0 0 2px var(--accent-dim);
+}
+
+.tile-removing {
+	animation: tileOut 0.28s ease forwards;
+	pointer-events: none;
+}
+
+/* Todo item check animation */
+.todo-item input[type="checkbox"]:checked + span {
+	text-decoration: line-through;
+	opacity: 0.5;
+}

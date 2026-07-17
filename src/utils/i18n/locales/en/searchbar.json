@@ -1,0 +1,17 @@
+{
+	"defaultPlaceholder": "Search or type URL …",
+	"aiPlaceholder": "Ask a question or type a command ...",
+	"voicePlaceholder": "Tell me what you're looking for ...",
+	"listeningPlaceholder": "I'm listening ...",
+	"actionSearch": "Search",
+	"actionAsk": "Ask",
+	"actionTalk": "Talk",
+	"actionStop": "Stop",
+	"actionSend": "Send",
+	"searchModeLabel": "Search mode",
+	"searchModeDescription": "Default search engine",
+	"aiModeLabel": "AI mode",
+	"aiModeDescription": "Ask questions to AI chatbot",
+	"voiceModeLabel": "Voice mode",
+	"voiceModeDescription": "Talk and get text from speech"
+}

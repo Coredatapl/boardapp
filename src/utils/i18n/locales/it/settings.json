@@ -1,0 +1,27 @@
+{
+	"header": "Impostazioni",
+	"appearance": {
+		"header": "Aspetto",
+		"mode": "Modalità {{theme}}",
+		"themeHint": "Attualmente {{theme}}"
+	},
+	"profile": {
+		"header": "Profilo",
+		"language": "Lingua",
+		"languageHint": "Utilizzata per i comandi vocali e la precisione della trascrizione.",
+		"displayName": "Nome visualizzato",
+		"displayNamePlaceholder": "es. John",
+		"displayNameHint": "Mostrato nel messaggio di saluto."
+	},
+	"shortcuts": {
+		"header": "Scorciatoie",
+		"editLabel": "Modifica scorciatoie",
+		"editingHint": "Modifica in corso — tocca ✕ per rimuovere",
+		"toEditHint": "Tocca per accedere alla modalità di modifica"
+	},
+	"about": {
+		"header": "Informazioni",
+		"developed": "Sviluppato da"
+	},
+	"saveHint": "Impostazioni salvate automaticamente"
+}

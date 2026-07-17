@@ -1,29 +1,37 @@
-export const targetInside = (
-  target: EventTarget,
-  element: HTMLElement
-): boolean => {
-  return element && element.contains(target as Node);
+export const LightTheme = "light";
+export const DarkTheme = "dark";
+
+export const normalize = (text: string) => {
+	if (!text) return "";
+	return text.toLowerCase();
 };
 
-export const matchByWords = (
-  words: string[],
-  data: string[],
-  withOrder: boolean = false,
-  minLength: number = 3
-): string[] => {
-  const matchedData: { value: string; count: number }[] = [];
-  for (const value of data) {
-    const filtered = words.filter(
-      (word) => word.length > minLength && value.indexOf(word) !== -1
-    );
-
-    if (filtered.length) {
-      matchedData.push({ value, count: filtered.length });
-    }
-  }
-
-  if (withOrder) {
-    matchedData.sort((a, b) => b.count - a.count);
-  }
-  return matchedData.map((v) => v.value);
+export const capitalise = (text: string) => {
+	if (!text) return "";
+	return text.charAt(0).toUpperCase() + text.slice(1);
 };
+
+export const compare = (str1: string, str2: string): boolean => {
+	if (!str1 || !str2) return false;
+	return normalize(str1) === normalize(str2);
+};
+
+export async function checkPermission(
+	name: PermissionName,
+	onGranted?: () => void,
+	onDenied?: () => void,
+) {
+	const permission = await navigator.permissions.query({
+		name,
+	});
+
+	if (permission.state === "granted" && onGranted) {
+		onGranted();
+	} else if (permission.state === "denied" && onDenied) {
+		onDenied();
+	}
+
+	permission.addEventListener("change", () => {
+		checkPermission(name, onGranted, onDenied);
+	});
+}

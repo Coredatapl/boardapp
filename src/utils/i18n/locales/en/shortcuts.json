@@ -1,0 +1,19 @@
+{
+	"editHint": {
+		"part1": "Tap",
+		"part2": "on a shortcut to remove it",
+		"part3": "click elsewhere or press Esc to exit"
+	},
+	"addModal": {
+		"header": "Add Shortcut",
+		"shortcutName": "New Shortcut",
+		"nameLabel": "Name",
+		"actionAdd": "Add Shortcut",
+		"buttonAdd": "Add"
+	},
+	"deleteModal": {
+		"header": "Remove Shortcut?",
+		"hint": "will be removed from your new tab page",
+		"actionDelete": "Delete Shortcut"
+	}
+}

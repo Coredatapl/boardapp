@@ -1,0 +1,27 @@
+{
+	"header": "Ustawienia",
+	"appearance": {
+		"header": "Wygląd",
+		"mode": "Tryb {{theme}}",
+		"themeHint": "Aktualnie: {{theme}}"
+	},
+	"profile": {
+		"header": "Profil",
+		"language": "Język",
+		"languageHint": "Używany do komend głosowych i dokładności transkrypcji.",
+		"displayName": "Nazwa wyświetlana",
+		"displayNamePlaceholder": "np. Jan",
+		"displayNameHint": "Wyświetlana w wiadomości powitalnej."
+	},
+	"shortcuts": {
+		"header": "Skróty",
+		"editLabel": "Edytuj skróty",
+		"editingHint": "Tryb edycji — stuknij ✕, aby usunąć",
+		"toEditHint": "Stuknij, aby wejść w tryb edycji"
+	},
+	"about": {
+		"header": "O aplikacji",
+		"developed": "Stworzone przez"
+	},
+	"saveHint": "Ustawienia zapisują się automatycznie"
+}

@@ -1,0 +1,27 @@
+{
+	"header": "Einstellungen",
+	"appearance": {
+		"header": "Erscheinungsbild",
+		"mode": "{{theme}} Modus",
+		"themeHint": "Aktuell {{theme}}"
+	},
+	"profile": {
+		"header": "Profil",
+		"language": "Sprache",
+		"languageHint": "Wird für Sprachbefehle und die Genauigkeit der Transkription verwendet.",
+		"displayName": "Anzeigename",
+		"displayNamePlaceholder": "z. B. John",
+		"displayNameHint": "Wird in der Begrüßungsnachricht angezeigt."
+	},
+	"shortcuts": {
+		"header": "Verknüpfungen",
+		"editLabel": "Verknüpfungen bearbeiten",
+		"editingHint": "Aktuell im Bearbeitungsmodus — tippe auf ✕ zum Entfernen",
+		"toEditHint": "Tippen, um den Bearbeitungsmodus zu öffnen"
+	},
+	"about": {
+		"header": "Über",
+		"developed": "Entwickelt von"
+	},
+	"saveHint": "Einstellungen automatisch gespeichert"
+}

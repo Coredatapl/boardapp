@@ -1,0 +1,24 @@
+{
+	"invalid": "Valor no válido",
+	"string": {
+		"minLength": "La cadena debe tener al menos {{minLength}} caracteres",
+		"maxLength": "La cadena puede tener como máximo {{maxLength}} caracteres"
+	},
+	"password": {
+		"minLength": "La contraseña debe tener al menos {{minLength}} caracteres",
+		"maxLength": "La contraseña puede tener un máximo de {{maxLength}} caracteres",
+		"uppercase": "La contraseña debe contener al menos una letra mayúscula",
+		"lowercase": "La contraseña debe contener al menos una letra minúscula",
+		"digit": "La contraseña debe contener al menos un número",
+		"special": "La contraseña debe contener al menos un carácter",
+		"confirmInvalid": "Passwords don't match"
+	},
+	"url": {
+		"invalid": "La URL proporcionada no es válida",
+		"minLength": "La URL debe tener al menos {{minLength}} caracteres"
+	},
+	"email": {
+		"invalid": "La dirección de correo electrónico proporcionada es incorrecta",
+		"minLength": "El correo electrónico debe tener al menos {{minLength}} caracteres"
+	}
+}

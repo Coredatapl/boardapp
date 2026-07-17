@@ -1,0 +1,19 @@
+{
+	"editHint": {
+		"part1": "Tocca",
+		"part2": "su una scorciatoia per rimuoverla",
+		"part3": "fai clic altrove o premi Esc per uscire"
+	},
+	"addModal": {
+		"header": "Aggiungi scorciatoia",
+		"shortcutName": "Nuova scorciatoia",
+		"nameLabel": "Nome",
+		"actionAdd": "Aggiungi scorciatoia",
+		"buttonAdd": "Aggiungi"
+	},
+	"deleteModal": {
+		"header": "Rimuovere la scorciatoia?",
+		"hint": "verrà rimossa dalla pagina della tua nuova scheda",
+		"actionDelete": "Elimina scorciatoia"
+	}
+}

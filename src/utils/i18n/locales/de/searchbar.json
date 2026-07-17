@@ -1,0 +1,17 @@
+{
+	"defaultPlaceholder": "Suchen oder URL eingeben …",
+	"aiPlaceholder": "Frage stellen oder Befehl eingeben ...",
+	"voicePlaceholder": "Sag mir, wonach du suchst ...",
+	"listeningPlaceholder": "Ich höre zu ...",
+	"actionSearch": "Suchen",
+	"actionAsk": "Fragen",
+	"actionTalk": "Sprechen",
+	"actionStop": "Stopp",
+	"actionSend": "Senden",
+	"searchModeLabel": "Such modus",
+	"searchModeDescription": "Standard-Suchmaschine",
+	"aiModeLabel": "AI Modus",
+	"aiModeDescription": "Fragen an den AI-Chatbot stellen",
+	"voiceModeLabel": "Sprach modus",
+	"voiceModeDescription": "Sprechen und Text aus Sprache erhalten"
+}

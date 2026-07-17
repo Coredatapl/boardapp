@@ -1,0 +1,27 @@
+{
+	"header": "Settings",
+	"appearance": {
+		"header": "Appearance",
+		"mode": "{{theme}} Mode",
+		"themeHint": "Currently {{theme}}"
+	},
+	"profile": {
+		"header": "Profile",
+		"language": "Language",
+		"languageHint": "Used for voice commands and transcription accuracy.",
+		"displayName": "Display Name",
+		"displayNamePlaceholder": "e.g. John",
+		"displayNameHint": "Shown in the greeting message."
+	},
+	"shortcuts": {
+		"header": "Shortcuts",
+		"editLabel": "Edit Shortcuts",
+		"editingHint": "Currently editing — tap ✕ to remove",
+		"toEditHint": "Tap to enter edit mode"
+	},
+	"about": {
+		"header": "About",
+		"developed": "Developed by"
+	},
+	"saveHint": "Settings saved automatically"
+}

@@ -1,0 +1,19 @@
+{
+	"editHint": {
+		"part1": "Tippe auf",
+		"part2": "ein Tastenkürzel, um es zu entfernen",
+		"part3": "klicke woanders hin oder drücke Esc zum Beenden"
+	},
+	"addModal": {
+		"header": "Verknüpfung hinzufügen",
+		"shortcutName": "Neue Verknüpfung",
+		"nameLabel": "Name",
+		"actionAdd": "Verknüpfung hinzufügen",
+		"buttonAdd": "Hinzufügen"
+	},
+	"deleteModal": {
+		"header": "Verknüpfung entfernen?",
+		"hint": "wird von deiner neuer tab seite entfernt",
+		"actionDelete": "Verknüpfung löschen"
+	}
+}
