@@ -2,7 +2,8 @@ export type ApiActionType =
 	| "register"
 	| "login"
 	| "logout"
-	| "send_notification";
+	| "send_notification"
+	| "geolocation";
 
 export type MessageCallback = (message: any) => void;
 

@@ -4,6 +4,7 @@ const ENV = "dev";
 const API_URL = "https://server.coredata.pl";
 const API_USER_ROLE = "user";
 let isRefreshing = false;
+let isGeolocating = false;
 let refreshSubscribers = [];
 
 function subscribeTokenRefresh(cb) {
@@ -248,6 +249,31 @@ async function sendNotification(data) {
   }
 }
 
+async function geolocation() {
+  if (isGeolocating) return;
+
+  const route = "/geolocation";
+  const method = "GET";
+  isGeolocating = true;
+
+  try {
+    const response = await sendRequest(route, method);
+    isGeolocating = false;
+
+    if (!response.success) {
+      return {
+        success: false,
+        result: `Geolocation failed. ${response.result}`,
+      };
+    }
+
+    return response;
+  } catch (error) {
+    isGeolocating = false;
+    return { success: false, result: error };
+  }
+}
+
 function log(message, data) {
   if (ENV === "prod") return;
   const time = `${new Date().toLocaleTimeString("en-GB", {
@@ -299,6 +325,11 @@ chrome.runtime.onMessage.addListener((message) => {
     handleLogout(message.data.reason);
   } else if (message.action === "send_notification") {
     sendNotification(message.data)
+      .then((response) => responseHandler(response))
+      .catch((error) => errorHandler(error));
+  } else if (message.action === "geolocation") {
+    if (isGeolocating) return;
+    geolocation()
       .then((response) => responseHandler(response))
       .catch((error) => errorHandler(error));
   }

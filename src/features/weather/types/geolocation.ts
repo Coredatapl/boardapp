@@ -13,3 +13,12 @@ export interface IpGeolocationData {
 	longitude: number;
 	ip: string;
 }
+
+export interface ApiGeolocationData {
+	ip: string;
+	latitude: number;
+	longitude: number;
+	city: string;
+	countryName: string;
+	countryCode: string;
+}

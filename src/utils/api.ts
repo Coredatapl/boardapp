@@ -45,4 +45,14 @@ const apiSendNotification = async (
 	});
 };
 
-export { apiLogin, apiLogout, apiRegister, apiSendNotification };
+const apiGeolocation = async (): Promise<void> => {
+	return apiRequest("geolocation", {});
+};
+
+export {
+	apiGeolocation,
+	apiLogin,
+	apiLogout,
+	apiRegister,
+	apiSendNotification,
+};

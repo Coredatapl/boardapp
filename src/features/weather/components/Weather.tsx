@@ -4,10 +4,17 @@ import { useModal } from "@/components/ui/modal/hooks/useModal";
 import { useLogger } from "@/hooks/useLogger";
 import { useStorage } from "@/hooks/useStorage";
 import { useTranslate } from "@/hooks/useTranslate";
+import type { ApiResponse } from "@/types/api";
+import { apiGeolocation } from "@/utils/api";
 import { checkPermission } from "@/utils/common";
 import { measure } from "@/utils/metrics";
-import type { Cordinates, IpGeolocationData } from "../types/geolocation";
+import type {
+  ApiGeolocationData,
+  Cordinates,
+  IpGeolocationData,
+} from "../types/geolocation";
 import type { WeatherCombinedData, WeatherResponse } from "../types/weather";
+import { fetchByIP } from "../utils/geolocation";
 import {
   defaultHighTemp,
   defaultLowPressure,
@@ -16,10 +23,14 @@ import {
 } from "../utils/temp";
 import { WeatherNotificationTrigger } from "../utils/trigger";
 import WeatherModal from "./WeatherModal";
-import { fetchByIP } from "../utils/geolocation";
 
 export default function Weather() {
-  const { isMobile, triggerNotification } = useAppContext();
+  const {
+    isExtension,
+    isMobile,
+    registerMessageCallback,
+    triggerNotification,
+  } = useAppContext();
   const { t } = useTranslate();
   const modal = useModal();
   const logger = useLogger("Weather");
@@ -110,23 +121,50 @@ export default function Weather() {
     obtainingLocation = true;
     logger.log("Obtaining geolocation by IP", "...");
     try {
-      const geoData: IpGeolocationData = await fetchByIP();
+      if (isExtension) {
+        apiGeolocation();
+      } else {
+        const geoData: IpGeolocationData = await fetchByIP();
 
-      if (geoData.latitude && geoData.longitude) {
-        saveLocation(geoData.latitude, geoData.longitude);
+        if (geoData.latitude && geoData.longitude) {
+          saveLocation(geoData.latitude, geoData.longitude);
+        }
+        if (geoData.city && !weatherData?.city.length) {
+          setCity(geoData.city);
+        }
+        if (geoData.country_code && !weatherData?.countryCode.length) {
+          setCountryCode(geoData.country_code);
+        }
+        obtainingLocation = false;
+        logger.log("Obtaining geolocation by IP ...", "finished");
       }
-      if (geoData.city && !weatherData?.city.length) {
-        setCity(geoData.city);
-      }
-      if (geoData.country_code && !weatherData?.countryCode.length) {
-        setCountryCode(geoData.country_code);
-      }
-      obtainingLocation = false;
-      logger.log("Obtaining geolocation by IP ...", "finished");
     } catch (error) {
       logger.log(`Geolocation by IP error: ${error}`);
       obtainingLocation = false;
     }
+  }
+
+  function onGeolocation(response: ApiResponse) {
+    if (!response.success) {
+      logger.log("Obtaining geolocation by IP failed", {
+        result: response.result,
+      });
+      return;
+    }
+
+    const geoData: ApiGeolocationData = response.result;
+
+    if (geoData.latitude && geoData.longitude) {
+      saveLocation(geoData.latitude, geoData.longitude);
+    }
+    if (geoData.city && !weatherData?.city.length) {
+      setCity(geoData.city);
+    }
+    if (geoData.countryCode && !weatherData?.countryCode.length) {
+      setCountryCode(geoData.countryCode);
+    }
+    obtainingLocation = false;
+    logger.log("Obtaining geolocation by IP ...", "finished");
   }
 
   function errorHandler(error: Partial<GeolocationPositionError>) {
@@ -250,6 +288,10 @@ export default function Weather() {
       getWeather();
     }, getWeatherTimeout);
 
+    if (isExtension) {
+      registerMessageCallback("geolocation_result", onGeolocation);
+    }
+
     return () => {
       if (getWeatherInterval) {
         clearInterval(getWeatherInterval);
@@ -258,13 +300,7 @@ export default function Weather() {
   }, []);
 
   if (!weatherData) {
-    return (
-      <div className="flex items-center pl-2">
-        <span className="text-xs dark:text-white/35 text-gray-400">
-          {t("weather.loading")}
-        </span>
-      </div>
-    );
+    return;
   }
 
   return (
