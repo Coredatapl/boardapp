@@ -236,7 +236,8 @@ async function sendNotification(data) {
     subject: `BoardApp Notifications`,
     template: "boardapp-notification",
     templateData: {
-      displayName: storage.account.displayName,
+      brand: "boardapp",
+      displayName: storage.account.displayName ?? storage.account.email,
       notifications: data.notifications,
     },
   });
