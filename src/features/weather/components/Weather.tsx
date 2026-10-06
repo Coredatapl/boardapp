@@ -234,6 +234,7 @@ export default function Weather() {
         mapUrl,
         city: city ?? data.name,
         countryCode: countryCode ?? data.sys.country,
+        updatedAt: Date.now(),
       };
 
       setWeatherData(currentData);
