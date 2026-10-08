@@ -19,6 +19,7 @@ import ModeSelector from "./ModeSelector";
 import SendButton from "./SendButton";
 import ToolSelector from "./ToolSelector";
 import VoiceButton from "./VoiceButton";
+import { QueryBuilder } from "../utils/queryBuilder";
 
 export default function SearchBar() {
   const { settings, isMobile } = useAppContext();
@@ -59,18 +60,16 @@ export default function SearchBar() {
 
   function search() {
     const url = searchMode.type === AiModeType ? researchUrl : searchUrl;
-    let query = searchInputRef.current?.value.trim();
+    const inputValue = searchInputRef.current?.value.trim();
 
-    if (!query || query.length < queryMinLength) {
+    if (!inputValue || inputValue.length < queryMinLength) {
       logger.log("Search query too short");
       return;
     }
 
-    if (contextValue?.length) {
-      query = `${contextValue}\n\n${query}`;
-    }
+    const query = QueryBuilder(inputValue, contextValue);
 
-    window.open(`${url}${encodeURIComponent(query)}`, "_self");
+    window.open(`${url}${query}`, "_self");
   }
 
   function sendHandler() {
