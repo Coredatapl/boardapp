@@ -8,10 +8,14 @@
 	"actionTalk": "Talk",
 	"actionStop": "Stop",
 	"actionSend": "Send",
-	"searchModeLabel": "Search mode",
+	"searchModeLabel": "Search",
 	"searchModeDescription": "Default search engine",
-	"aiModeLabel": "AI mode",
+	"aiModeLabel": "AI chat",
 	"aiModeDescription": "Ask questions to AI chatbot",
-	"voiceModeLabel": "Voice mode",
-	"voiceModeDescription": "Talk and get text from speech"
+	"voiceModeLabel": "Voice",
+	"voiceModeDescription": "Talk and get text from speech",
+	"toolsLabel": "Tools",
+	"toolContextLabel": "Context Window",
+	"toolContextPlaceholder": "Paste or type context for your query …",
+	"toolHistoryLabel": "Query History"
 }
