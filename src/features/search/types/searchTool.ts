@@ -1,5 +1,5 @@
 export interface SearchTool {
-  name: string;
-  label: string;
-  openAction: () => void;
+	name: string;
+	label: string;
+	openAction: () => void;
 }
