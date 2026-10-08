@@ -15,25 +15,25 @@ const logger = LoggerFactory("Metrics");
  * @returns Promise
  */
 export async function measure<T>(
-  name: string,
-  fn: () => Promise<T>,
+	name: string,
+	fn: () => Promise<T>,
 ): Promise<T> {
-  const startMark = `${name}-start`;
-  const endMark = `${name}-end`;
-  performance.mark(startMark);
-  try {
-    return await fn();
-  } finally {
-    const started = performance.getEntriesByName(startMark, "mark").length > 0;
-    if (started) {
-      performance.mark(endMark);
-      performance.measure(name, startMark, endMark);
+	const startMark = `${name}-start`;
+	const endMark = `${name}-end`;
+	performance.mark(startMark);
+	try {
+		return await fn();
+	} finally {
+		const started = performance.getEntriesByName(startMark, "mark").length > 0;
+		if (started) {
+			performance.mark(endMark);
+			performance.measure(name, startMark, endMark);
 
-      const [entry] = performance.getEntriesByName(name);
-      logger.log(`Operation ${name} took`, `${entry.duration.toFixed(2)} ms`);
+			const [entry] = performance.getEntriesByName(name);
+			logger.log(`Operation ${name} took`, `${entry.duration.toFixed(2)} ms`);
 
-      performance.clearMarks(startMark);
-      performance.clearMarks(endMark);
-    }
-  }
+			performance.clearMarks(startMark);
+			performance.clearMarks(endMark);
+		}
+	}
 }

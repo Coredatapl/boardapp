@@ -1,28 +1,28 @@
 const NewLineDelimiter = "";
 
 export const QueryBuilder = (
-  input: string,
-  context?: string | undefined,
-  rules?: string | undefined,
+	input: string,
+	context?: string | undefined,
+	rules?: string | undefined,
 ): string => {
-  let query = "";
+	let query = "";
 
-  if (context?.length) {
-    query = `# Context:
+	if (context?.length) {
+		query = `# Context:
   ${context}
   ${NewLineDelimiter}
     `;
-  }
+	}
 
-  query += `# Query:
+	query += `# Query:
   ${input}`;
 
-  if (rules?.length) {
-    query += `
+	if (rules?.length) {
+		query += `
   # Rules:
   ${NewLineDelimiter}
   ${rules}`;
-  }
+	}
 
-  return encodeURIComponent(query);
+	return encodeURIComponent(query);
 };
