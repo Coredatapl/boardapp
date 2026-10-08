@@ -128,7 +128,7 @@ export default function Settings() {
       <PanelHeader title={t("settings.header")} onClose={closePanel} />
       <PanelBody>
         <div>
-          <p className="text-xs font-semibold dark:text-white/35 text-gray-400 uppercase tracking-widest mb-3">
+          <p className="mb-1 text-xs font-semibold dark:text-white/35 text-gray-400 uppercase tracking-widest">
             {t("settings.appearance.header")}
           </p>
 
@@ -169,7 +169,7 @@ export default function Settings() {
         </div>
 
         <div>
-          <p className="text-xs font-semibold dark:text-white/35 text-gray-400 uppercase tracking-widest mb-3">
+          <p className="mb-1 text-xs font-semibold dark:text-white/35 text-gray-400 uppercase tracking-widest">
             {t("settings.profile.header")}
           </p>
           <div className="rounded-2xl dark:bg-surface-dark-item bg-surface-item border dark:border-surface-dark-element border-surface-element p-4 space-y-3">
@@ -212,7 +212,7 @@ export default function Settings() {
         </div>
 
         <div>
-          <p className="text-xs font-semibold dark:text-white/35 text-gray-400 uppercase tracking-widest mb-3">
+          <p className="mb-1 text-xs font-semibold dark:text-white/35 text-gray-400 uppercase tracking-widest">
             {t("settings.shortcuts.header")}
           </p>
           <div className="rounded-2xl dark:bg-surface-dark-item bg-surface-item border dark:border-surface-dark-element border-surface-element overflow-hidden">
@@ -255,7 +255,7 @@ export default function Settings() {
         </div>
 
         <div>
-          <p className="text-xs font-semibold dark:text-white/35 text-gray-400 uppercase tracking-widest mb-3">
+          <p className="mb-1 text-xs font-semibold dark:text-white/35 text-gray-400 uppercase tracking-widest">
             {t("settings.about.header")}
           </p>
           <div className="rounded-2xl dark:bg-surface-dark-item bg-surface-item border dark:border-surface-dark-element border-surface-element px-4 py-3.5">

@@ -82,7 +82,7 @@ export default function ContextWindow({
         placeholder={t("searchbar.toolContextPlaceholder")}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
-        className="max-h-40 w-full px-3 py-2 resize-none rounded-xl text-sm text-gray-700 dark:text-white/85 bg-white dark:bg-black/30 placeholder-gray-400 dark:placeholder-white/25 outline-none"
+        className="max-h-40 w-full px-3 py-2 resize-none rounded-xl text-sm text-gray-700 dark:text-white/85 bg-surface dark:bg-black/30 placeholder-gray-400 dark:placeholder-white/25 outline-none"
       ></textarea>
     </div>
   );
