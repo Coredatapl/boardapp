@@ -62,6 +62,7 @@ export default function Settings() {
 		setSettings(newSettings);
 		saveSettings(newSettings);
 		logger.log(`Language changed to ${lang}`, "successfully");
+		location.reload();
 	}
 
 	function validateName(value: string): string | null {
