@@ -101,6 +101,19 @@ export default function Settings() {
 		setTimeout(() => closePanel(), 300);
 	}
 
+	function toggleQueryHistory() {
+		const newSettings = {
+			...settings,
+			queryHistory: !settings.queryHistory,
+		} as AppSettings;
+		setSettings(newSettings);
+		saveSettings(newSettings);
+		logger.log(
+			`Query History changed to ${newSettings.queryHistory}`,
+			"successfully",
+		);
+	}
+
 	function langChangeHandler(lang: string) {
 		changeLang(lang);
 	}
@@ -251,6 +264,38 @@ export default function Settings() {
 								className={`${editMode ? "bg-green" : "dark:bg-white/20 bg-gray-300"} w-2 h-2 rounded-full transition-colors`}
 							></div>
 						</button>
+					</div>
+				</div>
+
+				<div>
+					<p className="mb-1 text-xs font-semibold dark:text-white/35 text-gray-400 uppercase tracking-widest">
+						{t("settings.search.header")}
+					</p>
+
+					<div className="flex items-center justify-between py-3 px-4 rounded-2xl dark:bg-surface-dark-item bg-surface-item border dark:border-surface-dark-element border-surface-element">
+						<div className="flex items-center gap-3">
+							<div>
+								<p className="text-sm font-medium dark:text-white/85 text-gray-700">
+									{t("settings.search.historyLabel")}
+								</p>
+								<p className="text-xs dark:text-white/35 text-gray-400">
+									{settings.queryHistory
+										? t("settings.search.historyOnHint")
+										: t("settings.search.historyOffHint")}
+								</p>
+							</div>
+						</div>
+						<div
+							onClick={() => toggleQueryHistory()}
+							role="switch"
+							aria-checked={settings.queryHistory}
+							tabIndex={0}
+							className={`${settings.queryHistory ? "bg-green" : "bg-gray-300"} relative w-10 h-5 rounded-full cursor-pointer shrink-0 transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-green focus-visible:ring-offset-2`}
+						>
+							<div
+								className={`${settings.queryHistory ? "translate-x-4.5" : "translate-x-0"} absolute top-0.5 left-1 w-4 h-4 rounded-full bg-white shadow transition-transform duration-300 ease-[cubic-bezier(0.34,1.3,0.64,1)]`}
+							></div>
+						</div>
 					</div>
 				</div>
 

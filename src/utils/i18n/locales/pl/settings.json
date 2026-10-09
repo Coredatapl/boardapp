@@ -19,6 +19,12 @@
 		"editingHint": "Tryb edycji — stuknij ✕, aby usunąć",
 		"toEditHint": "Stuknij, aby wejść w tryb edycji"
 	},
+	"search": {
+		"header": "Szukaj",
+		"historyLabel": "Historia zapytań",
+		"historyOnHint": "Zapytania będą zapisywane",
+		"historyOffHint": "Zapytania nie będą zapisywane"
+	},
 	"about": {
 		"header": "O aplikacji",
 		"docs": "Dokumentacja",

@@ -47,7 +47,7 @@ export default function QueryHistory({
 								type="button"
 								title="Restore query"
 								onClick={() => restore(query)}
-								className="flex w-full items-center justify-between gap-2 px-2 py-2 rounded-xl cursor-pointer text-left text-sm text-gray-700 hover:bg-surface dark:hover:bg-black/30 focus:outline-none focus-visible:bg-gray-100"
+								className="flex w-full items-center justify-between gap-2 px-2 py-2 rounded-xl cursor-pointer text-left text-sm text-gray-700 dark:text-white/25 dark:hover:text-white/85 hover:bg-surface dark:hover:bg-black/30 focus:outline-none focus-visible:bg-gray-100"
 							>
 								<span className="truncate">{query.value}</span>
 								<span className="shrink-0 text-xs uppercase text-gray-400">

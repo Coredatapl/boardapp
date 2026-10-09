@@ -1,4 +1,10 @@
-import { type Dispatch, type SetStateAction, useRef, useState } from "react";
+import {
+	type Dispatch,
+	type SetStateAction,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 import { useAppContext } from "@/app/AppContext";
 import { useClickOutside } from "@/hooks/useClickOutside";
 import { useTranslate } from "@/hooks/useTranslate";
@@ -13,7 +19,7 @@ export default function ToolSelector({
 	setContextOpen,
 	setHistoryOpen,
 }: ToolSelectorProps) {
-	const { isMobile } = useAppContext();
+	const { isMobile, settings } = useAppContext();
 	const { t } = useTranslate();
 	const [isOpen, setIsOpen] = useState(false);
 	const containerRef = useRef(null);
@@ -29,6 +35,7 @@ export default function ToolSelector({
 			openAction: () => setHistoryOpen(true),
 		},
 	];
+	const [availableTools, setAvailableTools] = useState(tools);
 
 	function handleToolOpen(tool: SearchTool) {
 		tool.openAction();
@@ -43,6 +50,15 @@ export default function ToolSelector({
 	useClickOutside([containerRef], () => {
 		toggleOpen(false);
 	});
+
+	useEffect(() => {
+		if (!settings.queryHistory) {
+			setHistoryOpen(false);
+			setAvailableTools([...tools.filter((tool) => tool.name !== "history")]);
+		} else {
+			setAvailableTools(tools);
+		}
+	}, [settings.queryHistory]);
 
 	return (
 		<div ref={containerRef} className="relative">
@@ -75,7 +91,7 @@ export default function ToolSelector({
 			<ul
 				className={`${isOpen ? "" : "hidden"} absolute left-0 z-20 min-w-32 mt-2 mb-2 p-1 rounded-xl dark:bg-surface-dark-container bg-surface-container border dark:border-surface-dark-container border-surface-element shadow-lg`}
 			>
-				{tools.map((tool) => (
+				{availableTools.map((tool) => (
 					<li key={tool.name}>
 						<button
 							type="button"

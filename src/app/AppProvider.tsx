@@ -40,6 +40,7 @@ export function AppProvider({ children }: PropsWithChildren) {
 			theme: LightTheme,
 			contactEmail: `${import.meta.env.VITE_APP_CONTACT_EMAIL}`,
 			displayName: "Boss",
+			queryHistory: true,
 		},
 	);
 	const [account, setAccount] = useState<UserAccount | undefined>(

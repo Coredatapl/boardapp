@@ -19,6 +19,12 @@
 		"editingHint": "Currently editing — tap ✕ to remove",
 		"toEditHint": "Tap to enter edit mode"
 	},
+	"search": {
+		"header": "Search",
+		"historyLabel": "Query History",
+		"historyOnHint": "Queries will be stored",
+		"historyOffHint": "Queries will not be stored"
+	},
 	"about": {
 		"header": "About",
 		"docs": "Documentation",

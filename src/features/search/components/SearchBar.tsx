@@ -82,6 +82,7 @@ export default function SearchBar() {
 	}
 
 	function updateHistory(value: string) {
+		if (!settings.queryHistory) return;
 		const id = `query-${performance.now().toFixed(0)}`;
 		const query: SearchQuery = {
 			id,
@@ -204,6 +205,12 @@ export default function SearchBar() {
 			searchInputRef.current?.focus();
 		}
 	}, [searchMode]);
+
+	useEffect(() => {
+		if (!settings.queryHistory) {
+			deleteHistory();
+		}
+	}, [settings.queryHistory]);
 
 	useEffect(() => {
 		if (!speech.isSupported || speech.isAvailableDevice === false) {
