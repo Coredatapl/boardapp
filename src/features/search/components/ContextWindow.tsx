@@ -10,7 +10,7 @@ interface ContextWindowProps {
 	setIsOpen: Dispatch<SetStateAction<boolean>>;
 	value: string | undefined;
 	setValue: Dispatch<SetStateAction<string | undefined>>;
-	setFocused: Dispatch<SetStateAction<boolean>>;
+	onFocus: () => void;
 }
 
 export default function ContextWindow({
@@ -18,7 +18,7 @@ export default function ContextWindow({
 	setIsOpen,
 	value,
 	setValue,
-	setFocused,
+	onFocus,
 }: ContextWindowProps) {
 	const { isMobile } = useAppContext();
 	const { t } = useTranslate();
@@ -104,8 +104,7 @@ export default function ContextWindow({
 				ref={contextInputRef}
 				rows={2}
 				placeholder={t("searchbar.toolContextPlaceholder")}
-				onFocus={() => setFocused(true)}
-				onBlur={() => setFocused(false)}
+				onFocus={() => onFocus()}
 				className="max-h-40 w-full px-3 py-2 resize-none rounded-xl text-sm text-gray-700 dark:text-white/85 bg-surface dark:bg-black/30 placeholder-gray-400 dark:placeholder-white/25 outline-none"
 			></textarea>
 		</div>

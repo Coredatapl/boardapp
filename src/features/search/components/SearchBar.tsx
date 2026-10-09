@@ -6,6 +6,7 @@ import {
 	useState,
 } from "react";
 import { useAppContext } from "@/app/AppContext";
+import { useClickOutside } from "@/hooks/useClickOutside";
 import { useLogger } from "@/hooks/useLogger";
 import { useStorage } from "@/hooks/useStorage";
 import { useTranslate } from "@/hooks/useTranslate";
@@ -34,6 +35,7 @@ export default function SearchBar() {
 	const storage = useStorage();
 	const searchUrl = `${import.meta.env.VITE_SEARCH_URL}`;
 	const researchUrl = `${import.meta.env.VITE_RESEARCH_URL}`;
+	const containerRef = useRef<HTMLDivElement>(null);
 	const searchInputRef = useRef<HTMLTextAreaElement>(null);
 	const [focused, setFocused] = useState(false);
 	const [voiceEnabled, setVoiceEnabled] = useState(false);
@@ -54,6 +56,7 @@ export default function SearchBar() {
 	const [sendDisabled, setSendDisabled] = useState(true);
 	const queryMinLength = SearchQueryMinLength ?? 3;
 	const historyMaxCount = 5;
+	let blurTimer: number | undefined;
 
 	function clearInput() {
 		if (!searchInputRef.current) {
@@ -177,6 +180,21 @@ export default function SearchBar() {
 		autoResize(event.currentTarget);
 	}
 
+	function focusHandler() {
+		setFocused(true);
+	}
+
+	function blurHandler() {
+		clearTimeout(blurTimer);
+		blurTimer = setTimeout(() => {
+			setFocused(false);
+		}, 500);
+	}
+
+	useClickOutside([containerRef], () => {
+		blurHandler();
+	});
+
 	useEffect(() => {
 		setPlaceholder(t(searchMode.placeHolder));
 		setActionLabel(t(searchMode.actionLabel));
@@ -242,6 +260,7 @@ export default function SearchBar() {
 			<div className="absolute -inset-0.5 bg-linear-to-r from-blue-600 via-indigo-600 to-fuchsia-700 bg-fuchsia-800 rounded-2xl blur opacity-30 group-hover:opacity-50 transition duration-300"></div>
 
 			<div
+				ref={containerRef}
 				className={`relative w-full items-center dark:bg-surface-dark bg-white border dark:border-white/8 border-gray-300 rounded-2xl custom-shadow`}
 			>
 				<ContextWindow
@@ -249,7 +268,7 @@ export default function SearchBar() {
 					setIsOpen={setContextOpen}
 					value={contextValue}
 					setValue={setContextValue}
-					setFocused={setFocused}
+					onFocus={focusHandler}
 				/>
 
 				<div
@@ -278,8 +297,7 @@ export default function SearchBar() {
 						placeholder={placeholder}
 						onKeyDown={(e) => keyDownHandler(e)}
 						onInput={(e) => inputHandler(e)}
-						onFocus={() => setFocused(true)}
-						onBlur={() => setFocused(false)}
+						onFocus={() => focusHandler()}
 						autoCapitalize="off"
 						autoComplete="off"
 						autoCorrect="off"
