@@ -8,7 +8,8 @@ type StorageKey =
 	| "notifications"
 	| "notifications-send"
 	| "weather"
-	| "location";
+	| "location"
+	| "query-history";
 
 interface StorageItem {
 	value: string;
@@ -25,20 +26,18 @@ interface StorageInterface {
 
 const logger = LoggerFactory("LocalStorage");
 const prefix = "ba-";
-const defaultExpire = 30 * 24 * 60 * 60 * 1000;
+const defaultExpire = 30 * 24 * 60 * 60 * 1000; // 30 days
 
 // TODO: integration with Chrome storage
 // TODO: compare value from local and chrome storage and update the older one with the newer
 const LocalStorage: StorageInterface = {
 	check(key: StorageKey): StorageItem | null {
 		const data = localStorage.getItem(`${prefix}${key}`);
-
 		if (!data) {
 			return null;
 		}
 
 		const item: StorageItem = JSON.parse(data);
-
 		return this.validate(key, item);
 	},
 
@@ -56,14 +55,14 @@ const LocalStorage: StorageInterface = {
 	},
 
 	set(key: StorageKey, value: any, expire?: number) {
-		const item = {
+		const item: StorageItem = {
 			value: JSON.stringify(value),
 			expire: Date.now() + (expire ?? defaultExpire),
 		};
 		const itemKey = `${prefix}${key}`;
 		const data = JSON.stringify(item);
-		localStorage.setItem(itemKey, data);
 
+		localStorage.setItem(itemKey, data);
 		logger.log(`${key} data`, "stored");
 	},
 

@@ -17,5 +17,7 @@
 	"toolsLabel": "Werkzeuge",
 	"toolContextLabel": "Kontextfenster",
 	"toolContextPlaceholder": "Fügen Sie hier den Kontext für Ihre Anfrage ein oder tippen Sie ihn ein …",
-	"toolHistoryLabel": "Abfrageverlauf"
+	"toolHistoryLabel": "Abfrageverlauf",
+	"toolHistoryNoDota": "Noch keine Anfragen",
+	"clearButtonLabel": "Löschen"
 }

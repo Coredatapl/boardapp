@@ -17,5 +17,7 @@
 	"toolsLabel": "Outils",
 	"toolContextLabel": "Fenêtre de contexte",
 	"toolContextPlaceholder": "Collez ou saisissez le contexte de votre requête …",
-	"toolHistoryLabel": "Historique des requêtes"
+	"toolHistoryLabel": "Historique des requêtes",
+	"toolHistoryNoDota": "Aucune requête pour le moment",
+	"clearButtonLabel": "Effacer"
 }

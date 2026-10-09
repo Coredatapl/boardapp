@@ -7,25 +7,31 @@ import {
 } from "react";
 import { useAppContext } from "@/app/AppContext";
 import { useLogger } from "@/hooks/useLogger";
+import { useStorage } from "@/hooks/useStorage";
 import { useTranslate } from "@/hooks/useTranslate";
 import { autoResize, checkPermission, compare } from "@/utils/common";
 import { SearchQueryMinLength } from "@/utils/validation";
 import { useSpeech } from "../hooks/useSpeech";
 import type { SearchMode } from "../types/searchMode";
+import type { SearchQuery } from "../types/searchQuery";
 import { AiModeType, WebModeType } from "../utils/common";
 import { modes } from "../utils/data";
 import { QueryBuilder } from "../utils/queryBuilder";
+import ClearButton from "./ClearButton";
 import ContextWindow from "./ContextWindow";
 import ModeSelector from "./ModeSelector";
+import QueryHistory from "./QueryHistory";
 import SendButton from "./SendButton";
 import ToolSelector from "./ToolSelector";
 import VoiceButton from "./VoiceButton";
 
+// TODO: delay focus change + reset on click inside container
 export default function SearchBar() {
 	const { settings, isMobile } = useAppContext();
 	const { t } = useTranslate();
 	const logger = useLogger("SearchBar");
 	const speech = useSpeech(settings.lang);
+	const storage = useStorage();
 	const searchUrl = `${import.meta.env.VITE_SEARCH_URL}`;
 	const researchUrl = `${import.meta.env.VITE_RESEARCH_URL}`;
 	const searchInputRef = useRef<HTMLTextAreaElement>(null);
@@ -41,8 +47,22 @@ export default function SearchBar() {
 	const [contextValue, setContextValue] = useState<string | undefined>(
 		undefined,
 	);
+	const [historyOpen, setHistoryOpen] = useState(false);
+	const [queryHistory, setQueryHistory] = useState<SearchQuery[]>(
+		storage.get<SearchQuery[]>("query-history") ?? [],
+	);
 	const [sendDisabled, setSendDisabled] = useState(true);
 	const queryMinLength = SearchQueryMinLength ?? 3;
+	const historyMaxCount = 5;
+
+	function clearInput() {
+		if (!searchInputRef.current) {
+			return;
+		}
+		searchInputRef.current.value = "";
+		setSendDisabled(true);
+		autoResize(searchInputRef.current);
+	}
 
 	function startListening() {
 		if (speech.isListening) return;
@@ -58,7 +78,50 @@ export default function SearchBar() {
 		setPlaceholder(t(searchMode.placeHolder));
 	}
 
-	function search() {
+	function updateHistory(value: string) {
+		const id = `query-${performance.now().toFixed(0)}`;
+		const query: SearchQuery = {
+			id,
+			mode: searchMode.type,
+			value,
+			createdAt: Date.now(),
+			context: contextValue,
+		};
+		const history = [...queryHistory];
+
+		if (history.length >= historyMaxCount) {
+			history.shift();
+		}
+		setQueryHistory([...history, query]);
+		storage.set("query-history", [...history, query]);
+	}
+
+	function deleteHistory() {
+		setQueryHistory([]);
+		storage.del("query-history");
+	}
+
+	function restoreQuery(query: SearchQuery) {
+		if (!searchInputRef.current) {
+			return;
+		}
+		const input = searchInputRef.current;
+
+		if (query.value.length) {
+			input.value = query.value;
+			setSendDisabled(false);
+			autoResize(searchInputRef.current);
+		}
+		if (query.context?.length) {
+			setContextValue(query.context);
+			setContextOpen(true);
+		} else {
+			setContextValue(undefined);
+			setContextOpen(false);
+		}
+	}
+
+	function send() {
 		const url = searchMode.type === AiModeType ? researchUrl : searchUrl;
 		const inputValue = searchInputRef.current?.value.trim();
 
@@ -66,6 +129,7 @@ export default function SearchBar() {
 			logger.log("Search query too short");
 			return;
 		}
+		updateHistory(inputValue);
 
 		const query = QueryBuilder(inputValue, contextValue);
 
@@ -73,7 +137,7 @@ export default function SearchBar() {
 	}
 
 	function sendHandler() {
-		search();
+		send();
 	}
 
 	function voiceActionHandler() {
@@ -98,7 +162,7 @@ export default function SearchBar() {
 			return;
 		}
 		if (compare(e.key, "Enter") && !e.shiftKey) {
-			search();
+			send();
 		}
 	}
 
@@ -183,6 +247,7 @@ export default function SearchBar() {
 				<ContextWindow
 					isOpen={contextOpen}
 					setIsOpen={setContextOpen}
+					value={contextValue}
 					setValue={setContextValue}
 					setFocused={setFocused}
 				/>
@@ -223,6 +288,7 @@ export default function SearchBar() {
 						aria-autocomplete="both"
 						aria-haspopup={false}
 					></textarea>
+					<ClearButton onClick={clearInput} disabled={sendDisabled} />
 				</div>
 
 				{/* Toolbar */}
@@ -230,7 +296,10 @@ export default function SearchBar() {
 					className={`flex items-center justify-between ${isMobile ? "gap-1 px-2 pt-2 pb-2" : "gap-2 px-3 pt-3 pb-3"}`}
 				>
 					<div className={`flex items-center ${isMobile ? "gap-1" : "gap-2"}`}>
-						<ToolSelector setContextOpen={setContextOpen} />
+						<ToolSelector
+							setContextOpen={setContextOpen}
+							setHistoryOpen={setHistoryOpen}
+						/>
 						<ModeSelector mode={searchMode} setMode={setSearchMode} />
 					</div>
 
@@ -247,9 +316,15 @@ export default function SearchBar() {
 						/>
 					</div>
 				</div>
-			</div>
 
-			{/* Query History (hidden by default) */}
+				<QueryHistory
+					isOpen={historyOpen}
+					setIsOpen={setHistoryOpen}
+					queries={queryHistory}
+					restore={restoreQuery}
+					clear={deleteHistory}
+				/>
+			</div>
 		</div>
 	);
 }

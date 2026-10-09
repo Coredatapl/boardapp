@@ -17,5 +17,7 @@
 	"toolsLabel": "Narzędzia",
 	"toolContextLabel": "Okno kontekstu",
 	"toolContextPlaceholder": "Wklej lub wpisz kontekst zapytania …",
-	"toolHistoryLabel": "Historia zapytań"
+	"toolHistoryLabel": "Historia zapytań",
+	"toolHistoryNoDota": "Brak zapytań",
+	"clearButtonLabel": "Wyczyść"
 }

@@ -17,5 +17,7 @@
 	"toolsLabel": "Herramientas",
 	"toolContextLabel": "Ventana de contexto",
 	"toolContextPlaceholder": "Pegue o escriba el contexto para su consulta …",
-	"toolHistoryLabel": "Historial de consultas"
+	"toolHistoryLabel": "Historial de consultas",
+	"toolHistoryNoDota": "No hay consultas aún",
+	"clearButtonLabel": "Limpiar"
 }

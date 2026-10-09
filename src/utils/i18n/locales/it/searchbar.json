@@ -17,5 +17,7 @@
 	"toolsLabel": "Strumenti",
 	"toolContextLabel": "Finestra di contesto",
 	"toolContextPlaceholder": "Incolla o digita il contesto per la tua query …",
-	"toolHistoryLabel": "Cronologia delle query"
+	"toolHistoryLabel": "Cronologia delle query",
+	"toolHistoryNoDota": "Ancora nessuna query",
+	"clearButtonLabel": "Cancella"
 }

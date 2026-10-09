@@ -17,5 +17,7 @@
 	"toolsLabel": "Tools",
 	"toolContextLabel": "Context Window",
 	"toolContextPlaceholder": "Paste or type context for your query …",
-	"toolHistoryLabel": "Query History"
+	"toolHistoryLabel": "Query History",
+	"toolHistoryNoDota": "No queries yet",
+	"clearButtonLabel": "Clear"
 }

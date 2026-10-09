@@ -3,10 +3,12 @@ import { useAppContext } from "@/app/AppContext";
 import CloseButton from "@/components/ui/CloseButton";
 import { useTranslate } from "@/hooks/useTranslate";
 import { autoResize } from "@/utils/common";
+import ClearButton from "./ClearButton";
 
 interface ContextWindowProps {
 	isOpen: boolean;
 	setIsOpen: Dispatch<SetStateAction<boolean>>;
+	value: string | undefined;
 	setValue: Dispatch<SetStateAction<string | undefined>>;
 	setFocused: Dispatch<SetStateAction<boolean>>;
 }
@@ -14,6 +16,7 @@ interface ContextWindowProps {
 export default function ContextWindow({
 	isOpen,
 	setIsOpen,
+	value,
 	setValue,
 	setFocused,
 }: ContextWindowProps) {
@@ -36,12 +39,30 @@ export default function ContextWindow({
 		setValue(value);
 	}
 
+	function clearContext() {
+		if (contextInputRef.current) {
+			contextInputRef.current.value = "";
+			autoResize(contextInputRef.current);
+		}
+		setValue(undefined);
+	}
+
 	function handleInput(element: HTMLTextAreaElement) {
 		clearTimeout(inputTimer);
 		inputTimer = setTimeout(() => {
 			updateContext(element);
 		}, 500);
 	}
+
+	useEffect(() => {
+		const inputElement = contextInputRef.current;
+
+		if (!inputElement) {
+			return;
+		}
+
+		inputElement.value = value ?? "";
+	}, [value]);
 
 	useEffect(() => {
 		const inputElement = contextInputRef.current;
@@ -65,7 +86,7 @@ export default function ContextWindow({
 
 	return (
 		<div
-			className={`${isOpen ? "" : "hidden"} ${isMobile ? "px-2 pt-2 pb-2" : "px-5 pt-4 pb-3"} border-b dark:border-white/8 border-gray-300`}
+			className={`${isOpen ? "" : "hidden"} ${isMobile ? "px-2 pt-2 pb-2" : "px-3 pt-4 pb-3"} border-b dark:border-white/8 border-gray-300`}
 		>
 			<div className="mb-2 flex items-center justify-between">
 				<label
@@ -74,7 +95,10 @@ export default function ContextWindow({
 				>
 					{t("searchbar.toolContextLabel")}
 				</label>
-				<CloseButton size="small" onClick={() => setIsOpen(false)} />
+				<div className="flex flex-row">
+					<ClearButton onClick={clearContext} disabled={value === undefined} />
+					<CloseButton size="small" onClick={() => setIsOpen(false)} />
+				</div>
 			</div>
 			<textarea
 				ref={contextInputRef}

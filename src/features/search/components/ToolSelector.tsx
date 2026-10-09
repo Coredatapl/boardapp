@@ -6,9 +6,13 @@ import type { SearchTool } from "../types/searchTool";
 
 interface ToolSelectorProps {
 	setContextOpen: Dispatch<SetStateAction<boolean>>;
+	setHistoryOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function ToolSelector({ setContextOpen }: ToolSelectorProps) {
+export default function ToolSelector({
+	setContextOpen,
+	setHistoryOpen,
+}: ToolSelectorProps) {
 	const { isMobile } = useAppContext();
 	const { t } = useTranslate();
 	const [isOpen, setIsOpen] = useState(false);
@@ -22,7 +26,7 @@ export default function ToolSelector({ setContextOpen }: ToolSelectorProps) {
 		{
 			name: "history",
 			label: t("searchbar.toolHistoryLabel"),
-			openAction: () => {},
+			openAction: () => setHistoryOpen(true),
 		},
 	];
 
