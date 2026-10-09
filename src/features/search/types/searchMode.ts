@@ -1,8 +1,11 @@
-import type { SearchAiMode, SearchVoiceMode } from "../utils/common";
+import type { AiModeType, WebModeType } from "../utils/common";
+
+export type SearchModeType = typeof WebModeType | typeof AiModeType;
 
 export interface SearchMode {
-	mode: SearchModeType | null;
+	type: SearchModeType;
 	label: string;
 	description: string;
+	placeHolder: string;
+	actionLabel: string;
 }
-export type SearchModeType = typeof SearchAiMode | typeof SearchVoiceMode;

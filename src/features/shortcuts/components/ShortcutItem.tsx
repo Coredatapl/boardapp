@@ -43,7 +43,7 @@ export default function ShortcutItem({
 				data-url={shortcut.url}
 				className="shortcut flex flex-col items-center gap-2 group"
 			>
-				<div className="icon-wrap w-14 h-14 flex items-center justify-center rounded-2xl shadow-sm dark:bg-surface-dark-container bg-surface-container border dark:border-surface-dark-element border-surface-element transition-all duration-200 group-hover:scale-105">
+				<div className="icon-wrap w-14 h-14 flex items-center justify-center rounded-2xl shadow-sm dark:bg-surface-dark-container bg-surface-container border dark:border-surface-dark-element border-surface-element transition-all duration-200 group-hover:bg-white group-hover:dark:bg-surface-dark group-hover:border-accent-soft/50">
 					{shortcut.favicon && (
 						<img
 							src={shortcut.favicon}
@@ -56,7 +56,7 @@ export default function ShortcutItem({
 						<span className="text-2xl">{shortcut.emoji || "🔗"}</span>
 					)}
 				</div>
-				<span className="text-sm dark:text-white/50 text-gray-500 group-hover:dark:text-white/80 group-hover:text-gray-700 transition-colors">
+				<span className="text-sm dark:text-white/50 text-gray-500 group-hover:text-accent transition-colors">
 					{shortcut.name}
 				</span>
 			</a>

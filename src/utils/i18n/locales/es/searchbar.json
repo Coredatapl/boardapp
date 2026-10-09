@@ -8,10 +8,16 @@
 	"actionTalk": "Hablar",
 	"actionStop": "Detener",
 	"actionSend": "Enviar",
-	"searchModeLabel": "Modo de búsqueda",
+	"searchModeLabel": "Buscar",
 	"searchModeDescription": "Motor de búsqueda predeterminado",
-	"aiModeLabel": "Modo AI",
+	"aiModeLabel": "AI chat",
 	"aiModeDescription": "Haz preguntas al chatbot de AI",
 	"voiceModeLabel": "Modo de voz",
-	"voiceModeDescription": "Habla y obtén texto a partir de la voz"
+	"voiceModeDescription": "Habla y obtén texto a partir de la voz",
+	"toolsLabel": "Herramientas",
+	"toolContextLabel": "Ventana de contexto",
+	"toolContextPlaceholder": "Pegue o escriba el contexto para su consulta …",
+	"toolHistoryLabel": "Historial de consultas",
+	"toolHistoryNoDota": "No hay consultas aún",
+	"clearButtonLabel": "Limpiar"
 }

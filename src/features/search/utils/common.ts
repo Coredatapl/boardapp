@@ -1,2 +1,2 @@
-export const SearchAiMode = "ai";
-export const SearchVoiceMode = "voice";
+export const WebModeType = "web";
+export const AiModeType = "ai";

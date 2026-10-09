@@ -3,6 +3,7 @@ import ModalBody from "@/components/ui/modal/ModalBody";
 import ModalHeader from "@/components/ui/modal/ModalHeader";
 import { useTranslate } from "@/hooks/useTranslate";
 import { capitalise } from "@/utils/common";
+import { getTimeAgo } from "@/utils/time";
 import type { WeatherCombinedData } from "../types/weather";
 import { defaultLowTemp, defaultMidTemp } from "../utils/temp";
 
@@ -132,6 +133,12 @@ export default function WeatherModal({ data }: WeatherModalProps) {
 								{data.tempMax} <sup>&deg;C</sup>
 							</span>
 						</div>
+					</div>
+
+					<div className="flex flex-row w-full mt-2 justify-center text-center text-gray-400">
+						<span className="text-xs">
+							Updated {getTimeAgo(data.updatedAt)}
+						</span>
 					</div>
 				</div>
 			</ModalBody>

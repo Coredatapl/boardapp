@@ -8,10 +8,16 @@
 	"actionTalk": "Sprechen",
 	"actionStop": "Stopp",
 	"actionSend": "Senden",
-	"searchModeLabel": "Such modus",
+	"searchModeLabel": "Such",
 	"searchModeDescription": "Standard-Suchmaschine",
-	"aiModeLabel": "AI Modus",
+	"aiModeLabel": "AI chat",
 	"aiModeDescription": "Fragen an den AI-Chatbot stellen",
-	"voiceModeLabel": "Sprach modus",
-	"voiceModeDescription": "Sprechen und Text aus Sprache erhalten"
+	"voiceModeLabel": "Sprach",
+	"voiceModeDescription": "Sprechen und Text aus Sprache erhalten",
+	"toolsLabel": "Werkzeuge",
+	"toolContextLabel": "Kontextfenster",
+	"toolContextPlaceholder": "Fügen Sie hier den Kontext für Ihre Anfrage ein oder tippen Sie ihn ein …",
+	"toolHistoryLabel": "Abfrageverlauf",
+	"toolHistoryNoDota": "Noch keine Anfragen",
+	"clearButtonLabel": "Löschen"
 }

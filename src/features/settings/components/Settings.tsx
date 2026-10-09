@@ -62,6 +62,7 @@ export default function Settings() {
 		setSettings(newSettings);
 		saveSettings(newSettings);
 		logger.log(`Language changed to ${lang}`, "successfully");
+		location.reload();
 	}
 
 	function validateName(value: string): string | null {
@@ -101,6 +102,19 @@ export default function Settings() {
 		setTimeout(() => closePanel(), 300);
 	}
 
+	function toggleQueryHistory() {
+		const newSettings = {
+			...settings,
+			queryHistory: !settings.queryHistory,
+		} as AppSettings;
+		setSettings(newSettings);
+		saveSettings(newSettings);
+		logger.log(
+			`Query History changed to ${newSettings.queryHistory}`,
+			"successfully",
+		);
+	}
+
 	function langChangeHandler(lang: string) {
 		changeLang(lang);
 	}
@@ -128,7 +142,7 @@ export default function Settings() {
 			<PanelHeader title={t("settings.header")} onClose={closePanel} />
 			<PanelBody>
 				<div>
-					<p className="text-xs font-semibold dark:text-white/35 text-gray-400 uppercase tracking-widest mb-3">
+					<p className="mb-1 text-xs font-semibold dark:text-white/35 text-gray-400 uppercase tracking-widest">
 						{t("settings.appearance.header")}
 					</p>
 
@@ -169,7 +183,7 @@ export default function Settings() {
 				</div>
 
 				<div>
-					<p className="text-xs font-semibold dark:text-white/35 text-gray-400 uppercase tracking-widest mb-3">
+					<p className="mb-1 text-xs font-semibold dark:text-white/35 text-gray-400 uppercase tracking-widest">
 						{t("settings.profile.header")}
 					</p>
 					<div className="rounded-2xl dark:bg-surface-dark-item bg-surface-item border dark:border-surface-dark-element border-surface-element p-4 space-y-3">
@@ -212,7 +226,7 @@ export default function Settings() {
 				</div>
 
 				<div>
-					<p className="text-xs font-semibold dark:text-white/35 text-gray-400 uppercase tracking-widest mb-3">
+					<p className="mb-1 text-xs font-semibold dark:text-white/35 text-gray-400 uppercase tracking-widest">
 						{t("settings.shortcuts.header")}
 					</p>
 					<div className="rounded-2xl dark:bg-surface-dark-item bg-surface-item border dark:border-surface-dark-element border-surface-element overflow-hidden">
@@ -255,27 +269,81 @@ export default function Settings() {
 				</div>
 
 				<div>
-					<p className="text-xs font-semibold dark:text-white/35 text-gray-400 uppercase tracking-widest mb-3">
+					<p className="mb-1 text-xs font-semibold dark:text-white/35 text-gray-400 uppercase tracking-widest">
+						{t("settings.search.header")}
+					</p>
+
+					<div className="flex items-center justify-between py-3 px-4 rounded-2xl dark:bg-surface-dark-item bg-surface-item border dark:border-surface-dark-element border-surface-element">
+						<div className="flex items-center gap-3">
+							<div>
+								<p className="text-sm font-medium dark:text-white/85 text-gray-700">
+									{t("settings.search.historyLabel")}
+								</p>
+								<p className="text-xs dark:text-white/35 text-gray-400">
+									{settings.queryHistory
+										? t("settings.search.historyOnHint")
+										: t("settings.search.historyOffHint")}
+								</p>
+							</div>
+						</div>
+						<div
+							onClick={() => toggleQueryHistory()}
+							role="switch"
+							aria-checked={settings.queryHistory}
+							tabIndex={0}
+							className={`${settings.queryHistory ? "bg-green" : "bg-gray-300"} relative w-10 h-5 rounded-full cursor-pointer shrink-0 transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-green focus-visible:ring-offset-2`}
+						>
+							<div
+								className={`${settings.queryHistory ? "translate-x-4.5" : "translate-x-0"} absolute top-0.5 left-1 w-4 h-4 rounded-full bg-white shadow transition-transform duration-300 ease-[cubic-bezier(0.34,1.3,0.64,1)]`}
+							></div>
+						</div>
+					</div>
+				</div>
+
+				<div>
+					<p className="mb-1 text-xs font-semibold dark:text-white/35 text-gray-400 uppercase tracking-widest">
 						{t("settings.about.header")}
 					</p>
 					<div className="rounded-2xl dark:bg-surface-dark-item bg-surface-item border dark:border-surface-dark-element border-surface-element px-4 py-3.5">
-						<p className="text-sm dark:text-white/50 text-gray-500">
-							Board App
-							<span className="ml-1 dark:text-white/25 text-gray-400">
-								v{appVersion}
-							</span>
-						</p>
-						<p className="text-xs dark:text-white/25 text-gray-400 mt-0.5">
-							{t("settings.about.developed")}{" "}
+						<div className="flex items-center gap-3">
+							<p className="font-bold text-sm dark:text-white/50 text-gray-500">
+								Board App
+								<span className="ml-1 dark:text-white/25 text-gray-400">
+									v{appVersion}
+								</span>
+							</p>
+
+							<p className="text-sm dark:text-white/50 text-gray-500"></p>
+						</div>
+
+						<div className="flex flex-row gap-2 mt-0.5 text-sm dark:text-white/25 text-gray-400">
 							<a
-								className="font-bold text-gray-700 dark:text-white/85 hover:text-accent"
+								className="text-gray-700 dark:text-white/85 hover:text-accent"
+								href="https://board.coredata.pl"
+								target="_blank"
+								rel="noopener"
+							>
+								{t("settings.about.docs")}
+							</a>
+							<span className="text-gray-300">&#10072;</span>
+							<a
+								className="text-gray-700 dark:text-white/85 hover:text-accent"
+								href="https://board.coredata.pl/privacy"
+								target="_blank"
+								rel="noopener"
+							>
+								{t("settings.about.privacy")}
+							</a>
+							<span className="text-gray-300">&#10072;</span>
+							<a
+								className="text-gray-700 dark:text-white/85 hover:text-accent"
 								href="https://coredata.pl"
 								target="_blank"
 								rel="noopener"
 							>
 								Coredata
 							</a>
-						</p>
+						</div>
 					</div>
 				</div>
 			</PanelBody>

@@ -19,9 +19,16 @@
 		"editingHint": "Aktuell im Bearbeitungsmodus — tippe auf ✕ zum Entfernen",
 		"toEditHint": "Tippen, um den Bearbeitungsmodus zu öffnen"
 	},
+	"search": {
+		"header": "Suche",
+		"historyLabel": "Suchverlauf",
+		"historyOnHint": "Anfragen werden gespeichert",
+		"historyOffHint": "Anfragen werden nicht gespeichert"
+	},
 	"about": {
 		"header": "Über",
-		"developed": "Entwickelt von"
+		"docs": "Dokumentation",
+		"privacy": "Datenschutz"
 	},
 	"saveHint": "Einstellungen automatisch gespeichert"
 }

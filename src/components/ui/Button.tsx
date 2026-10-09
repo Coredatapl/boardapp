@@ -2,6 +2,7 @@ export interface ButtonProps {
 	label?: string;
 	icon?: string;
 	onClick?: () => void;
+	disabled?: boolean;
 }
 
 export default function Button({ label, onClick }: ButtonProps) {

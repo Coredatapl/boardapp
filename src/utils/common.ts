@@ -35,3 +35,11 @@ export async function checkPermission(
 		checkPermission(name, onGranted, onDenied);
 	});
 }
+
+export const autoResize = (el: HTMLElement) => {
+	el.style.height = "auto";
+	el.style.height = `${el.scrollHeight}px`;
+	const max = parseInt(getComputedStyle(el).maxHeight, 10);
+	el.classList.toggle("overflow-y-auto", el.scrollHeight > max);
+	el.classList.toggle("overflow-y-hidden", el.scrollHeight <= max);
+};

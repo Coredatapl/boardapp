@@ -8,10 +8,16 @@
 	"actionTalk": "Parla",
 	"actionStop": "Interrompi",
 	"actionSend": "Invia",
-	"searchModeLabel": "Modalità ricerca",
+	"searchModeLabel": "Ricerca",
 	"searchModeDescription": "Motore di ricerca predefinito",
-	"aiModeLabel": "Modalità AI",
+	"aiModeLabel": "AI chat",
 	"aiModeDescription": "Fai domande al chatbot AI",
 	"voiceModeLabel": "Modalità vocale",
-	"voiceModeDescription": "Parla e ottieni testo dal parlato"
+	"voiceModeDescription": "Parla e ottieni testo dal parlato",
+	"toolsLabel": "Strumenti",
+	"toolContextLabel": "Finestra di contesto",
+	"toolContextPlaceholder": "Incolla o digita il contesto per la tua query …",
+	"toolHistoryLabel": "Cronologia delle query",
+	"toolHistoryNoDota": "Ancora nessuna query",
+	"clearButtonLabel": "Cancella"
 }

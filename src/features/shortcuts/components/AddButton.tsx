@@ -22,7 +22,7 @@ export default function AddButton({ addShortcut }: AddButtonProps) {
 			type="button"
 			onClick={openModal}
 		>
-			<div className="icon-wrap w-14 h-14 rounded-2xl dark:bg-surface-dark-container bg-surface-container flex items-center justify-center shadow-sm border dark:border-surface-dark-element border-surface-element border-dashed group-hover:border-solid transition-all duration-200 group-hover:scale-105">
+			<div className="icon-wrap w-14 h-14 rounded-2xl dark:bg-surface-dark-container bg-surface-container flex items-center justify-center shadow-sm border dark:border-surface-dark-element border-surface-element border-dashed group-hover:border-solid transition-all duration-200 group-hover:bg-white group-hover:dark:bg-surface-dark group-hover:border-accent-soft/50">
 				<svg
 					className="w-5 h-5 dark:text-white/25 text-gray-400 group-hover:text-accent transition-colors"
 					fill="none"

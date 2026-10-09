@@ -14,17 +14,17 @@ export type SupportedLanguage =
 const en: Language = {
 	code: "en-US",
 	short: "en",
-	long: "English (United States)",
+	long: "English (US)",
 };
 const de: Language = {
 	code: "de-DE",
 	short: "de",
-	long: "Deutsch (Deutschland)",
+	long: "Deutsch",
 };
-const fr: Language = { code: "fr-FR", short: "fr", long: "Français (France)" };
-const it: Language = { code: "it-IT", short: "it", long: "Italiano (Italia)" };
-const es: Language = { code: "es-ES", short: "es", long: "Español (España)" };
-const pl: Language = { code: "pl-PL", short: "pl", long: "Polski (Poland)" };
+const fr: Language = { code: "fr-FR", short: "fr", long: "Français" };
+const it: Language = { code: "it-IT", short: "it", long: "Italiano" };
+const es: Language = { code: "es-ES", short: "es", long: "Español" };
+const pl: Language = { code: "pl-PL", short: "pl", long: "Polski" };
 
 export const supportedLanguages = [en, de, fr, it, es, pl];
 

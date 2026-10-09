@@ -19,9 +19,16 @@
 		"editingHint": "Editando actualmente — toca ✕ para eliminar",
 		"toEditHint": "Toca para ingresar al modo de edición"
 	},
+	"search": {
+		"header": "Buscar",
+		"historyLabel": "Historial de consultas",
+		"historyOnHint": "Las consultas se guardarán",
+		"historyOffHint": "Las consultas no se guardarán"
+	},
 	"about": {
 		"header": "Acerca de",
-		"developed": "Desarrollado por"
+		"docs": "Documentación",
+		"privacy": "Privacidad"
 	},
 	"saveHint": "Ajustes guardados automáticamente"
 }

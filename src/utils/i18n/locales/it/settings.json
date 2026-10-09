@@ -19,9 +19,16 @@
 		"editingHint": "Modifica in corso — tocca ✕ per rimuovere",
 		"toEditHint": "Tocca per accedere alla modalità di modifica"
 	},
+	"search": {
+		"header": "Cerca",
+		"historyLabel": "Cronologia delle query",
+		"historyOnHint": "Le query verranno memorizzate",
+		"historyOffHint": "Le query non verranno memorizzate"
+	},
 	"about": {
 		"header": "Informazioni",
-		"developed": "Sviluppato da"
+		"docs": "Documentazione",
+		"privacy": "Privacy"
 	},
 	"saveHint": "Impostazioni salvate automaticamente"
 }

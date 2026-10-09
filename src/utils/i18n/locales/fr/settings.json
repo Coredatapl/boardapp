@@ -19,9 +19,16 @@
 		"editingHint": "Modification en cours — appuyez sur ✕ pour supprimer",
 		"toEditHint": "Appuyez pour passer en mode édition"
 	},
+	"search": {
+		"header": "Recherche",
+		"historyLabel": "Historique des requêtes",
+		"historyOnHint": "Les requêtes seront enregistrées",
+		"historyOffHint": "Les requêtes ne seront pas enregistrées"
+	},
 	"about": {
 		"header": "À propos",
-		"developed": "Développé par"
+		"docs": "Documentation",
+		"privacy": "Confidentialité"
 	},
 	"saveHint": "Paramètres enregistrés automatiquement"
 }

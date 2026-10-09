@@ -1,12 +1,20 @@
 import { useAppContext } from "@/app/AppContext";
 import type { ButtonProps } from "./Button";
 
-export default function CloseButton({ label, onClick }: ButtonProps) {
+interface CloseButtonProps {
+	size?: "small" | "base";
+}
+
+export default function CloseButton({
+	label,
+	onClick,
+	size,
+}: ButtonProps & CloseButtonProps) {
 	const { isMobile } = useAppContext();
 
 	return (
 		<button
-			className={`${isMobile ? "dark:bg-white/10 bg-black/8" : "dark:hover:bg-white/10 hover:bg-black/8"} w-8 h-8 flex items-center justify-center rounded-xl cursor-pointer transition-colors`}
+			className={`${isMobile ? "dark:bg-white/10 bg-black/8" : "dark:hover:bg-white/10 hover:bg-black/8"} ${size === "small" ? "w-5 h-5 rounded-lg" : "w-8 h-8 rounded-xl"} flex items-center justify-center cursor-pointer transition-colors`}
 			type="button"
 			onClick={onClick}
 		>

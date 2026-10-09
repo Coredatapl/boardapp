@@ -5,4 +5,5 @@ export interface AppSettings {
 	theme: ThemeType;
 	contactEmail: string;
 	displayName: string;
+	queryHistory: boolean;
 }

@@ -18,16 +18,22 @@ export async function measure<T>(
 	name: string,
 	fn: () => Promise<T>,
 ): Promise<T> {
-	performance.mark(`${name}-start`);
+	const startMark = `${name}-start`;
+	const endMark = `${name}-end`;
+	performance.mark(startMark);
 	try {
 		return await fn();
 	} finally {
-		performance.mark(`${name}-end`);
-		performance.measure(name, `${name}-start`, `${name}-end`);
+		const started = performance.getEntriesByName(startMark, "mark").length > 0;
+		if (started) {
+			performance.mark(endMark);
+			performance.measure(name, startMark, endMark);
 
-		const [entry] = performance.getEntriesByName(name);
-		logger.log(`Operation ${name} took`, `${entry.duration.toFixed(0)} ms`);
+			const [entry] = performance.getEntriesByName(name);
+			logger.log(`Operation ${name} took`, `${entry.duration.toFixed(2)} ms`);
 
-		performance.clearMarks();
+			performance.clearMarks(startMark);
+			performance.clearMarks(endMark);
+		}
 	}
 }

@@ -40,4 +40,5 @@ export interface WeatherCombinedData {
 	mapUrl: string;
 	city: string;
 	countryCode: string;
+	updatedAt: number;
 }
